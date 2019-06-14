@@ -44,4 +44,34 @@ class GlobalFunctions
 
         return false;
     }
+
+    public static function getArrayFromArrayName($name) {
+        if(!strpos($name, "[")) {
+            if(WSArrays::$arrays[$name]) return WSArrays::$arrays[$name];
+        } else {
+            $base_array = strtok($name, "[");
+            if(!$array = WSArrays::$arrays[$base_array]) return false;
+
+            $valid = preg_match_all("/(?<=\[).+?(?=\])/", $name, $matches);
+            if($valid === 0) return false;
+
+            foreach($matches[0] as $match) {
+                if(ctype_digit($match)) $match = intval($match);
+
+                $current_array = $array;
+                foreach($array as $key => $value) {
+                    if($key === $match) {
+                        $array = $value;
+                        break;
+                    }
+                }
+
+                if($current_array === $array) return false;
+            }
+
+            return $array;
+        }
+
+        return false;
+    }
 }

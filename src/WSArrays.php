@@ -12,7 +12,7 @@ class WSArrays extends GlobalFunctions {
      *
      * @var array
      */
-    protected static $arrays = [];
+    public static $arrays = [];
 
     /**
      * This function is called on every page.
