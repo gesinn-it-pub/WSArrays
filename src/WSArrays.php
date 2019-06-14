@@ -1,11 +1,11 @@
 <?php
 
-require 'ParserFunctions.class.php';
+require 'GlobalFunctions.class.php';
 
 /**
  * Class WSArrays
  */
-class WSArrays extends ParserFunctions {
+class WSArrays extends GlobalFunctions {
 
     /**
      * This protected variable holds all defined arrays. If an array is defined called "array", the array will be stored in self::$arrays["array"].
@@ -88,4 +88,5 @@ class WSArrays extends ParserFunctions {
 
         return true;
     }
+
 }
