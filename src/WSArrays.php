@@ -44,7 +44,7 @@ class WSArrays extends GlobalFunctions {
             // complexarraysearcharray alias casearcharray, casearcha
             $parser->setFunctionHook( 'complexarraysearcharray', [ComplexArraySearchArray::class, 'defineParser'] );
             $parser->setFunctionHook( 'casearcharray', [ComplexArraySearchArray::class, 'defineParser'] );
-            $parser->setFunctionHook( 'casearch', [ComplexArraySearchArray::class, 'defineParser'] );
+            $parser->setFunctionHook( 'casearcha', [ComplexArraySearchArray::class, 'defineParser'] );
 
             // complexarrayaddvalue alias caaddvalue, caadd, caaddv
             $parser->setFunctionHook( 'complexarrayaddvalue', [ComplexArrayAddValue::class, 'defineParser'] );

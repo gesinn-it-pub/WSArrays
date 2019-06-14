@@ -26,7 +26,7 @@ $magicWords['en'] = [
     'casearcharray' => [ 0, 'casearcharray' ],
     'casearcha' => [ 0, 'casearcha' ],
 
-    'compexarrayaddvalue' => [ 0, 'complexarrayaddvalue' ],
+    'complexarrayaddvalue' => [ 0, 'complexarrayaddvalue' ],
     'caaddvalue' => [ 0, 'caaddvalue' ],
     'caadd' => [ 0, 'caadd' ],
     'caaddv' => [ 0, 'caaddv' ],

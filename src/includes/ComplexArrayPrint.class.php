@@ -12,12 +12,12 @@ class ComplexArrayPrint extends WSArrays
     public static function defineParser( Parser $parser, $name = '', $options = '', $map = '', $subject = '') {
         if(empty($name)) return GlobalFunctions::error("You must provide a name");
 
-        if(!self::$array = GlobalFunctions::getArrayFromArrayName($name)) return GlobalFunctions::error("This array has not been defined");
-
         self::$name = $name;
         self::$map = $map;
 
         if($subject) self::$subject = $subject;
+
+        if(!self::$array = GlobalFunctions::getArrayFromArrayName($name)) return GlobalFunctions::error("This array has not been defined");
 
         if(!empty($options)) {
             GlobalFunctions::serializeOptions($options);
@@ -54,6 +54,10 @@ class ComplexArrayPrint extends WSArrays
 
         if(GlobalFunctions::containsArray(self::$array)) return GlobalFunctions::error("You cannot map a multidimensional array");
 
+        if(count(self::$array) === 1) {
+            return self::mapValue(self::$array);
+        }
+
         $result = null;
         foreach(self::$array as $value) {
             $result .= self::mapValue($value);
@@ -74,6 +78,10 @@ class ComplexArrayPrint extends WSArrays
     }
 
     private static function createList($type = "unordered") {
+        if(count(self::$array) === 1) {
+            return self::$array;
+        }
+
         if($type == "ordered") self::$indent_char = "#";
         $indent_char = self::$indent_char;
 
