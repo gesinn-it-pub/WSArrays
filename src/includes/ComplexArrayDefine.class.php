@@ -1,8 +1,8 @@
 <?php
 
-namespace WSArrays;
-
-class ComplexArrayDefine
+class ComplexArrayDefine extends WSArrays
 {
+    public static function defineParser() {
 
+    }
 }

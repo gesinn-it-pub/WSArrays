@@ -1,8 +1,8 @@
 <?php
 
-namespace WSArrays;
-
-class ComplexArrayPrint
+class ComplexArrayPrint extends WSArrays
 {
+    public static function defineParser() {
 
+    }
 }

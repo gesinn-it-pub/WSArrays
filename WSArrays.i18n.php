@@ -10,5 +10,6 @@ $magicWords = [];
  * @author Marijn van Wezel (xxmarijnw)
  */
 $magicWords['en'] = [
-    'complexarraydefine' => [ 0, 'complexarraydefine' ]
+    'complexarraydefine' => [ 0, 'complexarraydefine' ],
+    'complexarrayprint' => [ 0, 'complexarrayprint' ]
 ];

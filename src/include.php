@@ -1,7 +1,5 @@
 <?php
 
-namespace WSArrays;
-
 const INCLUDE_DIR = 'includes/';
 
 include INCLUDE_DIR . 'ComplexArrayDefine.class.php';
