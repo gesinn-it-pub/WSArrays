@@ -1,0 +1,29 @@
+{
+	"name": "WSComplexArrays",
+	"author": "Xxmarijnw",
+	"version": "0.0.1",
+	"url": "",
+	"descriptionmsg": "exampleextension-desc",
+	"license-name": "GPL-2.0-or-later",
+	"type": "parserhook",
+	"MessagesDirs": {
+		"WSComplexArrays": [
+			"i18n"
+		]
+	},
+	"AutoloadClasses": {
+		"WSComplexArrays": "src/WSComplexArrays.php"
+	},
+	"ExtensionMessagesFiles": {
+		"WSComplexArraysMagic": "WSComplexArrays.i18n.php"
+	},
+	"Hooks": {
+		"ParserFirstCallInit": [
+			"WSComplexArrays::onParserFirstCallInit"
+		]
+	},
+	"config": {
+		"WscaEnable": true
+	},
+	"manifest_version": 1
+}

@@ -1,0 +1,1 @@
+Multidimensional and associative arrays for MediaWiki.
