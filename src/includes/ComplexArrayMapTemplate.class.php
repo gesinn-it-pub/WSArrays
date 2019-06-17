@@ -28,15 +28,20 @@ class ComplexArrayMapTemplate extends WSArrays
 
     private static function map($value, &$return, $template) {
         $t = "{{".$template;
-        foreach($value as $key => $subvalue) {
-            if(is_array($subvalue)) {
-                $json = json_encode($subvalue);
-                GlobalFunctions::parseJSON($json);
 
-                $subvalue = $json;
+        if(is_array($value)) {
+            foreach($value as $key => $subvalue) {
+                if(is_array($subvalue)) {
+                    $json = json_encode($subvalue);
+                    GlobalFunctions::parseJSON($json);
+
+                    $subvalue = $json;
+                }
+
+                $t .= "|$key=$subvalue";
             }
-
-            $t .= "|$key=$subvalue";
+        } else {
+            $t .= "|$value";
         }
 
         $return .= $t."}}";
