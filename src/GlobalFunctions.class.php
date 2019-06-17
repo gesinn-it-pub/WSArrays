@@ -74,4 +74,16 @@ class GlobalFunctions
 
         return false;
     }
+
+    public static function arrayMaxDepth($array, $depth = 0) {
+        $max_sub_depth = 0;
+        foreach (array_filter($array, 'is_array') as $subarray) {
+            $max_sub_depth = max(
+                $max_sub_depth,
+                self::arrayMaxDepth($subarray, $depth + 1)
+            );
+        }
+
+        return $max_sub_depth + $depth;
+    }
 }

@@ -4,7 +4,7 @@ class ComplexArrayAddValue extends WSArrays
 {
     public static function defineParser( Parser $parser, $array = '', $value = '') {
         if(empty($array) || empty($value)) return GlobalFunctions::error("Array or value omitted");
-        if(!strpos($array, "[")) return GlobalFunctions::error("You must provide a subvalue");
+        if(!strpos($array, "[") || !strpos($array, "]")) return GlobalFunctions::error("You must provide a subarray");
 
         return self::addValueToArray($array, $value);
     }
