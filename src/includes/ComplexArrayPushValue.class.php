@@ -2,6 +2,14 @@
 
 class ComplexArrayPushValue extends WSArrays
 {
+    /**
+     * Define all allowed parameters.
+     *
+     * @param Parser $parser
+     * @param string $array
+     * @param string $value
+     * @return array|bool|null
+     */
     public static function defineParser( Parser $parser, $array = '', $value = '') {
         if(empty($array) || empty($value)) return GlobalFunctions::error("Array or value omitted");
 

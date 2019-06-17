@@ -5,7 +5,7 @@ class ComplexArrayDefine extends WSArrays
     /**
      * @param Parser $parser
      * @param string $name The name of the array that is going to be defined
-     * @param string $json The array, encoded in valid JSON
+     * @param string $wson The array, encoded in valid JSON
      *
      * @return array|bool
      */

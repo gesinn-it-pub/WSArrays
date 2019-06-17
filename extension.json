@@ -1,7 +1,7 @@
 {
 	"name": "WSArrays",
 	"author": "Xxmarijnw",
-	"version": "0.3.4",
+	"version": "0.4.0",
 	"url": "",
 	"description": "Parser functions to allow the creation and traversing of associative and multidimensional arrays.",
 	"license-name": "GPL-2.0",
