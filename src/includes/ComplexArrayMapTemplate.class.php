@@ -27,7 +27,7 @@ class ComplexArrayMapTemplate extends WSArrays
     }
 
     private static function map($value, &$return, $template) {
-        $t = "(".$template;
+        $t = "{{".$template;
         foreach($value as $key => $subvalue) {
             if(is_array($subvalue)) {
                 $json = json_encode($subvalue);
@@ -39,6 +39,6 @@ class ComplexArrayMapTemplate extends WSArrays
             $t .= "|$key=$subvalue";
         }
 
-        $return .= $t.")";
+        $return .= $t."}}";
     }
 }
