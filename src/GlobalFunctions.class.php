@@ -45,6 +45,10 @@ class GlobalFunctions
         return false;
     }
 
+    /**
+     * @param $name
+     * @return bool|array
+     */
     public static function getArrayFromArrayName($name) {
         if(!strpos($name, "[")) {
             if(WSArrays::$arrays[$name]) return WSArrays::$arrays[$name];

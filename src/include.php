@@ -15,3 +15,4 @@ include INCLUDE_DIR . 'ComplexArrayReset.class.php';
 include INCLUDE_DIR . 'ComplexArrayMerge.class.php';
 include INCLUDE_DIR . 'ComplexArraySort.class.php';
 include INCLUDE_DIR . 'ComplexArrayMapTemplate.class.php';
+include INCLUDE_DIR . 'ComplexArrayPushValue.class.php';

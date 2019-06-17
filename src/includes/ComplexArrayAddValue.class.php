@@ -23,7 +23,7 @@ class ComplexArrayAddValue extends WSArrays
         return null;
     }
 
-    private static function set($path, &$array=array(), $value=null) {
+    private static function set($path, &$array = array(), $value = null) {
         GlobalFunctions::parseWSON($value);
 
         if(GlobalFunctions::isValidJSON($value)) {
@@ -35,6 +35,7 @@ class ComplexArrayAddValue extends WSArrays
         foreach($path as $key) {
             $temp =& $temp[$key];
         }
+
         $temp = $value;
     }
 }

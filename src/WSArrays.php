@@ -82,6 +82,10 @@ class WSArrays extends GlobalFunctions {
             $parser->setFunctionHook( 'camaptemplate', [ComplexArrayMapTemplate::class, 'defineParser'] );
             $parser->setFunctionHook( 'camapt', [ComplexArrayMapTemplate::class, 'defineParser'] );
             $parser->setFunctionHook( 'catemplate', [ComplexArrayMapTemplate::class, 'defineParser'] );
+
+            // complexarraypushvalue alias capush
+            $parser->setFunctionHook( 'complexarraypushvalue', [ComplexArrayPushValue::class, 'defineParser'] );
+            $parser->setFunctionHook( 'capush', [ComplexArrayPushValue::class, 'defineParser'] );
         } catch(Exception $e) {
             return false;
         }

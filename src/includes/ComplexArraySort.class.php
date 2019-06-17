@@ -127,11 +127,16 @@ class ComplexArraySort extends WSArrays
         if(!self::$key) return "Key must not be omitted when using keysort";
         if(GlobalFunctions::arrayMaxDepth(self::$array) !== 1) return "This array cannot be sorted using keysort (must be 2-dimensional)";
 
-        foreach(self::$array as $element) {
-            if(!$element[self::$key]) return "This is not a uniform 2-dimensional array, or key does not exist";
+        self::ksort(self::$array, self::$key);
+
+        $i = 0;
+        $temp = [];
+        foreach(self::$array as $key => $item) {
+            $temp[$i] = $item;
+            $i++;
         }
 
-        self::ksort(self::$array, self::$key);
+        self::$array = $temp;
 
         return true;
     }
