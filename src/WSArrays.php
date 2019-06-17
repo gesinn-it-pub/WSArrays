@@ -14,6 +14,12 @@ class WSArrays extends GlobalFunctions {
      */
     public static $arrays = [];
 
+    public static $options = [
+        "max_array_size" => -1,
+        "max_array_depth" => -1,
+        "max_defined_arrays" => -1
+    ];
+
     /**
      * This function is called on every page.
      *
@@ -22,6 +28,15 @@ class WSArrays extends GlobalFunctions {
      * @throws Exception
      */
     public static function onParserFirstCallInit( Parser $parser ) {
+        global $wgMaxArraySize;
+        global $wgMaxArrayDepth;
+        global $wgMaxDefinedArrays;
+
+        // TODO: Add this
+        if(!empty($wgMaxArraySize)) self::$options['max_array_size'] = $wgMaxArraySize;
+        if(!empty($wgMaxArrayDepth)) self::$options['max_array_depth'] = $wgMaxArrayDepth;
+        if(!empty($wgMaxDefinedArrays)) self::$options['max_defined_arrays'] = $wgMaxDefinedArrays;
+
         try {
             require 'include.php';
 

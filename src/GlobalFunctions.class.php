@@ -26,9 +26,14 @@ class GlobalFunctions
         return (json_last_error() == JSON_ERROR_NONE);
     }
 
-    public static function parseWSON(&$json) {
-        $json = preg_replace("/(?!\B\"[^\"]*)\(\((?![^\"]*\"\B)/i", "{", $json);
-        $json = preg_replace("/(?!\B\"[^\"]*)\)\)(?![^\"]*\"\B)/i", "}", $json);
+    public static function parseWSON(&$wson) {
+        $wson = preg_replace("/(?!\B\"[^\"]*)\(\((?![^\"]*\"\B)/i", "{", $wson);
+        $wson = preg_replace("/(?!\B\"[^\"]*)\)\)(?![^\"]*\"\B)/i", "}", $wson);
+    }
+
+    public static function parseJSON(&$json) {
+        $json = preg_replace("/(?!\B\"[^\"]*){(?![^\"]*\"\B)/i", "((", $json);
+        $json = preg_replace("/(?!\B\"[^\"]*)}(?![^\"]*\"\B)/i", "))", $json);
     }
 
     public static function serializeOptions(&$options) {
