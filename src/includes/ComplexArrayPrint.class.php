@@ -73,12 +73,12 @@ class ComplexArrayPrint extends WSArrays
     private static function printMarkup() {
         $json = json_encode(self::$array);
 
-        $wson = str_replace("{", "((", $json);
-        return str_replace("}", "))", $wson);
+        $wson = preg_replace("/(?!\B\"[^\"]*){(?![^\"]*\"\B)/i", "((", $json);
+        return preg_replace("/(?!\B\"[^\"]*)}(?![^\"]*\"\B)/i", "))", $wson);
     }
 
     private static function createList($type = "unordered") {
-        if(count(self::$array) === 1) {
+        if(count(self::$array) === 1 && !GlobalFunctions::containsArray(self::$array)) {
             return self::$array;
         }
 

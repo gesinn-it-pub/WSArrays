@@ -27,8 +27,8 @@ class GlobalFunctions
     }
 
     public static function parseWSON(&$json) {
-        $json = str_replace("((", "{", $json);
-        $json = str_replace("))", "}", $json);
+        $json = preg_replace("/(?!\B\"[^\"]*)\(\((?![^\"]*\"\B)/i", "{", $json);
+        $json = preg_replace("/(?!\B\"[^\"]*)\)\)(?![^\"]*\"\B)/i", "}", $json);
     }
 
     public static function serializeOptions(&$options) {
