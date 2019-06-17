@@ -1,10 +1,10 @@
 {
 	"name": "WSArrays",
 	"author": "Xxmarijnw",
-	"version": "0.1.0",
+	"version": "0.2.4",
 	"url": "",
 	"description": "Parser functions to allow the creation and traversing of associative and multidimensional arrays.",
-	"license-name": "GPL-2.0-or-later",
+	"license-name": "GPL-2.0",
 	"type": "parserhook",
 	"MessagesDirs": {
 		"WSArrays": [
