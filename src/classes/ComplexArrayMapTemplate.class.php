@@ -1,5 +1,12 @@
 <?php
 
+/**
+ * Class ComplexArrayMapTemplate
+ *
+ * Defines the parser function {{#complexarraymaptemplate:}}, which allows users to map a multidimensional array to a list of templates.
+ *
+ * @extends WSArrays
+ */
 class ComplexArrayMapTemplate extends WSArrays
 {
     /**

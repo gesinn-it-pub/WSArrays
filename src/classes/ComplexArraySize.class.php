@@ -1,5 +1,12 @@
 <?php
 
+/**
+ * Class ComplexArraySize
+ *
+ * Defines the parser function {{#complexarraysize:}}, which allows users to get the size of a (sub)array.
+ *
+ * @extends WSArrays
+ */
 class ComplexArraySize extends WSArrays
 {
     /**

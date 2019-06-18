@@ -4,6 +4,8 @@
       "Marijn van Wezel <marijn@wikibase.nl>"
     ]
   },
+  "ca-name": "WSArrays",
+  "ca-description": "Parser functions to allow the creation and traversing of associative and multidimensional arrays",
   "ca-omitted": "$1 must not be omitted",
   "ca-map-multidimensional": "You cannot map a multidimensional array",
   "ca-nonexistant-subarray": "You cannot push to a non-existant subarray",

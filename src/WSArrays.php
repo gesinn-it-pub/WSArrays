@@ -1,19 +1,43 @@
 <?php
 
+/**
+ *
+ * Initialization file for WSArrays.
+ *
+ * @license GPL-2.0-or-later
+ * @version: 0.4.6.1
+ *
+ * @author Xxmarijnw <marijn@wikibase.nl>
+ *
+ */
+
+if (!defined( 'MEDIAWIKI' ) ) {
+    die();
+};
+
 require 'GlobalFunctions.class.php';
 
 /**
  * Class WSArrays
+ *
+ * Defines all parser functions.
+ *
+ * @extends GlobalFunctions
  */
 class WSArrays extends GlobalFunctions {
 
     /**
-     * This protected variable holds all defined arrays. If an array is defined called "array", the array will be stored in self::$arrays["array"].
+     * This variable holds all defined arrays. If an array is defined called "array", the array will be stored in self::$arrays["array"].
      *
      * @var array
      */
     public static $arrays = [];
 
+    /**
+     * Holds defined options.
+     *
+     * @var array
+     */
     public static $options = [
         "max_defined_arrays" => -1
     ];
@@ -27,7 +51,7 @@ class WSArrays extends GlobalFunctions {
      */
     public static function onParserFirstCallInit( Parser $parser ) {
         global $wgMaxDefinedArrays;
-        if(is_numeric($wgMaxDefinedArrays)) self::$options['max_defined_arrays'] = $wgMaxDefinedArrays;
+        if(is_numeric($wgMaxDefinedArrays) && $wgMaxDefinedArrays >= 0) self::$options['max_defined_arrays'] = $wgMaxDefinedArrays;
 
         try {
             require 'include.php';

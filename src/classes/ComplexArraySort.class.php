@@ -1,5 +1,12 @@
 <?php
 
+/**
+ * Class ComplexArraySort
+ *
+ * Defines the parser function {{#complexarraysort:}}, which allows users to sort arrays.
+ *
+ * @extends WSArrays
+ */
 class ComplexArraySort extends WSArrays
 {
     private static $key;

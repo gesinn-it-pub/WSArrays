@@ -1,5 +1,12 @@
 <?php
 
+/**
+ * Class ComplexArrayReset
+ *
+ * Defines the parser function {{#complexarrayreset:}}, which allows users to reset all or one array.
+ *
+ * @extends WSArrays
+ */
 class ComplexArrayReset extends WSArrays
 {
     /**

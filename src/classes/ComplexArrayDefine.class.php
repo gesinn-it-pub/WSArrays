@@ -1,5 +1,12 @@
 <?php
 
+/**
+ * Class ComplexArrayDefine
+ *
+ * Defines the parser function {{#complexarraydefine:}}, which allows users to define a new array.
+ *
+ * @extends WSArrays
+ */
 class ComplexArrayDefine extends WSArrays
 {
     /**

@@ -1,5 +1,10 @@
 <?php
 
+/**
+ * Class ComplexArraySearchArray
+ *
+ * @extends WSArrays
+ */
 class ComplexArraySearchArray extends WSArrays
 {
     public static function defineParser( Parser $parser ) {

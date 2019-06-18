@@ -1,5 +1,12 @@
 <?php
 
+/**
+ * Class ComplexArrayPrint
+ *
+ * Defines the parser function {{#complexarrayprint:}}, which allows users to display an array in a couple of ways.
+ *
+ * @extends WSArrays
+ */
 class ComplexArrayPrint extends WSArrays
 {
     /**

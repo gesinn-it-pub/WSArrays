@@ -1,5 +1,12 @@
 <?php
 
+/**
+ * Class ComplexArrayPushValue
+ *
+ * Defines the parser function {{#complexarraypushvalue:}}, which allows users to push a value or subarray to the end of a (sub)array.
+ *
+ * @extends WSArrays
+ */
 class ComplexArrayPushValue extends WSArrays
 {
     /**

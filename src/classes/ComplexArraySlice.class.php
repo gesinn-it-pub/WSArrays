@@ -1,5 +1,10 @@
 <?php
 
+/**
+ * Class ComplexArraySlice
+ *
+ * @extends WSArrays
+ */
 class ComplexArraySlice extends WSArrays
 {
     public static function defineParser( Parser $parser ) {

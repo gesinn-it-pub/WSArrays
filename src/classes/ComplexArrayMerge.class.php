@@ -1,5 +1,10 @@
 <?php
 
+/**
+ * Class ComplexArrayMerge
+ *
+ * @extends WSArrays
+ */
 class ComplexArrayMerge extends WSArrays
 {
     public static function defineParser( Parser $parser ) {

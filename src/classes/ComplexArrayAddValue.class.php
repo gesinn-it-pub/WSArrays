@@ -1,5 +1,12 @@
 <?php
 
+/**
+ * Class ComplexArrayAddValue
+ *
+ * Defines the parser function {{#complexarrayaddvalue:}}, which allows users to add values to (sub)arrays.
+ *
+ * @extends WSArrays
+ */
 class ComplexArrayAddValue extends WSArrays
 {
     /**
