@@ -37,7 +37,7 @@ class ComplexArrayPushValue extends WSArrays
 
         $ca_undefined_array = wfMessage('ca-undefined-array');
         if(!isset(WSArrays::$arrays[$base_array])) return GlobalFunctions::error($ca_undefined_array);
-        $array = WSArrays::$arrays[$base_array];
+        $wsarray = WSArrays::$arrays[$base_array];
 
         if(!strpos($array, "[")) {
             GlobalFunctions::WSONtoJSON($value);

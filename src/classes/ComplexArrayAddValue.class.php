@@ -40,7 +40,7 @@ class ComplexArrayAddValue extends WSArrays
 
         $ca_undefined_array = wfMessage('ca-undefined-array');
         if(!isset(WSArrays::$arrays[$base_array])) return GlobalFunctions::error($ca_undefined_array);
-        $array = WSArrays::$arrays[$base_array];
+        $wsarray = WSArrays::$arrays[$base_array];
 
         $valid = preg_match_all("/(?<=\[).+?(?=\])/", $array, $matches);
 
