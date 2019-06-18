@@ -11,17 +11,29 @@ class ComplexArrayPushValue extends WSArrays
      * @return array|bool|null
      */
     public static function defineParser( Parser $parser, $array = '', $value = '') {
-        if(empty($array) || empty($value)) return GlobalFunctions::error("Array or value omitted");
+        $ca_omitted = wfMessage('ca-omitted', 'Array');
+        if(empty($array)) return GlobalFunctions::error($ca_omitted);
 
-        return self::pushValueToArray($array, $value);
+        $ca_omitted = wfMessage('ca-omitted', 'Value');
+        if(empty($value)) return GlobalFunctions::error($ca_omitted);
+
+        return self::arrayPushValue($array, $value);
     }
 
-    private static function pushValueToArray($array, $value) {
+    /**
+     * @param $array
+     * @param $value
+     * @return array|bool|null
+     */
+    private static function arrayPushValue($array, $value) {
         $base_array = strtok($array, "[");
-        if(!$wsarray = WSArrays::$arrays[$base_array]) return GlobalFunctions::error("This array has not been defined");
+
+        $ca_undefined_array = wfMessage('ca-undefined-array');
+        if(!isset(WSArrays::$arrays[$base_array])) return GlobalFunctions::error($ca_undefined_array);
+        $array = WSArrays::$arrays[$base_array];
 
         if(!strpos($array, "[")) {
-            GlobalFunctions::parseWSON($value);
+            GlobalFunctions::WSONtoJSON($value);
 
             if(GlobalFunctions::isValidJSON($value)) {
                 $value = json_decode($value, true);
@@ -35,7 +47,9 @@ class ComplexArrayPushValue extends WSArrays
         }
 
         $valid = preg_match_all("/(?<=\[).+?(?=\])/", $array, $matches);
-        if($valid === 0) return GlobalFunctions::error("This name is invalid");
+
+        $ca_invalid_name = wfMessage('ca-invalid-name');
+        if($valid === 0) return GlobalFunctions::error($ca_invalid_name);
 
         $result = self::add($matches[0], $wsarray, $value);
 
@@ -46,8 +60,16 @@ class ComplexArrayPushValue extends WSArrays
         return null;
     }
 
+    /**
+     * Push value to location defined in $path.
+     *
+     * @param $path
+     * @param array $array
+     * @param null $value
+     * @return array|bool
+     */
     private static function add($path, &$array = array(), $value = null) {
-        GlobalFunctions::parseWSON($value);
+        GlobalFunctions::WSONtoJSON($value);
 
         if(GlobalFunctions::isValidJSON($value)) {
             $value = json_decode($value, true);
@@ -61,7 +83,8 @@ class ComplexArrayPushValue extends WSArrays
         foreach($path as $key) {
             $current_depth++;
 
-            if(!array_key_exists($key, $temp)) return GlobalFunctions::error("You cannot push to a non-existent subarray");
+            $ca_nonexistant_subarray = wfMessage('ca-nonexistant-subarray');
+            if(!array_key_exists($key, $temp)) return GlobalFunctions::error($ca_nonexistant_subarray);
 
             if($current_depth !== $depth) {
                 $temp =& $temp[$key];

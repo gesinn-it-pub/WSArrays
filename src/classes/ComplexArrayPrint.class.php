@@ -2,22 +2,55 @@
 
 class ComplexArrayPrint extends WSArrays
 {
+    /**
+     * Holds the array being worked on.
+     *
+     * @var array
+     */
     protected static $array = [];
 
+    /**
+     * Holds defined parameters.
+     *
+     * @var string
+     */
     private static $name = null;
     private static $map = null;
     private static $subject = "@@";
     private static $indent_char = "*";
 
+    /**
+     * Define all allowed parameters.
+     *
+     * @param Parser $parser
+     * @param string $name
+     * @param string $options
+     * @param string $map
+     * @param string $subject
+     * @return array|mixed|null|string|string[]
+     */
     public static function defineParser( Parser $parser, $name = '', $options = '', $map = '', $subject = '') {
-        if(empty($name)) return GlobalFunctions::error("You must provide a name");
+        $ca_omitted = wfMessage('ca-omitted', 'Name');
+        if(empty($name)) return GlobalFunctions::error($ca_omitted);
 
+        return self::arrayPrint($name, $options, $map, $subject);
+    }
+
+    /**
+     * @param $name
+     * @param string $options
+     * @param string $map
+     * @param string $subject
+     * @return array|mixed|null|string|string[]
+     */
+    private static function arrayPrint($name, $options = '', $map = '', $subject = '') {
         self::$name = $name;
         self::$map = $map;
 
         if($subject) self::$subject = $subject;
 
-        if(!self::$array = GlobalFunctions::getArrayFromArrayName($name)) return GlobalFunctions::error("This array has not been defined");
+        $ca_undefined_array = wfMessage('ca-undefined-array');
+        if(!self::$array = GlobalFunctions::getArrayFromArrayName($name)) return GlobalFunctions::error($ca_undefined_array);
 
         if(!empty($options)) {
             GlobalFunctions::serializeOptions($options);
@@ -30,6 +63,10 @@ class ComplexArrayPrint extends WSArrays
         return $result;
     }
 
+    /**
+     * @param $options
+     * @return array|mixed|null|string|string[]
+     */
     private static function applyOptions($options) {
         if(gettype($options) === "array") {
             $options = $options[0];
@@ -41,7 +78,7 @@ class ComplexArrayPrint extends WSArrays
                 break;
             case 'markup':
             case 'wson':
-                return self::printMarkup();
+                return self::ArrayToWSON(self::$array);
                 break;
             default:
                 return self::createList($options);
@@ -49,10 +86,15 @@ class ComplexArrayPrint extends WSArrays
         }
     }
 
+    /**
+     * @return array|mixed|null|string
+     */
     private static function applyMapping() {
-        if(!self::$map) return GlobalFunctions::error("No mapping given");
+        $ca_omitted = wfMessage('ca-omitted', 'Mapping');
+        if(!self::$map) return GlobalFunctions::error($ca_omitted);
 
-        if(GlobalFunctions::containsArray(self::$array)) return GlobalFunctions::error("You cannot map a multidimensional array");
+        $ca_map_multidimensional = wfMessage('ca-map-multidimensional');
+        if(GlobalFunctions::containsArray(self::$array)) return GlobalFunctions::error($ca_map_multidimensional);
 
         if(count(self::$array) === 1) {
             return self::mapValue(self::$array);
@@ -66,17 +108,20 @@ class ComplexArrayPrint extends WSArrays
         return $result;
     }
 
+    /**
+     * @param $value
+     * @return mixed
+     */
     private static function mapValue($value) {
         return str_replace(self::$subject, $value, self::$map);
     }
 
-    private static function printMarkup() {
-        $json = json_encode(self::$array);
-
-        $wson = preg_replace("/(?!\B\"[^\"]*){(?![^\"]*\"\B)/i", "((", $json);
-        return preg_replace("/(?!\B\"[^\"]*)}(?![^\"]*\"\B)/i", "))", $wson);
-    }
-
+    /**
+     * Create an (un)ordered list from an array.
+     *
+     * @param string $type
+     * @return array|null|string
+     */
     private static function createList($type = "unordered") {
         if(count(self::$array) === 1 && !GlobalFunctions::containsArray(self::$array)) {
             return self::$array;
@@ -104,6 +149,11 @@ class ComplexArrayPrint extends WSArrays
         return $result;
     }
 
+    /**
+     * @param $array
+     * @param $result
+     * @param int $depth
+     */
     private static function addArrayToUnorderedList($array, &$result, $depth = 0) {
         $depth++;
 

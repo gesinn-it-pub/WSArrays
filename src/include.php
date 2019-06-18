@@ -1,6 +1,6 @@
 <?php
 
-const INCLUDE_DIR = 'includes/';
+const INCLUDE_DIR = 'classes/';
 
 include INCLUDE_DIR . 'ComplexArrayDefine.class.php';
 include INCLUDE_DIR . 'ComplexArrayPrint.class.php';

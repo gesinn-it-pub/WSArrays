@@ -1,27 +1,29 @@
 {
-	"name": "WSArrays",
-	"author": "Xxmarijnw",
-	"version": "0.4.1",
-	"url": "",
-	"description": "Parser functions to allow the creation and traversing of associative and multidimensional arrays.",
-	"license-name": "GPL-2.0",
-	"type": "parserhook",
-	"MessagesDirs": {
-		"WSArrays": [
-			"i18n"
-		]
-	},
-	"AutoloadClasses": {
-		"WSArrays": "src/WSArrays.php"
-	},
-	"ExtensionMessagesFiles": {
-		"WSArraysMagic": "WSArrays.i18n.php"
-	},
-	"Hooks": {
-		"ParserFirstCallInit": [
-			"WSArrays::onParserFirstCallInit"
-		]
-	},
-	"config": {},
-	"manifest_version": 1
+  "name": "WSArrays",
+  "author": "Xxmarijnw",
+  "version": "0.4.6",
+  "url": "",
+  "description": "Parser functions to allow the creation and traversing of associative and multidimensional arrays.",
+  "license-name": "GPL-2.0",
+  "type": "parserhook",
+  "MessagesDirs": {
+    "WSArrays": [
+      "i18n"
+    ]
+  },
+  "AutoloadClasses": {
+    "WSArrays": "src/WSArrays.php"
+  },
+  "ExtensionMessagesFiles": {
+    "WSArraysMagic": "WSArrays.i18n.php"
+  },
+  "Hooks": {
+    "ParserFirstCallInit": [
+      "WSArrays::onParserFirstCallInit"
+    ]
+  },
+  "config": {
+    "MaxDefinedArrays": false
+  },
+  "manifest_version": 1
 }

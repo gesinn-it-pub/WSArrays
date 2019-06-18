@@ -7,6 +7,12 @@
  */
 class GlobalFunctions
 {
+    /**
+     * Print an error message.
+     *
+     * @param $message
+     * @return array
+     */
     public static function error($message) {
         $params = func_get_args();
         array_shift( $params );
@@ -20,26 +26,66 @@ class GlobalFunctions
         return array( $msgHtml, 'noparse' => true, 'isHTML' => false );
     }
 
+    /**
+     * Check if the given string $json is valid JSON.
+     *
+     * @param $json
+     * @return bool
+     */
     public static function isValidJSON($json) {
         json_decode($json);
 
         return (json_last_error() == JSON_ERROR_NONE);
     }
 
-    public static function parseWSON(&$wson) {
+    /**
+     * Convert WSON (custom JSON) to JSON.
+     *
+     * @param $wson
+     */
+    public static function WSONtoJSON(&$wson) {
         $wson = preg_replace("/(?!\B\"[^\"]*)\(\((?![^\"]*\"\B)/i", "{", $wson);
         $wson = preg_replace("/(?!\B\"[^\"]*)\)\)(?![^\"]*\"\B)/i", "}", $wson);
     }
 
-    public static function parseJSON(&$json) {
+    /**
+     * Convert JSON to WSON.
+     *
+     * @param $json
+     */
+    public static function JSONtoWSON(&$json) {
         $json = preg_replace("/(?!\B\"[^\"]*){(?![^\"]*\"\B)/i", "((", $json);
         $json = preg_replace("/(?!\B\"[^\"]*)}(?![^\"]*\"\B)/i", "))", $json);
     }
 
+    /**
+     * Convert an array to WSON.
+     *
+     * @param $array
+     * @return null|string|string[]
+     */
+    public static function ArrayToWSON($array) {
+        $json = json_encode($array);
+
+        $wson = preg_replace("/(?!\B\"[^\"]*){(?![^\"]*\"\B)/i", "((", $json);
+        return preg_replace("/(?!\B\"[^\"]*)}(?![^\"]*\"\B)/i", "))", $wson);
+    }
+
+    /**
+     * Create an array from a comma-separated list.
+     *
+     * @param $options
+     */
     public static function serializeOptions(&$options) {
         $options = explode(",", $options);
     }
 
+    /**
+     * Check if an array contains a subarray.
+     *
+     * @param $array
+     * @return bool
+     */
     public static function containsArray($array) {
         if(!is_array($array)) return false;
 
@@ -51,6 +97,8 @@ class GlobalFunctions
     }
 
     /**
+     * Return the contents of a subarray based on the name (basearray[subarray][subarray]...).
+     *
      * @param $name
      * @return bool|array
      */
@@ -59,7 +107,11 @@ class GlobalFunctions
             if(WSArrays::$arrays[$name]) return WSArrays::$arrays[$name];
         } else {
             $base_array = strtok($name, "[");
-            if(!$array = WSArrays::$arrays[$base_array]) return false;
+
+            $ca_undefined_array = wfMessage('ca-undefined-array');
+
+            if(!isset(WSArrays::$arrays[$base_array])) return GlobalFunctions::error($ca_undefined_array);
+            $array = WSArrays::$arrays[$base_array];
 
             $valid = preg_match_all("/(?<=\[).+?(?=\])/", $name, $matches);
             if($valid === 0) return false;
@@ -84,6 +136,13 @@ class GlobalFunctions
         return false;
     }
 
+    /**
+     * Find the max depth of a multidimensional array.
+     *
+     * @param $array
+     * @param int $depth
+     * @return int|mixed
+     */
     public static function arrayMaxDepth($array, $depth = 0) {
         $max_sub_depth = 0;
         foreach (array_filter($array, 'is_array') as $subarray) {
@@ -94,5 +153,13 @@ class GlobalFunctions
         }
 
         return $max_sub_depth + $depth;
+    }
+
+    public static function definedArrayLimitReached() {
+        if(WSArrays::$options['max_defined_arrays'] !== -1) {
+            if(count(WSArrays::$arrays) + 1 > count(WSArrays::$options['max_defined_arrays'])) return true;
+        }
+
+        return false;
     }
 }
