@@ -155,6 +155,11 @@ class GlobalFunctions
         return $max_sub_depth + $depth;
     }
 
+    /**
+     * Checks whether the maximum number of arrays as defined by $wfMaxDefinedArrays has been reached.
+     *
+     * @return bool
+     */
     public static function definedArrayLimitReached() {
         if(WSArrays::$options['max_defined_arrays'] !== -1) {
             if(count(WSArrays::$arrays) + 1 > count(WSArrays::$options['max_defined_arrays'])) return true;
