@@ -46,7 +46,22 @@ class ComplexArraySort extends WSArrays
         if(empty($options)) {
             $result = self::sortArray("sort");
         } else {
-            $result = self::sortArray($options);
+            GlobalFunctions::serializeOptions($options);
+
+            if(count($options) === 1) {
+                $result = self::sortArray($options[0]);
+            } else {
+                $sort = $options[0];
+                $order = $options[1];
+
+                if($order !== "desc") $order = null;
+
+                if($sort !== "keysort") {
+                    $result = self::sortArray($options[0]);
+                } else {
+                    $result = self::keysort($order);
+                }
+            }
         }
 
         if($result === true) {
@@ -216,7 +231,7 @@ class ComplexArraySort extends WSArrays
      *
      * @return bool|string
      */
-    private static function keysort() {
+    private static function keysort($order) {
         $ca_sort_missing_key = wfMessage('ca-sort-missing-key');
         if(!self::$key) return $ca_sort_missing_key;
 
@@ -233,6 +248,8 @@ class ComplexArraySort extends WSArrays
         }
 
         self::$array = $temp;
+
+        if($order === "desc") self::$array = array_reverse(self::$array);
 
         return true;
     }

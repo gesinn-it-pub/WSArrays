@@ -50,8 +50,8 @@ class WSArrays extends GlobalFunctions {
      * @throws Exception
      */
     public static function onParserFirstCallInit( Parser $parser ) {
-        global $wgMaxDefinedArrays;
-        if(is_numeric($wgMaxDefinedArrays) && $wgMaxDefinedArrays >= 0) self::$options['max_defined_arrays'] = $wgMaxDefinedArrays;
+        global $wfMaxDefinedArrays;
+        if(is_numeric($wfMaxDefinedArrays) && $wfMaxDefinedArrays >= 0) self::$options['max_defined_arrays'] = $wfMaxDefinedArrays;
 
         try {
             require 'include.php';
@@ -114,8 +114,9 @@ class WSArrays extends GlobalFunctions {
             $parser->setFunctionHook( 'camapt', [ComplexArrayMapTemplate::class, 'defineParser'] );
             $parser->setFunctionHook( 'catemplate', [ComplexArrayMapTemplate::class, 'defineParser'] );
 
-            // complexarraypushvalue alias capush
+            // complexarraypushvalue alias complexarraypush, capush
             $parser->setFunctionHook( 'complexarraypushvalue', [ComplexArrayPushValue::class, 'defineParser'] );
+            $parser->setFunctionHook( 'complexarraypush', [ComplexArrayPushValue::class, 'defineParser'] );
             $parser->setFunctionHook( 'capush', [ComplexArrayPushValue::class, 'defineParser'] );
         } catch(Exception $e) {
             return false;

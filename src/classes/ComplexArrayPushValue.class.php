@@ -90,8 +90,8 @@ class ComplexArrayPushValue extends WSArrays
         foreach($path as $key) {
             $current_depth++;
 
-            $ca_nonexistant_subarray = wfMessage('ca-nonexistant-subarray');
-            if(!array_key_exists($key, $temp)) return GlobalFunctions::error($ca_nonexistant_subarray);
+            $ca_nonexistent_subarray = wfMessage('ca-nonexistent-subarray');
+            if(!array_key_exists($key, $temp)) return GlobalFunctions::error($ca_nonexistent_subarray);
 
             if($current_depth !== $depth) {
                 $temp =& $temp[$key];
