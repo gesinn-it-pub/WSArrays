@@ -236,7 +236,9 @@ class ComplexArraySort extends WSArrays
         if(!self::$key) return $ca_sort_missing_key;
 
         $ca_sort_array_too_deep = wfMessage('ca-sort-array-too-deep');
-        if(GlobalFunctions::arrayMaxDepth(self::$array) !== 1) return $ca_sort_array_too_deep;
+        foreach(self::$array as $value) {
+            if(is_array($value[self::$key])) return $ca_sort_array_too_deep;
+        }
 
         self::ksort(self::$array, self::$key);
 
