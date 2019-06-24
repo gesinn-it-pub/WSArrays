@@ -24,7 +24,7 @@ require 'GlobalFunctions.class.php';
  *
  * @extends GlobalFunctions
  */
-class WSArrays extends GlobalFunctions {
+class WSArrays extends WSGlobalFunctions {
 
     /**
      * This variable holds all defined arrays. If an array is defined called "array", the array will be stored in self::$arrays["array"].

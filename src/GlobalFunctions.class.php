@@ -5,7 +5,7 @@
  *
  * Grandfather class. These functions are available in all other classes.
  */
-class GlobalFunctions
+class WSGlobalFunctions
 {
     /**
      * Print an error message.
