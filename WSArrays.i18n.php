@@ -56,5 +56,6 @@ $magicWords['en'] = [
     'catemplate' => [ 0, 'catemplate' ],
 
     'complexarraypushvalue' => [ 0, 'complexarraypushvalue' ],
+    'complexarraypush' => [ 0, 'complexarraypush' ],
     'capush' => [ 0, 'capush' ]
 ];
