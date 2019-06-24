@@ -51,15 +51,10 @@ class ComplexArraySort extends WSArrays
             if(count($options) === 1) {
                 $result = self::sortArray($options[0]);
             } else {
-                $sort = $options[0];
-                $order = $options[1];
-
-                if($order !== "desc") $order = null;
-
-                if($sort !== "keysort") {
+                if($options[0] !== "keysort") {
                     $result = self::sortArray($options[0]);
                 } else {
-                    $result = self::keysort($order);
+                    $result = self::keysort($options[1]);
                 }
             }
         }
@@ -102,7 +97,7 @@ class ComplexArraySort extends WSArrays
                 $array = self::shuffle();
                 break;
             case 'keysort':
-                $array = self::keysort();
+                $array = self::keysort(null);
                 break;
             case 'sort':
             default:
@@ -111,7 +106,6 @@ class ComplexArraySort extends WSArrays
         }
 
         if($array === true) {
-            self::saveArray();
             return true;
         } else {
             return $array;
@@ -229,6 +223,8 @@ class ComplexArraySort extends WSArrays
     /**
      * Sort array using keysort
      *
+     * @param $order
+     *
      * @return bool|string
      */
     private static function keysort($order) {
@@ -251,7 +247,11 @@ class ComplexArraySort extends WSArrays
 
         self::$array = $temp;
 
-        if($order === "desc") self::$array = array_reverse(self::$array);
+        if($order == "desc") {
+            self::$array = array_reverse(self::$array);
+        }
+
+        WSArrays::$arrays[self::$name] = self::$array;
 
         return true;
     }
@@ -280,12 +280,5 @@ class ComplexArraySort extends WSArrays
         }
 
         $array = $ret;
-    }
-
-    /**
-     * Save array.
-     */
-    private static function saveArray() {
-        WSArrays::$arrays[self::$name] = self::$array;
     }
 }
