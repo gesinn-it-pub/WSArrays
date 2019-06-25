@@ -5,7 +5,7 @@
  *
  * Grandfather class. These functions are available in all other classes.
  */
-class WSGlobalFunctions
+class GlobalFunctions
 {
     /**
      * Print an error message.
@@ -166,5 +166,17 @@ class WSGlobalFunctions
         }
 
         return false;
+    }
+
+    /**
+     * Fetch any arrays defined by Semantic MediaWiki.
+     *
+     * @return void
+     */
+    public static function fetchSemanticArrays() {
+        global $wfDefinedArraysGlobal;
+        if($wfDefinedArraysGlobal !== null) {
+            WSArrays::$arrays = array_merge(WSArrays::$arrays, $wfDefinedArraysGlobal);
+        }
     }
 }

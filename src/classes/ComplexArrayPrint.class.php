@@ -37,6 +37,8 @@ class ComplexArrayPrint extends WSArrays
      * @return array|mixed|null|string|string[]
      */
     public static function defineParser( Parser $parser, $name = '', $options = '', $map = '', $subject = '') {
+        GlobalFunctions::fetchSemanticArrays();
+
         $ca_omitted = wfMessage('ca-omitted', 'Name');
         if(empty($name)) return GlobalFunctions::error($ca_omitted);
 

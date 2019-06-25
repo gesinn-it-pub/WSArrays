@@ -19,6 +19,8 @@ class ComplexArrayDefine extends WSArrays
      * @return null
      */
     public static function defineParser( Parser $parser, $name = '', $wson = '') {
+        GlobalFunctions::fetchSemanticArrays();
+
         $ca_omitted = wfMessage('ca-omitted', 'Name');
         if(empty($name)) return GlobalFunctions::error($ca_omitted);
 

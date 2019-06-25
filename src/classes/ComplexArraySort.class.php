@@ -23,6 +23,8 @@ class ComplexArraySort extends WSArrays
      * @return array|null
      */
     public static function defineParser( Parser $parser, $name = '', $options = '', $key = '') {
+        GlobalFunctions::fetchSemanticArrays();
+
         $ca_omitted = wfMessage('ca-omitted');
         if(empty($name)) return GlobalFunctions::error($ca_omitted);
 

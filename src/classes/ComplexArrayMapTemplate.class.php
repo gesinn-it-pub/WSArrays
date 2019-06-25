@@ -18,6 +18,8 @@ class ComplexArrayMapTemplate extends WSArrays
      * @return array
      */
     public static function defineParser( Parser $parser, $name = '', $template = '') {
+        GlobalFunctions::fetchSemanticArrays();
+
         if(empty($name)) return GlobalFunctions::error("Name should not be omitted");
         if(empty($template)) return GlobalFunctions::error("Template should not be omitted");
 

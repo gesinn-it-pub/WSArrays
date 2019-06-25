@@ -18,6 +18,8 @@ class ComplexArraySize extends WSArrays
      * @return array|int
      */
     public static function defineParser( Parser $parser, $name = '', $options = '') {
+        GlobalFunctions::fetchSemanticArrays();
+
         $ca_omitted = wfMessage( 'ca-omitted', 'Name' );
         if(empty($name)) return GlobalFunctions::error($ca_omitted);
 

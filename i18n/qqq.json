@@ -11,5 +11,8 @@
   "ca-max-defined-arrays-reached": "Error message shown when someone tries to define too many arrays",
   "ca-sort-missing-key": "Error message shown when someone omits the key while using keysort",
   "ca-sort-array-too-deep": "Error message shown when someone tries to use keysort on an array that isn't two-dimensional",
-  "ca-sort-broken": "Error message shown when the sorting failed"
+  "ca-sort-broken": "Error message shown when the sorting failed",
+  "ca-smw-paramdesc-name": "Description of the SMW printer parameter 'name'",
+  "ca-smw-paramdesc-hide": "Description of the SMW printer parameter 'hide'",
+  "ca-smw-paramdesc-unassociative": "Description of the SMW printer parameter 'unassociative'"
 }

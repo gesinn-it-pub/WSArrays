@@ -5,7 +5,7 @@
  * Initialization file for WSArrays.
  *
  * @license GPL-2.0-or-later
- * @version: 0.4.6.1
+ * @version: 0.4.7
  *
  * @author Xxmarijnw <marijn@wikibase.nl>
  *
@@ -17,6 +17,8 @@ if (!defined( 'MEDIAWIKI' ) ) {
 
 require 'GlobalFunctions.class.php';
 
+$GLOBALS['smwgResultFormats']['complexarray'] = 'SMW\Query\ResultPrinters\ComplexArrayPrinter';
+
 /**
  * Class WSArrays
  *
@@ -24,7 +26,7 @@ require 'GlobalFunctions.class.php';
  *
  * @extends GlobalFunctions
  */
-class WSArrays extends WSGlobalFunctions {
+class WSArrays extends GlobalFunctions {
 
     /**
      * This variable holds all defined arrays. If an array is defined called "array", the array will be stored in self::$arrays["array"].

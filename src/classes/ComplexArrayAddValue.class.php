@@ -18,6 +18,8 @@ class ComplexArrayAddValue extends WSArrays
      * @return array|null
      */
     public static function defineParser( Parser $parser, $name = '', $value = '') {
+        GlobalFunctions::fetchSemanticArrays();
+
         $ca_omitted = wfMessage('ca-omitted', 'Name');
         if(empty($name)) return GlobalFunctions::error($ca_omitted);
 

@@ -16,6 +16,8 @@ class ComplexArrayReset extends WSArrays
      * @param string $array
      */
     public static function defineParser( Parser $parser, $array = '') {
+        GlobalFunctions::fetchSemanticArrays();
+
         self::arrayReset($array);
     }
 

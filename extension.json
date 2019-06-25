@@ -1,8 +1,8 @@
 {
   "namemsg": "ca-name",
   "author": "Xxmarijnw",
-  "version": "0.4.6.1",
-  "url": "",
+  "version": "0.4.9",
+  "url": "https://www.mediawiki.org/wiki/Extension:WSArrays",
   "descriptionmsg": "ca-description",
   "license-name": "GPL-2.0-or-later",
   "type": "parserhook",
@@ -23,7 +23,8 @@
     ]
   },
   "config": {
-    "MaxDefinedArrays": false
+    "MaxDefinedArrays": false,
+    "DefinedArraysGlobal": []
   },
   "manifest_version": 1
 }
