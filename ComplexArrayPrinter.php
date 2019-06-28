@@ -71,7 +71,12 @@ class ComplexArrayPrinter extends ResultPrinter {
         $this->unassociative = filter_var($this->params['unassociative'], FILTER_VALIDATE_BOOLEAN);
 
         if(!$this->name) {
-            return;
+            $json = json_encode($this->buildResultArray( $queryResult ));
+
+            $json = preg_replace("/(?!\B\"[^\"]*){(?![^\"]*\"\B)/i", "((", $json);
+            $json = preg_replace("/(?!\B\"[^\"]*)}(?![^\"]*\"\B)/i", "))", $json);
+
+            return $json;
         }
 
         $wfDefinedArraysGlobal[$this->name] = $this->buildResultArray( $queryResult );

@@ -125,6 +125,10 @@ class WSArrays extends GlobalFunctions {
             // complexarrayextract alias caextract
             $parser->setFunctionHook( 'complexarrayextract', [ComplexArrayExtract::class, 'defineParser'] );
             $parser->setFunctionHook( 'caextract', [ComplexArrayExtract::class, 'defineParser'] );
+
+            // complexarrayunion alias caunion
+            $parser->setFunctionHook( 'complexarraypusharray', [ComplexArrayPushArray::class, 'defineParser'] );
+            $parser->setFunctionHook( 'capusharray', [ComplexArrayPushArray::class, 'defineParser'] );
         } catch(Exception $e) {
             return false;
         }
