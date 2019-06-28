@@ -8,6 +8,11 @@
 
 namespace SMW\Query\ResultPrinters;
 
+/**
+ * Class ComplexArrayPrinter
+ * @package SMW\Query\ResultPrinters
+ * @extends ResultPrinter
+ */
 class ComplexArrayPrinter extends ResultPrinter {
     private $name;
     private $unassociative;
