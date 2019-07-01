@@ -204,6 +204,10 @@ class GlobalFunctions
         return strtok($array, "[");
     }
 
+    /**
+     * @param $name
+     * @return bool
+     */
     public static function isValidArrayName($name) {
         return (ctype_alnum(trim($name)));
     }

@@ -3,6 +3,8 @@
 /**
  * Class ComplexArraySearch
  *
+ * Defines the parser function {{#complexarraysearch:}}, which allows users to get search in an array.
+ *
  * @extends WSArrays
  */
 class ComplexArraySearch extends WSArrays
