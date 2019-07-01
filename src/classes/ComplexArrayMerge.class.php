@@ -43,21 +43,29 @@ class ComplexArrayMerge extends WSArrays
             array_push($args, $last_element);
         }
 
-        $ca_too_little_arrays = wfMessage('ca-too-little-arrays');
-        if(count($args) < 2) return GlobalFunctions::error($ca_too_little_arrays);
+        if(count($args) < 2) {
+            $ca_too_little_arrays = wfMessage('ca-too-little-arrays');
+
+            return GlobalFunctions::error($ca_too_little_arrays);
+        }
 
         $arrays = [];
         foreach($args as $array) {
             if(!WSArrays::$arrays[$array]) {
                 $ca_nonexistant_multiple = wfMessage('ca-nonexistant-multiple');
+
                 return GlobalFunctions::error($ca_nonexistant_multiple);
             }
 
             array_push($arrays, WSArrays::$arrays[$array]);
         }
 
-        $ca_max_defined_arrays_reached = wfMessage('ca-max-defined-arrays-reached', WSArrays::$options['max_defined_arrays'], $new_array);
-        if(GlobalFunctions::definedArrayLimitReached()) return GlobalFunctions::error($ca_max_defined_arrays_reached);
+        if(GlobalFunctions::definedArrayLimitReached()) {
+            $ca_max_defined_arrays_reached = wfMessage('ca-max-defined-arrays-reached', WSArrays::$options['max_defined_arrays'], $new_array);
+
+            return GlobalFunctions::error($ca_max_defined_arrays_reached);
+        }
+
         if($last_element === "recursive") {
             WSArrays::$arrays[$new_array] = call_user_func_array('array_merge_recursive', $arrays);
         } else {

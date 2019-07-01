@@ -5,7 +5,7 @@
  * Initialization file for WSArrays.
  *
  * @license GPL-2.0-or-later
- * @version: 0.6.1
+ * @version: 0.6.1.1
  *
  * @author Xxmarijnw <marijn@wikibase.nl>
  *
@@ -27,6 +27,7 @@ $GLOBALS['smwgResultFormats']['complexarray'] = 'SMW\Query\ResultPrinters\Comple
  * @extends GlobalFunctions
  */
 class WSArrays extends GlobalFunctions {
+    const INCLUDE_DIR = 'classes/';
 
     /**
      * This variable holds all defined arrays. If an array is defined called "array", the array will be stored in self::$arrays["array"].
@@ -41,7 +42,7 @@ class WSArrays extends GlobalFunctions {
      * @var array
      */
     public static $options = [
-        "max_defined_arrays" => 0
+        "max_defined_arrays" => -1
     ];
 
     /**
@@ -53,87 +54,165 @@ class WSArrays extends GlobalFunctions {
      */
     public static function onParserFirstCallInit( Parser $parser ) {
         global $wfMaxDefinedArrays;
-        if(is_numeric($wfMaxDefinedArrays) && $wfMaxDefinedArrays >= 0) self::$options['max_defined_arrays'] = $wfMaxDefinedArrays;
+        if(is_numeric($wfMaxDefinedArrays) && $wfMaxDefinedArrays >= 0) {
+            self::$options['max_defined_arrays'] = $wfMaxDefinedArrays;
+        }
 
         try {
-            require 'include.php';
+            spl_autoload_register('WSArrays::autoload');
 
-            // complexarraydefine alias cadefine
-            $parser->setFunctionHook( 'complexarraydefine', [ComplexArrayDefine::class, 'defineParser'] );
-            $parser->setFunctionHook( 'cadefine', [ComplexArrayDefine::class, 'defineParser'] );
+            $function_hooks = [
+                [
+                    "class" => "ComplexArrayDefine",
+                    "hooks" => [
+                        "complexarraydefine",
+                        "cadefine"
+                    ]
+                ],
+                [
+                    "class" => "ComplexArrayPrint",
+                    "hooks" => [
+                        "complexarrayprint",
+                        "caprint"
+                    ]
+                ],
+                [
+                    "class" => "ComplexArraySize",
+                    "hooks" => [
+                        "complexarraysize",
+                        "casize"
+                    ]
+                ],
+                [
+                    "class" => "ComplexArraySearch",
+                    "hooks" => [
+                        "complexarraysearch",
+                        "casearch"
+                    ]
+                ],
+                [
+                    "class" => "ComplexArraySearchArray",
+                    "hooks" => [
+                        "complexarraysearcharray",
+                        "casearcharray",
+                        "casearcha"
+                    ]
+                ],
+                [
+                    "class" => "ComplexArrayAddValue",
+                    "hooks" => [
+                        "complexarrayaddvalue",
+                        "caaddvalue",
+                        "caadd",
+                        "caaddv"
+                    ]
+                ],
+                [
+                    "class" => "ComplexArraySlice",
+                    "hooks" => [
+                        "complexarrayslice",
+                        "caslice"
+                    ]
+                ],
+                [
+                    "class" => "ComplexArrayCut",
+                    "hooks" => [
+                        "complexarraycut",
+                        "cacut"
+                    ]
+                ],
+                [
+                    "class" => "ComplexArrayUnique",
+                    "hooks" => [
+                        "complexarrayunique",
+                        "caunique"
+                    ]
+                ],
+                [
+                    "class" => "ComplexArrayReset",
+                    "hooks" => [
+                        "complexarrayreset",
+                        "careset",
+                        "caclear"
+                    ]
+                ],
+                [
+                    "class" => "ComplexArrayMerge",
+                    "hooks" => [
+                        "complexarraymerge",
+                        "camerge"
+                    ]
+                ],
+                [
+                    "class" => "ComplexArraySort",
+                    "hooks" => [
+                        "complexarraysort",
+                        "casort"
+                    ]
+                ],
+                [
+                    "class" => "ComplexArrayMapTemplate",
+                    "hooks" => [
+                        "complexarraymaptemplate",
+                        "camaptemplate",
+                        "camapt",
+                        "catemplate",
+                        "camap"
+                    ]
+                ],
+                [
+                    "class" => "ComplexArrayPushValue",
+                    "hooks" => [
+                        "complexarraypushvalue",
+                        "complexarraypush",
+                        "capush"
+                    ]
+                ],
+                [
+                    "class" => "ComplexArrayExtract",
+                    "hooks" => [
+                        "complexarrayextract",
+                        "caextract"
+                    ]
+                ],
+                [
+                    "class" => "ComplexArrayPushArray",
+                    "hooks" => [
+                        "complexarraypusharray",
+                        "capusharray"
+                    ]
+                ],
+            ];
 
-            // complexarrayprint alias caprint
-            $parser->setFunctionHook( 'complexarrayprint', [ComplexArrayPrint::class, 'defineParser'] );
-            $parser->setFunctionHook( 'caprint', [ComplexArrayPrint::class, 'defineParser'] );
-
-            // complexarraysize alias casize
-            $parser->setFunctionHook( 'complexarraysize', [ComplexArraySize::class, 'defineParser'] );
-            $parser->setFunctionHook( 'casize', [ComplexArraySize::class, 'defineParser'] );
-
-            // complexarraysearch alias casearch
-            $parser->setFunctionHook( 'complexarraysearch', [ComplexArraySearch::class, 'defineParser'] );
-            $parser->setFunctionHook( 'casearch', [ComplexArraySearch::class, 'defineParser'] );
-
-            // complexarraysearcharray alias casearcharray, casearcha
-            $parser->setFunctionHook( 'complexarraysearcharray', [ComplexArraySearchArray::class, 'defineParser'] );
-            $parser->setFunctionHook( 'casearcharray', [ComplexArraySearchArray::class, 'defineParser'] );
-            $parser->setFunctionHook( 'casearcha', [ComplexArraySearchArray::class, 'defineParser'] );
-
-            // complexarrayaddvalue alias caaddvalue, caadd, caaddv
-            $parser->setFunctionHook( 'complexarrayaddvalue', [ComplexArrayAddValue::class, 'defineParser'] );
-            $parser->setFunctionHook( 'caaddvalue', [ComplexArrayAddValue::class, 'defineParser'] );
-            $parser->setFunctionHook( 'caadd', [ComplexArrayAddValue::class, 'defineParser'] );
-            $parser->setFunctionHook( 'caaddv', [ComplexArrayAddValue::class, 'defineParser'] );
-
-            // complexarrayslice alias caslice
-            $parser->setFunctionHook( 'complexarrayslice', [ComplexArraySlice::class, 'defineParser'] );
-            $parser->setFunctionHook( 'caslice', [ComplexArraySlice::class, 'defineParser'] );
-
-            // complexarraycut alias cacut
-            $parser->setFunctionHook( 'complexarraycut', [ComplexArrayCut::class, 'defineParser'] );
-            $parser->setFunctionHook( 'cacut', [ComplexArrayCut::class, 'defineParser'] );
-
-            // complexarrayunique alias caunique
-            $parser->setFunctionHook( 'complexarrayunique', [ComplexArrayUnique::class, 'defineParser'] );
-            $parser->setFunctionHook( 'caunique', [ComplexArrayUnique::class, 'defineParser'] );
-
-            // complexarrayreset alias careset, caclear
-            $parser->setFunctionHook( 'complexarrayreset', [ComplexArrayReset::class, 'defineParser'] );
-            $parser->setFunctionHook( 'careset', [ComplexArrayReset::class, 'defineParser'] );
-            $parser->setFunctionHook( 'caclear', [ComplexArrayReset::class, 'defineParser'] );
-
-            // complexarraymerge alias camerge
-            $parser->setFunctionHook( 'complexarraymerge', [ComplexArrayMerge::class, 'defineParser'] );
-            $parser->setFunctionHook( 'camerge', [ComplexArrayMerge::class, 'defineParser'] );
-
-            // complexarraysort alias casort
-            $parser->setFunctionHook( 'complexarraysort', [ComplexArraySort::class, 'defineParser'] );
-            $parser->setFunctionHook( 'casort', [ComplexArraySort::class, 'defineParser'] );
-
-            // complexarraymaptemplate alias camaptemplate, camapt, catemplate, camap
-            $parser->setFunctionHook( 'complexarraymaptemplate', [ComplexArrayMapTemplate::class, 'defineParser'] );
-            $parser->setFunctionHook( 'camaptemplate', [ComplexArrayMapTemplate::class, 'defineParser'] );
-            $parser->setFunctionHook( 'camapt', [ComplexArrayMapTemplate::class, 'defineParser'] );
-            $parser->setFunctionHook( 'catemplate', [ComplexArrayMapTemplate::class, 'defineParser'] );
-            $parser->setFunctionHook( 'camap', [ComplexArrayMapTemplate::class, 'defineParser'] );
-
-            // complexarraypushvalue alias complexarraypush, capush
-            $parser->setFunctionHook( 'complexarraypushvalue', [ComplexArrayPushValue::class, 'defineParser'] );
-            $parser->setFunctionHook( 'complexarraypush', [ComplexArrayPushValue::class, 'defineParser'] );
-            $parser->setFunctionHook( 'capush', [ComplexArrayPushValue::class, 'defineParser'] );
-
-            // complexarrayextract alias caextract
-            $parser->setFunctionHook( 'complexarrayextract', [ComplexArrayExtract::class, 'defineParser'] );
-            $parser->setFunctionHook( 'caextract', [ComplexArrayExtract::class, 'defineParser'] );
-
-            // complexarrayunion alias caunion
-            $parser->setFunctionHook( 'complexarraypusharray', [ComplexArrayPushArray::class, 'defineParser'] );
-            $parser->setFunctionHook( 'capusharray', [ComplexArrayPushArray::class, 'defineParser'] );
+            WSArrays::setHooks($parser, $function_hooks);
         } catch(Exception $e) {
             return false;
         }
 
         return true;
+    }
+
+    protected static function setHooks(Parser $parser, $function_hooks) {
+        if(!is_array($function_hooks)) return false;
+
+        foreach($function_hooks as $function_hook) {
+            $class = $function_hook['class'];
+            $hooks = $function_hook['hooks'];
+
+            foreach($hooks as $hook) {
+                $parser->setFunctionHook( $hook, [$class, 'defineParser'] );
+            }
+        }
+
+        return true;
+    }
+
+    protected static function autoload($class) {
+        $file = __DIR__ . '/' . WSArrays::INCLUDE_DIR . $class . '.class.php';
+
+        if(file_exists($file)) {
+            require $file;
+        }
     }
 
 }
