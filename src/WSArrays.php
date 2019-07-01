@@ -13,7 +13,29 @@
 
 if (!defined( 'MEDIAWIKI' ) ) {
     die();
-};
+} else {
+    global $wgVersion;
+
+    if(version_compare($wgVersion, 1.27) < 0) {
+        if(function_exists('wfMessage')) {
+            $ca_unsupported_version = wfMessage('ca-unsopported-version', 'MediaWiki', $wgVersion, '1.27');
+        } else {
+            $ca_unsupported_version = "This version of MediaWiki is not supported by WSArrays (has version ".$wgVersion.", requires at least version 1.27)";
+        }
+
+        throw new Exception($ca_unsupported_version);
+    }
+
+    if(version_compare(PHP_VERSION, 5.4) < 0) {
+        if(function_exists('wfMessage')) {
+            $ca_unsupported_version = wfMessage('ca-unsopported-version', 'PHP', PHP_VERSION, '5.4');
+        } else {
+            $ca_unsupported_version = "This version of PHP is not supported by WSArrays (has version ".PHP_VERSION.", requires at least version 5.4)";
+        }
+
+        throw new Exception($ca_unsupported_version);
+    }
+}
 
 require 'GlobalFunctions.class.php';
 

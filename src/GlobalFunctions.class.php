@@ -183,6 +183,8 @@ class GlobalFunctions
     /**
      * Fetch any arrays defined by Semantic MediaWiki.
      *
+     * Semantic MediaWiki stores all ComplexArrays in the configuration parameter $wfDefinedArraysGlobal. In order to allow access to these array, we need to move them to WSArrays::$arrays.
+     *
      * @return void
      */
     public static function fetchSemanticArrays() {
@@ -192,6 +194,12 @@ class GlobalFunctions
         }
     }
 
+    /**
+     * Get the name of the base array from a full name.
+     *
+     * @param $array
+     * @return string
+     */
     public static function calculateBaseArray($array) {
         return strtok($array, "[");
     }
