@@ -45,12 +45,6 @@ class ComplexArrayPrint extends WSArrays
             return GlobalFunctions::error($ca_omitted);
         }
 
-        if(!GlobalFunctions::isValidArrayName($name)) {
-            $ca_invalid_name = wfMessage( 'ca-invalid-name' );
-
-            return GlobalFunctions::error($ca_invalid_name);
-        }
-
         return ComplexArrayPrint::arrayPrint($name, $options, $map, $subject);
     }
 

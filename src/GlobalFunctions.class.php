@@ -205,6 +205,6 @@ class GlobalFunctions
     }
 
     public static function isValidArrayName($name) {
-        return (ctype_alnum($name));
+        return (ctype_alnum(trim($name)));
     }
 }

@@ -53,7 +53,7 @@ class ComplexArrayMapTemplate extends WSArrays
 
         $array = GlobalFunctions::getArrayFromArrayName($name);
 
-        if($array) {
+        if(!$array) {
                 $ca_undefined_array = wfMessage('ca-undefined-array');
 
                 return GlobalFunctions::error($ca_undefined_array);
