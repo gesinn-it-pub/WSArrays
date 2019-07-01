@@ -203,4 +203,8 @@ class GlobalFunctions
     public static function calculateBaseArray($array) {
         return strtok($array, "[");
     }
+
+    public static function isValidArrayName($name) {
+        return (ctype_alnum($name));
+    }
 }

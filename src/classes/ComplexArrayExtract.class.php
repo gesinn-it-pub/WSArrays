@@ -19,9 +19,15 @@ class ComplexArrayExtract extends WSArrays
      */
     public static function defineParser( Parser $parser, $name = '', $subarray = '' ) {
         if(!$name) {
-            $ca_omitted = wfMessage( 'ca-omitted', 'Name' );
+            $ca_omitted = wfMessage( 'ca-omitted', 'New array' );
 
             return GlobalFunctions::error($ca_omitted);
+        }
+
+        if(!GlobalFunctions::isValidArrayName($name)) {
+            $ca_invalid_name = wfMessage( 'ca-invalid-name' );
+
+            return GlobalFunctions::error($ca_invalid_name);
         }
 
         if(!$subarray) {

@@ -33,6 +33,12 @@ class ComplexArrayPushArray extends WSArrays
         // Get the first argument (name of new array)
         $new_array = reset($args);
 
+        if(!GlobalFunctions::isValidArrayName($new_array)) {
+            $ca_invalid_name = wfMessage( 'ca-invalid-name' );
+
+            return GlobalFunctions::error($ca_invalid_name);
+        }
+
         // Remove the first (second) argument
         array_shift($args);
 

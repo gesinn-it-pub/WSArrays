@@ -26,6 +26,12 @@ class ComplexArraySlice extends WSArrays
             return GlobalFunctions::error($ca_omitted);
         }
 
+        if(!GlobalFunctions::isValidArrayName($new_array)) {
+            $ca_invalid_name = wfMessage( 'ca-invalid-name' );
+
+            return GlobalFunctions::error($ca_invalid_name);
+        }
+
         if(empty($array)) {
             $ca_omitted = wfMessage( 'ca-omitted', 'Name' );
 

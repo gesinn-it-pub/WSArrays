@@ -27,6 +27,12 @@ class ComplexArrayDefine extends WSArrays
             return GlobalFunctions::error($ca_omitted);
         }
 
+        if(!GlobalFunctions::isValidArrayName($name)) {
+            $ca_invalid_name = wfMessage( 'ca-invalid-name' );
+
+            return GlobalFunctions::error($ca_invalid_name);
+        }
+
         if(empty($wson)) {
             $ca_omitted = wfMessage( 'ca-omitted', 'Array' );
 
