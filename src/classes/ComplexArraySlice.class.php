@@ -32,12 +32,6 @@ class ComplexArraySlice extends WSArrays
             return GlobalFunctions::error($ca_omitted);
         }
 
-        if(empty($offset)) {
-            $ca_omitted = wfMessage( 'ca-omitted', 'Offset' );
-
-            return GlobalFunctions::error($ca_omitted);
-        }
-
         return ComplexArraySlice::arraySlice($new_array, $array, $offset, $length);
     }
 
@@ -48,7 +42,7 @@ class ComplexArraySlice extends WSArrays
      * @param string $length
      * @return array|null
      */
-    private static function arraySlice($new_array, $array, $offset, $length = '') {
+    private static function arraySlice($new_array, $array, $offset = 0, $length = 0) {
         if(!$array = GlobalFunctions::getArrayFromArrayName($array)) {
             $ca_undefined_array = wfMessage('ca-undefined-array');
 
