@@ -42,6 +42,8 @@ class ComplexArrayExtract extends WSArrays
         $ca_undefined_array = wfMessage('ca-undefined-array');
         if(!$array = GlobalFunctions::getArrayFromArrayName($subarray)) return GlobalFunctions::error($ca_undefined_array);
 
+        $ca_max_defined_arrays_reached = wfMessage('ca-max-defined-arrays-reached', WSArrays::$options['max_defined_arrays'], $name);
+        if(GlobalFunctions::definedArrayLimitReached()) return GlobalFunctions::error($ca_max_defined_arrays_reached);
         WSArrays::$arrays[$name] = $array;
 
         return null;

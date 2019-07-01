@@ -41,7 +41,7 @@ class WSArrays extends GlobalFunctions {
      * @var array
      */
     public static $options = [
-        "max_defined_arrays" => -1
+        "max_defined_arrays" => 0
     ];
 
     /**

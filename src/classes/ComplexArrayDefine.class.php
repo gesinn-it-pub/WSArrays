@@ -43,11 +43,10 @@ class ComplexArrayDefine extends WSArrays
         $ca_invalid_wson = wfMessage('ca-invalid-wson');
         if(!GlobalFunctions::isValidJSON($wson)) return GlobalFunctions::error($ca_invalid_wson);
 
-        $ca_max_defined_arrays_reached = wfMessage('ca-max-defined-arrays-reached', WSArrays::$options['max_defined_arrays'], $name);
-        if(GlobalFunctions::definedArrayLimitReached()) return GlobalFunctions::error($ca_max_defined_arrays_reached);
-
         $array = json_decode($wson, true);
 
+        $ca_max_defined_arrays_reached = wfMessage('ca-max-defined-arrays-reached', WSArrays::$options['max_defined_arrays'], $name);
+        if(GlobalFunctions::definedArrayLimitReached()) return GlobalFunctions::error($ca_max_defined_arrays_reached);
         WSArrays::$arrays[$name] = $array;
 
         return null;

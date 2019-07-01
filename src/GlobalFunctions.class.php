@@ -162,7 +162,7 @@ class GlobalFunctions
      */
     public static function definedArrayLimitReached() {
         if(WSArrays::$options['max_defined_arrays'] !== -1) {
-            if(count(WSArrays::$arrays) + 1 > count(WSArrays::$options['max_defined_arrays'])) return true;
+            if(count(WSArrays::$arrays) + 1 > WSArrays::$options['max_defined_arrays']) return true;
         }
 
         return false;
