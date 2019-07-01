@@ -58,9 +58,9 @@ class ComplexArrayMerge extends WSArrays
         $arrays = [];
         foreach($args as $array) {
             if(!WSArrays::$arrays[$array]) {
-                $ca_nonexistant_multiple = wfMessage('ca-nonexistant-multiple');
+                $ca_nonexistent_multiple = wfMessage('ca-nonexistent-multiple');
 
-                return GlobalFunctions::error($ca_nonexistant_multiple);
+                return GlobalFunctions::error($ca_nonexistent_multiple);
             }
 
             array_push($arrays, WSArrays::$arrays[$array]);
