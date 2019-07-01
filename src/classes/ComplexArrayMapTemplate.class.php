@@ -22,13 +22,13 @@ class ComplexArrayMapTemplate extends WSArrays
         GlobalFunctions::fetchSemanticArrays();
 
         if(empty($name)) {
-            $ca_omitted = wfMessage('ca-omitted', 'Name');
+            $ca_omitted = wfMessage( 'ca-omitted', 'Name' );
 
             return GlobalFunctions::error($ca_omitted);
         }
 
         if(empty($template)) {
-            $ca_omitted = wfMessage('ca-omitted', 'Template');
+            $ca_omitted = wfMessage( 'ca-omitted', 'Template' );
 
             return GlobalFunctions::error($ca_omitted);
         }

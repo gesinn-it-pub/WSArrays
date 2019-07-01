@@ -21,7 +21,7 @@ class ComplexArrayPushValue extends WSArrays
         GlobalFunctions::fetchSemanticArrays();
 
         if(empty($array)) {
-            $ca_omitted = wfMessage('ca-omitted', 'Array');
+            $ca_omitted = wfMessage( 'ca-omitted', 'Name' );
 
             return GlobalFunctions::error($ca_omitted);
         }

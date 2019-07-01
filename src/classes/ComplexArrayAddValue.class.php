@@ -21,20 +21,20 @@ class ComplexArrayAddValue extends WSArrays
         GlobalFunctions::fetchSemanticArrays();
 
         if(empty($name)) {
-            $ca_omitted = wfMessage('ca-omitted', 'Name');
+            $ca_omitted = wfMessage( 'ca-omitted', 'Name' );
 
             return GlobalFunctions::error($ca_omitted);
         }
 
         if(empty($value)) {
-            $ca_omitted = wfMessage('ca-omitted', "Value");
+            $ca_omitted = wfMessage( 'ca-omitted', 'Value' );
 
             return GlobalFunctions::error($ca_omitted);
         }
 
         if(!strpos($name, "[") ||
            !strpos($name, "]")) {
-            $ca_subarray_not_provided = wfMessage('ca-subarray-not-provided');
+            $ca_subarray_not_provided = wfMessage( 'ca-subarray-not-provided' );
 
             return GlobalFunctions::error($ca_subarray_not_provided);
         }
