@@ -56,7 +56,7 @@ class ComplexArrayMerge extends WSArrays
             array_push($arrays, WSArrays::$arrays[$array]);
         }
 
-        $ca_max_defined_arrays_reached = wfMessage('ca-max-defined-arrays-reached', WSArrays::$options['max_defined_arrays'], $name);
+        $ca_max_defined_arrays_reached = wfMessage('ca-max-defined-arrays-reached', WSArrays::$options['max_defined_arrays'], $new_array);
         if(GlobalFunctions::definedArrayLimitReached()) return GlobalFunctions::error($ca_max_defined_arrays_reached);
         if($last_element === "recursive") {
             WSArrays::$arrays[$new_array] = call_user_func_array('array_merge_recursive', $arrays);
