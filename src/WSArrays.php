@@ -137,13 +137,6 @@ class WSArrays extends GlobalFunctions {
                     ]
                 ],
                 [
-                    "class" => "ComplexArrayCut",
-                    "hooks" => [
-                        "complexarraycut",
-                        "cacut"
-                    ]
-                ],
-                [
                     "class" => "ComplexArrayUnique",
                     "hooks" => [
                         "complexarrayunique",
