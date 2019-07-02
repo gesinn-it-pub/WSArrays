@@ -209,6 +209,13 @@ class GlobalFunctions
      * @return bool
      */
     public static function isValidArrayName($name) {
-        return (ctype_alnum(trim($name)));
+        if(strpos($name, '[') !== false ||
+           strpos($name, ']') !== false ||
+           strpos($name, '{') !== false ||
+           strpos($name, '}') !== false) {
+            return false;
+        }
+
+        return true;
     }
 }
