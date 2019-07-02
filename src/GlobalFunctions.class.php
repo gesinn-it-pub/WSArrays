@@ -108,7 +108,7 @@ class GlobalFunctions
      */
     public static function getArrayFromArrayName($name) {
         if(!strpos($name, "[")) {
-            if(WSArrays::$arrays[$name]) return WSArrays::$arrays[$name];
+            if(isset(WSArrays::$arrays[$name])) return WSArrays::$arrays[$name];
         } else {
             $base_array = GlobalFunctions::calculateBaseArray($name);
 

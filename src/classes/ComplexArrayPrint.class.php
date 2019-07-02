@@ -134,6 +134,8 @@ class ComplexArrayPrint extends WSArrays
      * @return mixed
      */
     private static function mapValue($value) {
+        if(is_array($value)) return null;
+
         return str_replace(ComplexArrayPrint::$subject, $value, ComplexArrayPrint::$map);
     }
 

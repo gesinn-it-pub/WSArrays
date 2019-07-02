@@ -88,6 +88,8 @@ class ComplexArrayMapTemplate extends WSArrays
                     $subvalue = $json;
                 }
 
+                if(is_numeric($key)) $key += 1;
+
                 $t .= "|$key=$subvalue";
             }
         } else {
