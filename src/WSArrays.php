@@ -5,7 +5,7 @@
  * Initialization file for WSArrays.
  *
  * @license GPL-2.0-or-later
- * @version: 1.0
+ * @version: 1.0.1
  *
  * @author Xxmarijnw <marijn@wikibase.nl>
  *
