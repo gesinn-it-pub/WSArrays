@@ -33,10 +33,11 @@ class ComplexArrayDefine extends WSArrays
             return GlobalFunctions::error($ca_invalid_name);
         }
 
+        // Define an empty array
         if(empty($wson)) {
-            $ca_omitted = wfMessage( 'ca-omitted', 'Array' );
+            WSArrays::$arrays[$name] = array();
 
-            return GlobalFunctions::error($ca_omitted);
+            return null;
         }
 
         return ComplexArrayDefine::arrayDefine($name, $wson);

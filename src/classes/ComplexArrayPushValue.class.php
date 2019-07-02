@@ -43,12 +43,9 @@ class ComplexArrayPushValue extends WSArrays
     private static function arrayPushValue($array, $value) {
         $base_array = self::calculateBaseArray($array);
 
+        // If the array doesn't exist yet, create it
         if(!isset(WSArrays::$arrays[$base_array])) {
             WSArrays::$arrays[$base_array] = array();
-
-            /* $ca_undefined_array = wfMessage('ca-undefined-array');
-
-            return GlobalFunctions::error($ca_undefined_array); */
         }
 
         $wsarray = WSArrays::$arrays[$base_array];
