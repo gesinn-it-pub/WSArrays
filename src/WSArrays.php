@@ -171,8 +171,7 @@ class WSArrays extends GlobalFunctions {
                         "complexarraymaptemplate",
                         "camaptemplate",
                         "camapt",
-                        "catemplate",
-                        "camap"
+                        "catemplate"
                     ]
                 ],
                 [
@@ -197,6 +196,13 @@ class WSArrays extends GlobalFunctions {
                         "capusharray"
                     ]
                 ],
+                [
+                    "class" => "ComplexArrayMap",
+                    "hooks" => [
+                        "complexarraymap",
+                        "camap"
+                    ]
+                ]
             ];
 
             WSArrays::setHooks($parser, $function_hooks);
