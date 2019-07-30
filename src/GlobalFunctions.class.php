@@ -128,6 +128,11 @@ class GlobalFunctions
                 if(ctype_digit($match)) $match = intval($match);
 
                 $current_array = $array;
+
+                if(!is_array($array)) {
+                    return false;
+                }
+
                 foreach($array as $key => $value) {
                     if($key === $match) {
                         $array = $value;

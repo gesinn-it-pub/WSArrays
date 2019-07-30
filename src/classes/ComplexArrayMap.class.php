@@ -16,7 +16,18 @@ class ComplexArrayMap extends WSArrays
      */
     private static $buffer = '';
 
+    /**
+     * Variable containing the name of the array that needs to be mapped.
+     *
+     * @var string
+     */
     private static $array = '';
+
+    /**
+     * Dynamic variable containing the key currently being worked on.
+     *
+     * @var string
+     */
     private static $array_key = '';
 
     /**
@@ -53,9 +64,10 @@ class ComplexArrayMap extends WSArrays
     }
 
     /**
-     * @param $array
-     * @param $value
-     * @return array|null
+     * @param $array_name
+     * @param $map_key
+     * @param $map
+     * @return array|string
      */
     private static function arrayMap($array_name, $map_key, $map) {
         $base_array = GlobalFunctions::calculateBaseArray($array_name);
@@ -77,6 +89,13 @@ class ComplexArrayMap extends WSArrays
         return ComplexArrayMap::iterate($array, $map_key, $map, $array_name);
     }
 
+    /**
+     * @param $array
+     * @param $map_key
+     * @param $map
+     * @param $array_name
+     * @return string
+     */
     private static function iterate($array, $map_key, $map, $array_name) {
         ComplexArrayMap::$array = $array_name;
 
@@ -98,17 +117,37 @@ class ComplexArrayMap extends WSArrays
                 $preg_quote = preg_quote($map_key);
                 $regex = "/($preg_quote(\[[^\[\]]+\])+)/";
 
-                ComplexArrayMap::$buffer .= preg_replace_callback($regex, function($matches) {
-                    $match = $matches[0];
-                    $pointer = preg_replace("/[^\[]*/", "", $match, 1);
-
-                    $array_name = ComplexArrayMap::$array . '[' . ComplexArrayMap::$array_key . ']' . $pointer;
-
-                    return "{{#complexarrayprint: $array_name }}";
-                }, $map);
+                ComplexArrayMap::$buffer .= preg_replace_callback($regex, 'ComplexArrayMap::replaceCallback', $map);
             }
         }
 
         return ComplexArrayMap::$buffer;
+    }
+
+    /**
+     * @param $matches
+     * @return array|bool
+     */
+    public static function replaceCallback($matches) {
+        $match = $matches[0];
+        $pointer = ComplexArrayMap::getPointerFromArrayName($match);
+
+        $array_name = ComplexArrayMap::$array . '[' . ComplexArrayMap::$array_key . ']' . $pointer;
+        $value = GlobalFunctions::getArrayFromArrayName($array_name);
+
+        switch(gettype($value)) {
+            case 'integer':
+            case 'float':
+            case 'string':
+                return $value;
+                break;
+            default:
+                return $match;
+                break;
+        }
+    }
+
+    private static function getPointerFromArrayName($array_key) {
+        return preg_replace("/[^\[]*/", "", $array_key, 1);
     }
 }
