@@ -25,6 +25,7 @@
   },
   "config": {
     "MaxDefinedArrays": false,
+    "SkipVersionControl": false,
     "DefinedArraysGlobal": []
   },
   "manifest_version": 1
