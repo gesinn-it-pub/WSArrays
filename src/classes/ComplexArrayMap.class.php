@@ -30,15 +30,21 @@ class ComplexArrayMap extends WSArrays {
     private static $array_key = '';
 
     /**
+     * @var bool
+     */
+    private static $hide = false;
+
+    /**
      * Define parameters and initialize parser.
      *
      * @param Parser $parser
      * @param string $name
      * @param string $map_key
      * @param string $map
+     * @param string $hide
      * @return array|null
      */
-    public static function defineParser( Parser $parser, $name = '', $map_key = '', $map = '' ) {
+    public static function defineParser( Parser $parser, $name = '', $map_key = '', $map = '', $hide = '' ) {
         GlobalFunctions::fetchSemanticArrays();
 
         if(empty($name)) {
@@ -57,6 +63,10 @@ class ComplexArrayMap extends WSArrays {
             $ca_omitted = wfMessage( 'ca-omitted', 'Map' );
 
             return GlobalFunctions::error($ca_omitted);
+        }
+
+        if(!empty($hide) && $hide === "true") {
+            ComplexArrayMap::$hide = true;
         }
 
         return ComplexArrayMap::arrayMap($name, $map_key, $map);
@@ -136,9 +146,14 @@ class ComplexArrayMap extends WSArrays {
                 return $value;
                 break;
             default:
-                return $matches[0];
+                if(!ComplexArrayMap::$hide) {
+                    return $matches[0];
+                }
+
                 break;
         }
+
+        return null;
     }
 
     private static function getValueFromMatch($match) {

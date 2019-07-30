@@ -118,7 +118,7 @@ class ComplexArrayPrint extends WSArrays
         }
 
         if(count(ComplexArrayPrint::$array) === 1) {
-            return ComplexArrayPrint::mapValue(ComplexArrayPrint::$array);
+            return ComplexArrayPrint::mapValue(ComplexArrayPrint::$array[0]);
         }
 
         $result = null;
