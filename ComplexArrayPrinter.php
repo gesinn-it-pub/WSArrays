@@ -71,7 +71,7 @@ class ComplexArrayPrinter extends ResultPrinter {
         $definitions[] = [
             'name' => 'simple',
             'message' => 'ca-smw-paramdesc-simple',
-            'default' => 'false'
+            'default' => 'true'
         ];
 
         return $definitions;
