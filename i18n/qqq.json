@@ -17,5 +17,6 @@
   "ca-unsupported-version": "Exception thrown when some version is not supported",
   "ca-smw-paramdesc-name": "Description of the SMW printer parameter 'name'",
   "ca-smw-paramdesc-hide": "Description of the SMW printer parameter 'hide'",
-  "ca-smw-paramdesc-unassociative": "Description of the SMW printer parameter 'unassociative'"
+  "ca-smw-paramdesc-unassociative": "Description of the SMW printer parameter 'unassociative'",
+  "ca-smw-paramdessc-simple": "Description of the SMW printer parameter 'simple'"
 }
