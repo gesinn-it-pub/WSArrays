@@ -36,7 +36,7 @@ class ComplexArrayPrint extends WSArrays
      * @param string $subject
      * @return array|mixed|null|string|string[]
      */
-    public static function defineParser( Parser $parser, $name = '', $options = '', $map = '', $subject = '') {
+    public static function defineParser( Parser $parser, $name = '', $options = '', $map = '', $subject = '' ) {
         GlobalFunctions::fetchSemanticArrays();
 
         if(empty($name)) {

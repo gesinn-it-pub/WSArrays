@@ -18,7 +18,7 @@ class ComplexArrayDefine extends WSArrays
      *
      * @return null
      */
-    public static function defineParser( Parser $parser, $name = '', $wson = '') {
+    public static function defineParser( Parser $parser, $name = '', $wson = '' ) {
         GlobalFunctions::fetchSemanticArrays();
 
         if(empty($name)) {

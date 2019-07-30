@@ -7,8 +7,7 @@
  *
  * @extends WSArrays
  */
-class ComplexArraySearch extends WSArrays
-{
+class ComplexArraySearch extends WSArrays {
     private static $found = 0;
     private static $key = 0;
 
@@ -18,7 +17,7 @@ class ComplexArraySearch extends WSArrays
      * @param string $value
      * @return array
      */
-    public static function defineParser(Parser $parser, $name = '', $value = '')
+    public static function defineParser( Parser $parser, $name = '', $value = '' )
     {
         GlobalFunctions::fetchSemanticArrays();
 

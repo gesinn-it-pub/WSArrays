@@ -17,7 +17,7 @@ class ComplexArrayPushValue extends WSArrays
      * @param string $value
      * @return array|bool|null
      */
-    public static function defineParser( Parser $parser, $array = '', $value = '') {
+    public static function defineParser( Parser $parser, $array = '', $value = '' ) {
         GlobalFunctions::fetchSemanticArrays();
 
         if(empty($array)) {

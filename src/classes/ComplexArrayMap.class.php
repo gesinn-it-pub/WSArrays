@@ -7,8 +7,7 @@
  *
  * @extends WSArrays
  */
-class ComplexArrayMap extends WSArrays
-{
+class ComplexArrayMap extends WSArrays {
     /**
      * Buffer containing items to be returned.
      *
@@ -39,7 +38,7 @@ class ComplexArrayMap extends WSArrays
      * @param string $map
      * @return array|null
      */
-    public static function defineParser( Parser $parser, $name = '', $map_key = '', $map = '') {
+    public static function defineParser( Parser $parser, $name = '', $map_key = '', $map = '' ) {
         GlobalFunctions::fetchSemanticArrays();
 
         if(empty($name)) {
@@ -60,7 +59,7 @@ class ComplexArrayMap extends WSArrays
             return GlobalFunctions::error($ca_omitted);
         }
 
-        return array(ComplexArrayMap::arrayMap($name, $map_key, $map), 'noparse' => false);
+        return ComplexArrayMap::arrayMap($name, $map_key, $map);
     }
 
     /**
@@ -115,9 +114,8 @@ class ComplexArrayMap extends WSArrays
                 }
             } else {
                 $preg_quote = preg_quote($map_key);
-                $regex = "/($preg_quote(\[[^\[\]]+\])+)/";
 
-                ComplexArrayMap::$buffer .= preg_replace_callback($regex, 'ComplexArrayMap::replaceCallback', $map);
+                ComplexArrayMap::$buffer .= preg_replace_callback("/($preg_quote(\[[^\[\]]+\])+)/", 'ComplexArrayMap::replaceCallback', $map);
             }
         }
 
@@ -129,11 +127,7 @@ class ComplexArrayMap extends WSArrays
      * @return array|bool
      */
     public static function replaceCallback($matches) {
-        $match = $matches[0];
-        $pointer = ComplexArrayMap::getPointerFromArrayName($match);
-
-        $array_name = ComplexArrayMap::$array . '[' . ComplexArrayMap::$array_key . ']' . $pointer;
-        $value = GlobalFunctions::getArrayFromArrayName($array_name);
+        $value = ComplexArrayMap::getValueFromMatch($matches[0]);
 
         switch(gettype($value)) {
             case 'integer':
@@ -142,9 +136,21 @@ class ComplexArrayMap extends WSArrays
                 return $value;
                 break;
             default:
-                return $match;
+                return $matches[0];
                 break;
         }
+    }
+
+    private static function getValueFromMatch($match) {
+        $pointer = ComplexArrayMap::getPointerFromArrayName($match);
+        $array_name = ComplexArrayMap::getArrayNameFromPointer($pointer);
+        $value = GlobalFunctions::getArrayFromArrayName($array_name);
+
+        return $value;
+    }
+
+    private static function getArrayNameFromPointer($pointer) {
+        return ComplexArrayMap::$array . '[' . ComplexArrayMap::$array_key . ']' . $pointer;
     }
 
     private static function getPointerFromArrayName($array_key) {
