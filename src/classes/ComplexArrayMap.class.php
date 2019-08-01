@@ -164,6 +164,10 @@ class ComplexArrayMap extends WSArrays {
         return null;
     }
 
+    /**
+     * @param $match
+     * @return array|bool
+     */
     private static function getValueFromMatch($match) {
         $pointer = ComplexArrayMap::getPointerFromArrayName($match);
         $array_name = ComplexArrayMap::getArrayNameFromPointer($pointer);
@@ -172,10 +176,18 @@ class ComplexArrayMap extends WSArrays {
         return $value;
     }
 
+    /**
+     * @param $pointer
+     * @return string
+     */
     private static function getArrayNameFromPointer($pointer) {
         return ComplexArrayMap::$array . '[' . ComplexArrayMap::$array_key . ']' . $pointer;
     }
 
+    /**
+     * @param $array_key
+     * @return null|string|string[]
+     */
     private static function getPointerFromArrayName($array_key) {
         return preg_replace("/[^\[]*/", "", $array_key, 1);
     }
