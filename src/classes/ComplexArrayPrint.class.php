@@ -27,7 +27,7 @@ class ComplexArrayPrint extends WSArrays
     private static $indent_char = "*";
 
     /**
-     * Define all allowed parameters.
+     * Define all allowed parameters. This parser is hooked with Parser::SFH_OBJECT_ARGS.
      *
      * @param Parser $parser
      * @param string $name
@@ -36,8 +36,32 @@ class ComplexArrayPrint extends WSArrays
      * @param string $subject
      * @return array|mixed|null|string|string[]
      */
-    public static function defineParser( Parser $parser, $name = '', $options = '', $map = '', $subject = '' ) {
+    public static function defineParser( Parser $parser, $frame, $args ) {
         GlobalFunctions::fetchSemanticArrays();
+
+        if(isset($args[0])) {
+            $name = trim( $frame->expand( $args[0] ) );
+        } else {
+            $name = '';
+        }
+
+        if(isset($args[1])) {
+            $options = trim( $frame->expand( $args[1] ) );
+        } else {
+            $options = '';
+        }
+
+        if(isset($args[2])) {
+            $map = trim( $frame->expand( $args[2] ) );
+        } else {
+            $map = '';
+        }
+
+        if(isset($args[3])) {
+            $subject = trim( $frame->expand( $args[3], PPFrame::NO_ARGS | PPFrame::NO_TEMPLATES ) );
+        } else {
+            $subject = '';
+        }
 
         if(empty($name)) {
             $ca_omitted = wfMessage( 'ca-omitted', 'Name' );
@@ -165,7 +189,7 @@ class ComplexArrayPrint extends WSArrays
             } else {
                 $result .= "$indent_char ".strval($key)."\n";
 
-                ComplexArrayPrint::addArrayToUnorderedList($value, $result);
+                ComplexArrayPrint::addArrayToList($value, $result);
             }
         }
 
@@ -177,7 +201,7 @@ class ComplexArrayPrint extends WSArrays
      * @param $result
      * @param int $depth
      */
-    private static function addArrayToUnorderedList($array, &$result, $depth = 0) {
+    private static function addArrayToList($array, &$result, $depth = 0) {
         $depth++;
 
         $indent_char = ComplexArrayPrint::$indent_char;

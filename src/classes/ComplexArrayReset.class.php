@@ -30,7 +30,9 @@ class ComplexArrayReset extends WSArrays
         if(empty($array)) {
             WSArrays::$arrays = [];
         } else {
-            unset(WSArrays::$arrays[$array]);
+            if(isset(WSArrays::$arrays[$array])) {
+                unset(WSArrays::$arrays[$array]);
+            }
         }
     }
 }

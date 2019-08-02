@@ -59,6 +59,12 @@ class ComplexArrayMapTemplate extends WSArrays
                 return GlobalFunctions::error($ca_undefined_array);
         }
 
+        $return = ComplexArrayMapTemplate::mapToArray($array, $template, $options);
+
+        return array($return, "noparse" => false);
+    }
+
+    private static function mapToArray($array, $template, $options) {
         $return = null;
         if(GlobalFunctions::containsArray($array) && $options !== "condensed") {
             foreach($array as $value) {
@@ -68,7 +74,7 @@ class ComplexArrayMapTemplate extends WSArrays
             ComplexArrayMapTemplate::map($array, $return, $template);
         }
 
-        return array($return, "noparse" => false);
+        return $return;
     }
 
     /**

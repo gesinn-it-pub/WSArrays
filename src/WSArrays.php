@@ -96,13 +96,6 @@ class WSArrays extends GlobalFunctions {
                     ]
                 ],
                 [
-                    "class" => "ComplexArrayPrint",
-                    "hooks" => [
-                        "complexarrayprint",
-                        "caprint"
-                    ]
-                ],
-                [
                     "class" => "ComplexArraySize",
                     "hooks" => [
                         "complexarraysize",
@@ -203,6 +196,13 @@ class WSArrays extends GlobalFunctions {
             ];
 
             $sfh_function_hooks = [
+                [
+                    "class" => "ComplexArrayPrint",
+                    "hooks" => [
+                        "complexarrayprint",
+                        "caprint"
+                    ]
+                ],
                 [
                     "class" => "ComplexArrayMap",
                     "hooks" => [
