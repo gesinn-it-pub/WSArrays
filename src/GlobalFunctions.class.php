@@ -1,11 +1,13 @@
 <?php
 
+require_once('SafeComplexArray.class.php');
+
 /**
  * Class GlobalFunctions
  *
  * Grandfather class. These functions are available in all other classes.
  */
-class GlobalFunctions
+class GlobalFunctions extends SafeComplexArray
 {
     /**
      * Print an error message.
@@ -108,7 +110,13 @@ class GlobalFunctions
      */
     public static function getArrayFromArrayName($name) {
         if(!strpos($name, "[")) {
-            if(isset(WSArrays::$arrays[$name])) return WSArrays::$arrays[$name];
+            if(isset(WSArrays::$arrays[$name])) {
+                if(get_class(WSArrays::$arrays[$name]) !== "SafeComplexArray") {
+                    throw new Exception("Wrongly declared array");
+                }
+
+                return WSArrays::$arrays[$name]->getArray();
+            }
         } else {
             $base_array = GlobalFunctions::calculateBaseArray($name);
 
@@ -122,7 +130,11 @@ class GlobalFunctions
                 return false;
             }
 
-            $array = WSArrays::$arrays[$base_array];
+            if(get_class(WSArrays::$arrays[$base_array]) !== "SafeComplexArray") {
+                throw new Exception("Wrongly declared array");
+            } else {
+                $array = WSArrays::$arrays[$base_array]->getArray();
+            }
 
             foreach($matches[0] as $match) {
                 if(ctype_digit($match)) $match = intval($match);
@@ -222,5 +234,9 @@ class GlobalFunctions
         }
 
         return true;
+    }
+
+    public static function getArrayFromSafeComplexArray(SafeComplexArray $array) {
+        return $array->getArray();
     }
 }

@@ -8,6 +8,39 @@
 
 namespace SMW\Query\ResultPrinters;
 
+class SafeComplexArray {
+    private $safe_array = array();
+
+    /**
+     * @param array $array
+     */
+    public function __construct(array $array) {
+        $this->cleanArray($array);
+    }
+
+    /**
+     * @return array
+     * @throws Exception
+     */
+    public function getArray() {
+        if(!$this->safe_array) throw new Exception("No array has been declared");
+
+        return $this->safe_array;
+    }
+
+    private function cleanArray(&$array) {
+        foreach($array as &$value) {
+            if(!is_array($value)) {
+                $value = htmlspecialchars($value);
+            } else {
+                $this->cleanArray($array);
+            }
+        }
+
+        $this->safe_array = $array;
+    }
+}
+
 /**
  * Class ComplexArrayPrinter
  * @package SMW\Query\ResultPrinters
@@ -107,7 +140,7 @@ class ComplexArrayPrinter extends ResultPrinter {
             return $json;
         }
 
-        $wfDefinedArraysGlobal[$this->name] = $this->buildResultArray( $queryResult );
+        $wfDefinedArraysGlobal[$this->name] = new SafeComplexArray($this->buildResultArray( $queryResult ));
     }
 
     /**

@@ -17,6 +17,8 @@ class ComplexArrayMapTemplate extends WSArrays
      * @param string $template
      * @param string $options
      * @return array
+     *
+     * @throws Exception
      */
     public static function defineParser( Parser $parser, $name = '', $template = '', $options = '' ) {
         GlobalFunctions::fetchSemanticArrays();
@@ -41,6 +43,8 @@ class ComplexArrayMapTemplate extends WSArrays
      * @param $template
      * @param $options
      * @return array
+     *
+     * @throws Exception
      */
     private static function arrayMapTemplate($name, $template, $options = '') {
         $base_array = GlobalFunctions::calculateBaseArray($name);

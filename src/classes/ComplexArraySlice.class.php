@@ -56,11 +56,11 @@ class ComplexArraySlice extends WSArrays
         }
 
         if(!empty($length)) {
-            WSArrays::$arrays[$new_array] = array_slice($array, $offset, $length);
+            WSArrays::$arrays[$new_array] = new SafeComplexArray(array_slice($array, $offset, $length));
 
             return null;
         } else {
-            WSArrays::$arrays[$new_array] = array_slice($array, $offset);
+            WSArrays::$arrays[$new_array] = new SafeComplexArray(array_slice($array, $offset));
 
             return null;
         }

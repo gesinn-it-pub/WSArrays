@@ -33,16 +33,16 @@ class ComplexArrayUnique extends WSArrays
      * @return array|null
      */
     private static function arrayUnique($name) {
-        $array = WSArrays::$arrays[$name];
+        $array = GlobalFunctions::getArrayFromSafeComplexArray(WSArrays::$arrays[$name]);
 
         if(GlobalFunctions::containsArray($array)) {
             $array = array_unique($array, SORT_REGULAR);
 
-            WSArrays::$arrays[$name] = $array;
+            WSArrays::$arrays[$name] = new SafeComplexArray($array);
         } else {
             $array = array_unique($array);
 
-            WSArrays::$arrays[$name] = $array;
+            WSArrays::$arrays[$name] = new SafeComplexArray($array);
         }
 
         return null;

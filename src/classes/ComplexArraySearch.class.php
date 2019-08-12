@@ -16,6 +16,8 @@ class ComplexArraySearch extends WSArrays {
      * @param string $name
      * @param string $value
      * @return array
+     *
+     * @throws Exception
      */
     public static function defineParser( Parser $parser, $name = '', $value = '' )
     {
@@ -40,6 +42,8 @@ class ComplexArraySearch extends WSArrays {
      * @param $name
      * @param $value
      * @return array|int
+     *
+     * @throws Exception
      */
     private static function arraySearch($name, $value)
     {
@@ -58,6 +62,8 @@ class ComplexArraySearch extends WSArrays {
      * @param $value
      * @param $key
      * @return int
+     *
+     * @throws Exception
      */
     private static function findValue($value, $key) {
         $array = GlobalFunctions::getArrayFromArrayName($key);

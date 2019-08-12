@@ -54,7 +54,7 @@ class ComplexArrayPushValue extends WSArrays
             WSArrays::$arrays[$base_array] = array();
         }
 
-        $wsarray = WSArrays::$arrays[$base_array];
+        $wsarray = GlobalFunctions::getArrayFromSafeComplexArray(WSArrays::$arrays[$base_array]);
 
         if(!strpos($array, "[")) {
             GlobalFunctions::WSONtoJSON($value);
@@ -65,7 +65,7 @@ class ComplexArrayPushValue extends WSArrays
 
             array_push($wsarray, $value);
 
-            WSArrays::$arrays[$base_array] = $wsarray;
+            WSArrays::$arrays[$base_array] = new SafeComplexArray($wsarray);
 
             return null;
         }
@@ -82,7 +82,7 @@ class ComplexArrayPushValue extends WSArrays
             return $result;
         }
 
-        WSArrays::$arrays[$base_array] = $wsarray;
+        WSArrays::$arrays[$base_array] = new SafeComplexArray($wsarray);
 
         return null;
     }

@@ -58,7 +58,8 @@ class ComplexArraySort extends WSArrays
             return GlobalFunctions::error($ca_undefined_array);
         }
 
-        ComplexArraySort::$array = WSArrays::$arrays[$name];
+        ComplexArraySort::$array = GlobalFunctions::getArrayFromSafeComplexArray(WSArrays::$arrays[$name]);
+
         ComplexArraySort::$name = $name;
 
         if(!empty($key)) {
@@ -302,7 +303,7 @@ class ComplexArraySort extends WSArrays
             ComplexArraySort::$array = array_reverse(ComplexArraySort::$array);
         }
 
-        WSArrays::$arrays[ComplexArraySort::$name] = ComplexArraySort::$array;
+        WSArrays::$arrays[ComplexArraySort::$name] = new SafeComplexArray(ComplexArraySort::$array);
 
         return true;
     }

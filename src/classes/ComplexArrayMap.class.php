@@ -41,6 +41,8 @@ class ComplexArrayMap extends WSArrays {
      * @param string $frame
      * @param string $args
      * @return array|null
+     *
+     * @throws Exception
      */
     public static function defineParser( Parser $parser, $frame, $args ) {
         GlobalFunctions::fetchSemanticArrays();
@@ -83,6 +85,8 @@ class ComplexArrayMap extends WSArrays {
      * @param $map_key
      * @param $map
      * @return array|string
+     *
+     * @throws Exception
      */
     private static function arrayMap($array_name, $map_key, $map) {
         $base_array = GlobalFunctions::calculateBaseArray($array_name);

@@ -16,6 +16,8 @@ class ComplexArrayAddValue extends WSArrays
      * @param string $name
      * @param string $value
      * @return array|null
+     *
+     * @throws Exception
      */
     public static function defineParser( Parser $parser, $name = '', $value = '' ) {
         GlobalFunctions::fetchSemanticArrays();
@@ -46,6 +48,8 @@ class ComplexArrayAddValue extends WSArrays
      * @param $array
      * @param $value
      * @return array|null
+     *
+     * @throws Exception
      */
     private static function arrayAddValue($array, $value) {
         $base_array = GlobalFunctions::calculateBaseArray($array);
@@ -62,11 +66,11 @@ class ComplexArrayAddValue extends WSArrays
             return GlobalFunctions::error($ca_invalid_name);
         }
 
-        $wsarray = WSArrays::$arrays[$base_array];
+        $wsarray = GlobalFunctions::getArrayFromSafeComplexArray(WSArrays::$arrays[$base_array]);
 
         ComplexArrayAddValue::set($matches[0], $wsarray, $value);
 
-        WSArrays::$arrays[$base_array] = $wsarray;
+        WSArrays::$arrays[$base_array] = new SafeComplexArray($wsarray);
 
         return null;
     }

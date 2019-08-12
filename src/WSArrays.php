@@ -78,7 +78,7 @@ class WSArrays extends GlobalFunctions {
      * @return boolean
      * @throws Exception
      */
-    public static function onParserFirstCallInit( Parser $parser ) {
+    final public static function onParserFirstCallInit( Parser $parser ) {
         global $wfMaxDefinedArrays;
         if(is_numeric($wfMaxDefinedArrays) && $wfMaxDefinedArrays >= 0) {
             WSArrays::$options['max_defined_arrays'] = $wfMaxDefinedArrays;
@@ -221,7 +221,7 @@ class WSArrays extends GlobalFunctions {
         return true;
     }
 
-    protected static function setHooks(Parser $parser, $function_hooks) {
+    final protected static function setHooks(Parser $parser, $function_hooks) {
         if(!is_array($function_hooks)) return false;
 
         foreach($function_hooks as $function_hook) {
@@ -236,7 +236,7 @@ class WSArrays extends GlobalFunctions {
         return true;
     }
 
-    protected static function setSFHHooks( Parser $parser, $sfh_function_hooks) {
+    final protected static function setSFHHooks( Parser $parser, $sfh_function_hooks) {
         if(!is_array($sfh_function_hooks)) return false;
 
         foreach($sfh_function_hooks as $sfh_function_hook) {
@@ -251,7 +251,7 @@ class WSArrays extends GlobalFunctions {
         return true;
     }
 
-    protected static function autoload($class) {
+    final protected static function autoload($class) {
         $file = __DIR__ . '/' . WSArrays::INCLUDE_DIR . $class . '.class.php';
 
         if(file_exists($file)) {

@@ -30,11 +30,11 @@ class ComplexArrayPrint extends WSArrays
      * Define all allowed parameters. This parser is hooked with Parser::SFH_OBJECT_ARGS.
      *
      * @param Parser $parser
-     * @param string $name
-     * @param string $options
-     * @param string $map
-     * @param string $subject
+     * @param Object $frame
+     * @param Object $args
      * @return array|mixed|null|string|string[]
+     *
+     * @throws Exception
      */
     public static function defineParser( Parser $parser, $frame, $args ) {
         GlobalFunctions::fetchSemanticArrays();
@@ -78,6 +78,8 @@ class ComplexArrayPrint extends WSArrays
      * @param string $map
      * @param string $subject
      * @return array|mixed|null|string|string[]
+     *
+     * @throws Exception
      */
     private static function arrayPrint($name, $options = '', $map = '', $subject = '') {
         ComplexArrayPrint::$name = $name;
@@ -212,6 +214,29 @@ class ComplexArrayPrint extends WSArrays
             if(is_array($value)) {
                 $result .= "$indent ".strval($key)."\n";
                 ComplexArrayPrint::addArrayToUnorderedList($value, $result, $depth);
+            } else {
+                if(!is_numeric($key)) {
+                    $result .= "$indent $key: $value\n";
+                } else {
+                    $result .= "$indent $value\n";
+                }
+            }
+        }
+    }
+
+    /**
+     * @param $array
+     * @param $result
+     * @param int $depth
+     */
+    private static function addArrayToUnorderedList($array, &$result, $depth = 0) {
+        $depth++;
+        $indent_char = self::$indent_char;
+        foreach($array as $key => $value) {
+            $indent = str_repeat("$indent_char", $depth + 1);
+            if(is_array($value)) {
+                $result .= "$indent ".strval($key)."\n";
+                self::addArrayToUnorderedList($value, $result, $depth);
             } else {
                 if(!is_numeric($key)) {
                     $result .= "$indent $key: $value\n";

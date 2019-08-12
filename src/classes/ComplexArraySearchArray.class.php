@@ -53,6 +53,7 @@ class ComplexArraySearchArray extends WSArrays
     /**
      * @param $name
      * @param $value
+     * @param $new_array
      * @return array|int
      */
     private static function arraySearchArray($new_array, $name, $value) {
@@ -65,7 +66,7 @@ class ComplexArraySearchArray extends WSArrays
         ComplexArraySearchArray::findValues($value, $name);
 
         if(count(ComplexArraySearchArray::$found) > 0) {
-            WSArrays::$arrays[$new_array] = ComplexArraySearchArray::$found;
+            WSArrays::$arrays[$new_array] = new SafeComplexArray(ComplexArraySearchArray::$found);
         }
 
         return null;
@@ -73,7 +74,7 @@ class ComplexArraySearchArray extends WSArrays
 
     /**
      * @param $value
-     * @param $keyß
+     * @param $key
      */
     private static function findValues($value, $key) {
         $array = GlobalFunctions::getArrayFromArrayName($key);

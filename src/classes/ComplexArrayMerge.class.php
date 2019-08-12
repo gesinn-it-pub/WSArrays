@@ -65,9 +65,9 @@ class ComplexArrayMerge extends WSArrays
         }
 
         if(ComplexArrayMerge::$last_element === "recursive") {
-            WSArrays::$arrays[ComplexArrayMerge::$new_array] = call_user_func_array('array_merge_recursive', $arrays);
+            WSArrays::$arrays[ComplexArrayMerge::$new_array] = new SafeComplexArray(call_user_func_array('array_merge_recursive', $arrays));
         } else {
-            WSArrays::$arrays[ComplexArrayMerge::$new_array] = call_user_func_array('array_merge', $arrays);
+            WSArrays::$arrays[ComplexArrayMerge::$new_array] = new SafeComplexArray(call_user_func_array('array_merge', $arrays));
         }
 
         return null;
@@ -99,7 +99,9 @@ class ComplexArrayMerge extends WSArrays
                 return false;
             }
 
-            array_push($arrays, WSArrays::$arrays[$array]);
+            $safe_array = GlobalFunctions::getArrayFromSafeComplexArray(WSArrays::$arrays[$array]);
+
+            array_push($arrays, $safe_array);
         }
 
         return $arrays;

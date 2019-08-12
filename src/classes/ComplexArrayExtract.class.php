@@ -16,6 +16,8 @@ class ComplexArrayExtract extends WSArrays
      * @param string $name
      * @param string $subarray
      * @return array|bool
+     *
+     * @throws Exception
      */
     public static function defineParser( Parser $parser, $name = '', $subarray = '' ) {
         if(!$name) {
@@ -43,6 +45,8 @@ class ComplexArrayExtract extends WSArrays
      * @param $name
      * @param $subarray
      * @return array|bool
+     *
+     * @throws Exception
      */
     private static function arrayExtract($name, $subarray) {
         if(!strpos($subarray, "[") ||
@@ -64,7 +68,11 @@ class ComplexArrayExtract extends WSArrays
             return GlobalFunctions::error($ca_max_defined_arrays_reached);
         }
 
-        WSArrays::$arrays[$name] = $array;
+        if(is_string($array)) {
+            $array = array($array);
+        }
+
+        WSArrays::$arrays[$name] = new SafeComplexArray($array);
 
         return null;
     }

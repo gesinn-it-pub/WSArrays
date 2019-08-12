@@ -59,7 +59,7 @@ class ComplexArrayPushArray extends WSArrays
             return GlobalFunctions::error($ca_nonexistent_multiple);
         }
 
-        WSArrays::$arrays[ComplexArrayPushArray::$new_array] = $arrays;
+        WSArrays::$arrays[ComplexArrayPushArray::$new_array] = new SafeComplexArray($arrays);
 
         return null;
     }
@@ -75,7 +75,13 @@ class ComplexArrayPushArray extends WSArrays
                 return false;
             }
 
-            array_push($arrays, WSArrays::$arrays[$array]);
+            if(get_class(WSArrays::$arrays[$array]) !== "SafeComplexArray") {
+                throw new Exception("Wronlgy declared array");
+            } else {
+                $safe_array = WSArrays::$arrays[$array]->getArray();
+            }
+
+            array_push($arrays, $safe_array);
         }
 
         return $arrays;

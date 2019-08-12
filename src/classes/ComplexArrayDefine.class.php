@@ -16,6 +16,8 @@ class ComplexArrayDefine extends WSArrays
      * @param string $name The name of the array that is going to be defined
      * @param string $wson The array, encoded in valid JSON
      *
+     * @throws Exception
+     *
      * @return null
      */
     public static function defineParser( Parser $parser, $name = '', $wson = '' ) {
@@ -35,7 +37,7 @@ class ComplexArrayDefine extends WSArrays
 
         // Define an empty array
         if(empty($wson)) {
-            WSArrays::$arrays[$name] = array();
+            WSArrays::$arrays[$name] = new SafeComplexArray(array());
 
             return null;
         }
@@ -49,6 +51,7 @@ class ComplexArrayDefine extends WSArrays
      * @param $name
      * @param $wson
      * @return array|null
+     * @throws Exception
      */
     private static function arrayDefine($name, $wson) {
         GlobalFunctions::WSONtoJSON($wson);
@@ -65,7 +68,9 @@ class ComplexArrayDefine extends WSArrays
             return GlobalFunctions::error($ca_max_defined_arrays_reached);
         }
 
-        WSArrays::$arrays[$name] = json_decode($wson, true);
+        $array = json_decode($wson, true);
+
+        WSArrays::$arrays[$name] = new SafeComplexArray($array);
 
         return null;
     }
