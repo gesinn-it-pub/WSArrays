@@ -1,14 +1,32 @@
 <?php
 
 /**
+ * WSArrays - Associative and multidimensional arrays for MediaWiki.
+ * Copyright (C) 2019 Marijn van Wezel
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 2 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program; if not, write to the
+ * Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
+ */
+
+/**
  * Class ComplexArrayPushArray
  *
  * Defines the parser function {{#complexarraypusharray:}}, which allows users to push one or more arrays to the end of another array, creating a new array.
  *
  * @extends WSArrays
  */
-class ComplexArrayPushArray extends WSArrays
-{
+class ComplexArrayPushArray extends WSArrays {
     /**
      * @var string
      */
@@ -19,47 +37,45 @@ class ComplexArrayPushArray extends WSArrays
      *
      * @param Parser $parser
      * @return array|null
+     *
+     * @throws Exception
      */
     public static function defineParser( Parser $parser ) {
         GlobalFunctions::fetchSemanticArrays();
 
-        return ComplexArrayPushArray::arrayPush(func_get_args());
+        return ComplexArrayPushArray::arrayPush( func_get_args() );
     }
 
     /**
      * @param $args
      * @return array|null
+     *
+     * @throws Exception
      */
-    private static function arrayPush($args) {
-        ComplexArrayPushArray::parseFunctionArguments($args);
+    private static function arrayPush( $args ) {
+        ComplexArrayPushArray::parseFunctionArguments( $args );
 
-        if(!GlobalFunctions::isValidArrayName(ComplexArrayPushArray::$new_array)) {
+        if ( !GlobalFunctions::isValidArrayName( ComplexArrayPushArray::$new_array ) ) {
             $ca_invalid_name = wfMessage( 'ca-invalid-name' );
 
-            return GlobalFunctions::error($ca_invalid_name);
+            return GlobalFunctions::error( $ca_invalid_name );
         }
 
-        if(count($args) < 2) {
-            $ca_too_little_arrays = wfMessage('ca-too-little-arrays');
+        if( count( $args ) < 2 ) {
+            $ca_too_little_arrays = wfMessage( 'ca-too-little-arrays' );
 
-            return GlobalFunctions::error($ca_too_little_arrays);
+            return GlobalFunctions::error( $ca_too_little_arrays );
         }
 
-        if(GlobalFunctions::definedArrayLimitReached()) {
-            $ca_max_defined_arrays_reached = wfMessage('ca-max-defined-arrays-reached', WSArrays::$options['max_defined_arrays'], $new_array);
+        if ( GlobalFunctions::definedArrayLimitReached() ) {
+            $ca_max_defined_arrays_reached = wfMessage( 'ca-max-defined-arrays-reached', WSArrays::$options[ 'max_defined_arrays' ], ComplexArrayPushArray::$new_array );
 
             return GlobalFunctions::error($ca_max_defined_arrays_reached);
         }
 
-        $arrays = ComplexArrayPushArray::iterate($args);
+        $arrays = ComplexArrayPushArray::iterate( $args );
 
-        if(!is_array($arrays)) {
-            $ca_nonexistent_multiple = wfMessage('ca-nonexistent-multiple');
-
-            return GlobalFunctions::error($ca_nonexistent_multiple);
-        }
-
-        WSArrays::$arrays[ComplexArrayPushArray::$new_array] = new SafeComplexArray($arrays);
+        WSArrays::$arrays[ ComplexArrayPushArray::$new_array ] = new SafeComplexArray( $arrays );
 
         return null;
     }
@@ -68,20 +84,16 @@ class ComplexArrayPushArray extends WSArrays
      * @param $arr
      * @return array|bool
      */
-    private static function iterate($arr) {
+    private static function iterate( $arr ) {
         $arrays = [];
-        foreach($arr as $array) {
-            if(!WSArrays::$arrays[$array]) {
-                return false;
+        foreach ( $arr as $array ) {
+            if ( !isset( WSArrays::$arrays[ $array ] ) ) {
+                continue;
             }
 
-            if(get_class(WSArrays::$arrays[$array]) !== "SafeComplexArray") {
-                throw new Exception("Wronlgy declared array");
-            } else {
-                $safe_array = WSArrays::$arrays[$array]->getArray();
-            }
+            $safe_array = GlobalFunctions::getArrayFromSafeComplexArray( WSArrays::$arrays[ $array ] );
 
-            array_push($arrays, $safe_array);
+            array_push( $arrays, $safe_array );
         }
 
         return $arrays;
@@ -90,23 +102,23 @@ class ComplexArrayPushArray extends WSArrays
     /**
      * @param $args
      */
-    private static function parseFunctionArguments(&$args) {
-        ComplexArrayPushArray::removeFirstItemFromArray($args);
-        ComplexArrayPushArray::getFirstItemFromArray($args);
-        ComplexArrayPushArray::removeFirstItemFromArray($args);
+    private static function parseFunctionArguments( &$args ) {
+        ComplexArrayPushArray::removeFirstItemFromArray( $args );
+        ComplexArrayPushArray::getFirstItemFromArray( $args );
+        ComplexArrayPushArray::removeFirstItemFromArray( $args );
     }
 
     /**
      * @param $array
      */
-    private static function removeFirstItemFromArray(&$array) {
-        array_shift($array);
+    private static function removeFirstItemFromArray( &$array ) {
+        array_shift( $array );
     }
 
     /**
      * @param $array
      */
-    private static function getFirstItemFromArray(&$array) {
-        ComplexArrayPushArray::$new_array = reset($array);
+    private static function getFirstItemFromArray( &$array ) {
+        ComplexArrayPushArray::$new_array = reset( $array );
     }
 }
