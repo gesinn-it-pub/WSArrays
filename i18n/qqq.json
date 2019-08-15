@@ -1,4 +1,9 @@
 {
+  "@metadata": {
+    "authors": [
+      "Marijn van Wezel <marijn@wikibase.nl>"
+    ]
+  },
   "ca-name": "The name of the extension (normally WSArrays)",
   "ca-description": "The description of the extension as shown on Special:Version",
   "ca-omitted": "Error message shown when someone forgets a required parameter",
