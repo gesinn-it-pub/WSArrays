@@ -208,6 +208,8 @@ class ComplexArrayPrint extends WSArrays {
                 $return  = key( ComplexArrayPrint::$array ) . ": " . $last_el;
 
                 return $return;
+            } else {
+                return ComplexArrayPrint::$array;
             }
         }
 
@@ -218,7 +220,6 @@ class ComplexArrayPrint extends WSArrays {
         $indent_char = ComplexArrayPrint::$indent_char;
 
         $result = null;
-
         foreach ( ComplexArrayPrint::$array as $key => $value ) {
             if ( !is_array( $value ) ) {
                 if ( !is_numeric( $key ) ) {
