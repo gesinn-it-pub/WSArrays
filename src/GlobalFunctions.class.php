@@ -91,6 +91,20 @@ class GlobalFunctions extends SafeComplexArray {
         return preg_replace( "/(?!\B\"[^\"]*)}(?![^\"]*\"\B)/i", "))", $wson );
     }
 
+    public static function WSONtoArray( $wson ) {
+        GlobalFunctions::WSONtoJSON( $wson );
+
+        if ( !GlobalFunctions::isValidJSON( $wson ) ) {
+            return false;
+        }
+
+        try {
+            return json_decode( $wson, true );
+        } catch (Exception $e) {
+            return false;
+        }
+    }
+
     /**
      * Create an array from a comma-separated list.
      *

@@ -71,12 +71,6 @@ class ComplexArrayMerge extends WSArrays {
             return GlobalFunctions::error( $ca_too_little_arrays );
         }
 
-        if ( GlobalFunctions::definedArrayLimitReached() ) {
-            $ca_max_defined_arrays_reached = wfMessage( 'ca-max-defined-arrays-reached', WSArrays::$options['max_defined_arrays'], ComplexArrayMerge::$new_array );
-
-            return GlobalFunctions::error( $ca_max_defined_arrays_reached );
-        }
-
         $arrays = ComplexArrayMerge::iterate( $args );
 
         if ( ComplexArrayMerge::$last_element === "recursive" ) {

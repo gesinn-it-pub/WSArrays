@@ -54,8 +54,8 @@ class ComplexArrayDefine extends WSArrays {
         }
 
         // Define an empty array
-        if ( empty($wson) ) {
-            WSArrays::$arrays[ $name ] = new SafeComplexArray( array() );
+        if ( empty( $wson ) ) {
+            WSArrays::$arrays[$name] = new SafeComplexArray();
 
             return null;
         }
@@ -72,23 +72,16 @@ class ComplexArrayDefine extends WSArrays {
      * @throws Exception
      */
     private static function arrayDefine( $name, $wson ) {
-        GlobalFunctions::WSONtoJSON( $wson );
+        // Convert the WSON to an array
+        $array = GlobalFunctions::WSONtoArray( $wson );
 
-        if ( !GlobalFunctions::isValidJSON( $wson ) ) {
+        if ( !$array ) {
             $ca_invalid_wson = wfMessage( 'ca-invalid-wson' );
 
             return GlobalFunctions::error( $ca_invalid_wson );
         }
 
-        if ( GlobalFunctions::definedArrayLimitReached() ) {
-            $ca_max_defined_arrays_reached = wfMessage( 'ca-max-defined-arrays-reached', WSArrays::$options[ 'max_defined_arrays' ], $name );
-
-            return GlobalFunctions::error( $ca_max_defined_arrays_reached );
-        }
-
-        $array = json_decode( $wson, true );
-
-        WSArrays::$arrays[ $name ] = new SafeComplexArray( $array );
+        WSArrays::$arrays[$name] = new SafeComplexArray( $array );
 
         return null;
     }

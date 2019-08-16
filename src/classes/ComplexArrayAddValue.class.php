@@ -75,12 +75,16 @@ class ComplexArrayAddValue extends WSArrays {
     private static function arrayAddValue( $array, $value ) {
         $base_array = GlobalFunctions::calculateBaseArray( $array );
 
+        /*
+         * The array has not been found, return.
+         */
         if ( !isset( WSArrays::$arrays[ $base_array ] ) ) {
-            $ca_undefined_array = wfMessage( 'ca-undefined-array' );
-
-            return GlobalFunctions::error( $ca_undefined_array );
+            return null;
         }
 
+        /*
+         * This function creates an array $matches[0] of all the subarrays in the name.
+         */
         if ( preg_match_all( "/(?<=\[).+?(?=\])/", $array, $matches ) === 0 ) {
             $ca_invalid_name = wfMessage( 'ca-invalid-name' );
 

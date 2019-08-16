@@ -74,14 +74,12 @@ class ComplexArraySort extends WSArrays {
      * @throws Exception
      */
     private static function arraySort( $name, $options = '', $key = '' ) {
-        if ( !isset( WSArrays::$arrays[$name] ) ) {
-            $ca_undefined_array = wfMessage( 'ca-undefined-array' );
-
-            return GlobalFunctions::error( $ca_undefined_array );
-        }
-
-        ComplexArraySort::$array = GlobalFunctions::getUnsafeArrayFromSafeComplexArray( WSArrays::$arrays[ $name ] );
         ComplexArraySort::$name = $name;
+        ComplexArraySort::$array = GlobalFunctions::getUnsafeArrayFromSafeComplexArray( WSArrays::$arrays[ $name ] );
+
+        if ( !isset( WSArrays::$arrays[$name] ) ) {
+            return null;
+        }
 
         if ( !empty( $key ) ) {
             ComplexArraySort::$key = $key;

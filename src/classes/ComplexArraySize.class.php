@@ -62,12 +62,10 @@ class ComplexArraySize extends WSArrays {
         $base_array = GlobalFunctions::calculateBaseArray( $name );
 
         if ( !isset( WSArrays::$arrays[$base_array] ) ) {
-            $ca_undefined_array = wfMessage( 'ca-undefined-array' );
-
-            return GlobalFunctions::error( $ca_undefined_array );
+            return null;
         }
 
-        $array = GlobalFunctions::getUnsafeArrayFromSafeComplexArray( WSArrays::$arrays[ $base_array ] );
+        $array = GlobalFunctions::getUnsafeArrayFromSafeComplexArray( WSArrays::$arrays[$base_array] );
 
         if ( !strpos( $name, "[" ) && empty( $options ) ) {
             $count = count( $array, COUNT_RECURSIVE );
@@ -82,9 +80,7 @@ class ComplexArraySize extends WSArrays {
         }
 
         if ( !is_array( $array = GlobalFunctions::getArrayFromArrayName( $name ) ) ) {
-            $ca_undefined_array = wfMessage( 'ca-undefined-array' );
-
-            return GlobalFunctions::error( $ca_undefined_array );
+            return null;
         }
 
         if ( $options === "top" ) {

@@ -108,22 +108,13 @@ class ComplexArrayMap extends WSArrays {
      * @throws Exception
      */
     private static function arrayMap( $array_name, $map_key, $map ) {
-        $base_array = GlobalFunctions::calculateBaseArray( $array_name );
-
         ComplexArrayMap::$buffer = '';
 
-        if ( !isset( WSArrays::$arrays[ $base_array ] ) ) {
-            $ca_undefined_array = wfMessage( 'ca-undefined-array' );
-
-            return GlobalFunctions::error( $ca_undefined_array );
-        }
-
+        $base_array = GlobalFunctions::calculateBaseArray( $array_name );
         $array = GlobalFunctions::getArrayFromArrayName($array_name);
 
-        if ( !$array ) {
-            $ca_undefined_array = wfMessage( 'ca-undefined-array' );
-
-            return GlobalFunctions::error( $ca_undefined_array );
+        if ( !isset( WSArrays::$arrays[ $base_array ] ) || !$array ) {
+            return null;
         }
 
         return ComplexArrayMap::iterate( $array, $map_key, $map, $array_name );

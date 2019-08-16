@@ -79,9 +79,7 @@ class ComplexArraySearchArray extends WSArrays {
      */
     private static function arraySearchArray( $new_array, $name, $value ) {
         if ( !WSArrays::$arrays[ $name ] ) {
-            $ca_undefined_array = wfMessage( 'ca-undefined-array' );
-
-            return GlobalFunctions::error( $ca_undefined_array );
+            return null;
         }
 
         ComplexArraySearchArray::findValues( $value, $name );

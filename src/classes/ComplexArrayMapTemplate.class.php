@@ -66,19 +66,10 @@ class ComplexArrayMapTemplate extends WSArrays {
      */
     private static function arrayMapTemplate( $name, $template, $options = '' ) {
         $base_array = GlobalFunctions::calculateBaseArray( $name );
-
-        if ( !isset( WSArrays::$arrays[ $base_array ] ) ) {
-            $ca_undefined_array = wfMessage( 'ca-undefined-array' );
-
-            return GlobalFunctions::error( $ca_undefined_array );
-        }
-
         $array = GlobalFunctions::getArrayFromArrayName( $name );
 
-        if ( !$array ) {
-                $ca_undefined_array = wfMessage( 'ca-undefined-array' );
-
-                return GlobalFunctions::error( $ca_undefined_array );
+        if ( !isset( WSArrays::$arrays[$base_array] ) || !$array) {
+            return null;
         }
 
         $return = ComplexArrayMapTemplate::mapToArray( $array, $template, $options );

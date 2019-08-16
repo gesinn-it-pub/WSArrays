@@ -67,6 +67,7 @@ class ComplexArrayExtract extends WSArrays {
      * @throws Exception
      */
     private static function arrayExtract( $name, $subarray ) {
+        // If no subarray is provided, show an error.
         if( !strpos( $subarray, "[" ) ||
             !strpos( $subarray, "]" ) ) {
             $ca_subarray_not_provided = wfMessage( 'ca-subarray-not-provided' );
@@ -74,20 +75,15 @@ class ComplexArrayExtract extends WSArrays {
             return GlobalFunctions::error( $ca_subarray_not_provided );
         }
 
-        if( !$array = GlobalFunctions::getArrayFromArrayName( $subarray, true ) ) {
-            $ca_undefined_array = wfMessage( 'ca-undefined-array' );
+        $array = GlobalFunctions::getArrayFromArrayName( $subarray, true );
 
-            return GlobalFunctions::error( $ca_undefined_array );
+        if( !$array ) {
+            return null;
         }
 
-        if( GlobalFunctions::definedArrayLimitReached() ) {
-            $ca_max_defined_arrays_reached = wfMessage( 'ca-max-defined-arrays-reached', WSArrays::$options['max_defined_arrays'], $name );
-
-            return GlobalFunctions::error( $ca_max_defined_arrays_reached );
-        }
-
+        // If the array is a single value, convert it back to a single value array.
         if( is_string( $array ) ) {
-            $array = array( $array );
+            $array = [$array];
         }
 
         WSArrays::$arrays[ $name ] = new SafeComplexArray( $array );

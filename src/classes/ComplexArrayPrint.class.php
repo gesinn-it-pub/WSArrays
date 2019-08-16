@@ -110,13 +110,12 @@ class ComplexArrayPrint extends WSArrays {
      * @throws Exception
      */
     private static function arrayPrint( $name, $options = '', $map = '', $subject = '' ) {
-        ComplexArrayPrint::$name = $name;
-        ComplexArrayPrint::$map = $map;
+        ComplexArrayPrint::$name  = $name;
+        ComplexArrayPrint::$map   = $map;
+        ComplexArrayPrint::$array = GlobalFunctions::getArrayFromArrayName( $name );
 
-        if ( !ComplexArrayPrint::$array = GlobalFunctions::getArrayFromArrayName( $name ) ) {
-            $ca_undefined_array = wfMessage( 'ca-undefined-array' );
-
-            return GlobalFunctions::error( $ca_undefined_array );
+        if ( !ComplexArrayPrint::$array ) {
+            return null;
         }
 
         if ( $subject ) {

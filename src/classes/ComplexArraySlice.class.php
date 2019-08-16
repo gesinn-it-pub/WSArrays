@@ -71,20 +71,18 @@ class ComplexArraySlice extends WSArrays {
      * @throws Exception
      */
     private static function arraySlice( $new_array, $array, $offset = 0, $length = 0 ) {
-        if ( !$array = GlobalFunctions::getArrayFromArrayName( $array, true ) ) {
-            $ca_undefined_array = wfMessage( 'ca-undefined-array' );
+        $array = GlobalFunctions::getArrayFromArrayName( $array, true );
 
-            return GlobalFunctions::error( $ca_undefined_array );
+        if ( !$array ) {
+            return null;
         }
 
         if ( !empty( $length ) ) {
             WSArrays::$arrays[ $new_array ] = new SafeComplexArray( array_slice( $array, $offset, $length ) );
-
-            return null;
         } else {
             WSArrays::$arrays[ $new_array ] = new SafeComplexArray( array_slice( $array, $offset ) );
-
-            return null;
         }
+
+        return null;
     }
 }
