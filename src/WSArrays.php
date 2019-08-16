@@ -59,7 +59,7 @@ if ( !defined( 'MEDIAWIKI' ) ) {
     }
 }
 
-require 'GlobalFunctions.class.php';
+require_once 'GlobalFunctions.class.php';
 
 $GLOBALS[ 'smwgResultFormats' ][ 'complexarray' ] = 'SMW\Query\ResultPrinters\ComplexArrayPrinter';
 
@@ -91,7 +91,7 @@ class WSArrays extends GlobalFunctions {
     ];
 
     /**
-     * This function is called on every page.
+     * This function is called on every page with a WSArrays parser function.
      *
      * @param Parser $parser
      * @return boolean
@@ -274,7 +274,7 @@ class WSArrays extends GlobalFunctions {
         $file = __DIR__ . '/' . WSArrays::INCLUDE_DIR . $class . '.class.php';
 
         if ( file_exists( $file ) ) {
-            require $file;
+            require_once $file;
         }
     }
 

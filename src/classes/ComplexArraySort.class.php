@@ -50,6 +50,8 @@ class ComplexArraySort extends WSArrays {
      * @param string $options
      * @param string $key
      * @return array|null
+     *
+     * @throws Exception
      */
     public static function defineParser( Parser $parser, $name = '', $options = '', $key = '' ) {
         GlobalFunctions::fetchSemanticArrays();
@@ -68,6 +70,8 @@ class ComplexArraySort extends WSArrays {
      * @param string $options
      * @param string $key
      * @return array|null
+     *
+     * @throws Exception
      */
     private static function arraySort( $name, $options = '', $key = '' ) {
         if ( !isset( WSArrays::$arrays[$name] ) ) {
@@ -76,7 +80,7 @@ class ComplexArraySort extends WSArrays {
             return GlobalFunctions::error( $ca_undefined_array );
         }
 
-        ComplexArraySort::$array = GlobalFunctions::getArrayFromSafeComplexArray( WSArrays::$arrays[ $name ] );
+        ComplexArraySort::$array = GlobalFunctions::getUnsafeArrayFromSafeComplexArray( WSArrays::$arrays[ $name ] );
         ComplexArraySort::$name = $name;
 
         if ( !empty( $key ) ) {
@@ -91,7 +95,7 @@ class ComplexArraySort extends WSArrays {
             if ( count( $options ) === 1 ) {
                 $result = ComplexArraySort::sortArray( $options[ 0 ] );
             } else {
-                if( $options[ 0 ] !== "keysort" ) {
+                if ( $options[ 0 ] !== "keysort" ) {
                     $result = ComplexArraySort::sortArray( $options[ 0 ] );
                 } else {
                     $result = ComplexArraySort::keysort( $options[ 1 ] );

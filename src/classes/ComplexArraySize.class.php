@@ -67,7 +67,7 @@ class ComplexArraySize extends WSArrays {
             return GlobalFunctions::error( $ca_undefined_array );
         }
 
-        $array = GlobalFunctions::getArrayFromSafeComplexArray( WSArrays::$arrays[ $base_array ] );
+        $array = GlobalFunctions::getUnsafeArrayFromSafeComplexArray( WSArrays::$arrays[ $base_array ] );
 
         if ( !strpos( $name, "[" ) && empty( $options ) ) {
             $count = count( $array, COUNT_RECURSIVE );

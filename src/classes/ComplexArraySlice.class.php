@@ -71,7 +71,7 @@ class ComplexArraySlice extends WSArrays {
      * @throws Exception
      */
     private static function arraySlice( $new_array, $array, $offset = 0, $length = 0 ) {
-        if ( !$array = GlobalFunctions::getArrayFromArrayName( $array ) ) {
+        if ( !$array = GlobalFunctions::getArrayFromArrayName( $array, true ) ) {
             $ca_undefined_array = wfMessage( 'ca-undefined-array' );
 
             return GlobalFunctions::error( $ca_undefined_array );

@@ -33,6 +33,8 @@ class ComplexArrayUnique extends WSArrays {
      * @param Parser $parser
      * @param string $name
      * @return array|null
+     *
+     * @throws Exception
      */
     public static function defineParser( Parser $parser, $name = '' ) {
         GlobalFunctions::fetchSemanticArrays();
@@ -47,11 +49,15 @@ class ComplexArrayUnique extends WSArrays {
     }
 
     /**
+     * Apply array_unique onto the array and safe it again as SafeComplexArray
+     *
      * @param $name
      * @return array|null
+     *
+     * @throws Exception
      */
     private static function arrayUnique( $name ) {
-        $array = GlobalFunctions::getArrayFromSafeComplexArray( WSArrays::$arrays[ $name ] );
+        $array = GlobalFunctions::getUnsafeArrayFromSafeComplexArray( WSArrays::$arrays[ $name ] );
 
         if ( GlobalFunctions::containsArray( $array ) ) {
             $array = array_unique( $array, SORT_REGULAR );

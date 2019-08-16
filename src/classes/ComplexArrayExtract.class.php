@@ -74,7 +74,7 @@ class ComplexArrayExtract extends WSArrays {
             return GlobalFunctions::error( $ca_subarray_not_provided );
         }
 
-        if( !$array = GlobalFunctions::getArrayFromArrayName( $subarray ) ) {
+        if( !$array = GlobalFunctions::getArrayFromArrayName( $subarray, true ) ) {
             $ca_undefined_array = wfMessage( 'ca-undefined-array' );
 
             return GlobalFunctions::error( $ca_undefined_array );

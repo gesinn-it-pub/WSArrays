@@ -149,7 +149,7 @@ class ComplexArrayPrint extends WSArrays {
                 break;
             case 'markup':
             case 'wson':
-                return ComplexArrayPrint::ArrayToWSON( ComplexArrayPrint::$array );
+                return ComplexArrayPrint::arrayToWSON( ComplexArrayPrint::$array );
                 break;
             default:
                 return ComplexArrayPrint::createList( $options );
@@ -203,7 +203,12 @@ class ComplexArrayPrint extends WSArrays {
      */
     private static function createList( $type = "unordered" ) {
         if ( count( ComplexArrayPrint::$array ) === 1 && !GlobalFunctions::containsArray( ComplexArrayPrint::$array ) ) {
-            return ComplexArrayPrint::$array;
+            if ( is_array( ComplexArrayPrint::$array ) ) {
+                $last_el = reset( ComplexArrayPrint::$array );
+                $return  = key( ComplexArrayPrint::$array ) . ": " . $last_el;
+
+                return $return;
+            }
         }
 
         if ( $type == "ordered" ) {

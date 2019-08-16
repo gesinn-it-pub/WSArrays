@@ -79,7 +79,7 @@ class ComplexArraySearch extends WSArrays {
 
         ComplexArraySearch::findValue( $value, $name );
 
-        return ComplexArraySearch::$key;
+        return htmlspecialchars(ComplexArraySearch::$key);
     }
 
     /**
@@ -89,7 +89,7 @@ class ComplexArraySearch extends WSArrays {
      * @throws Exception
      */
     private static function findValue( $value, $key ) {
-        $array = GlobalFunctions::getArrayFromArrayName( $key );
+        $array = GlobalFunctions::getArrayFromArrayName( $key, true );
 
         ComplexArraySearch::i( $array, $value, $key );
     }

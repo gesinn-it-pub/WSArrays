@@ -26,8 +26,7 @@ require_once ('SafeComplexArray.class.php');
  *
  * Grandfather class. These functions are available in all other classes.
  */
-class GlobalFunctions extends SafeComplexArray
-{
+class GlobalFunctions extends SafeComplexArray {
     /**
      * Print an error message.
      *
@@ -125,14 +124,19 @@ class GlobalFunctions extends SafeComplexArray
      * Return the contents of a subarray based on the name (basearray[subarray][subarray]...).
      *
      * @param $name
+     * @param $unsafe
      * @return bool|array
      *
      * @throws Exception
      */
-    public static function getArrayFromArrayName( $name ) {
+    public static function getArrayFromArrayName( $name, $unsafe = false ) {
         if ( !strpos( $name, "[" ) ) {
             if ( isset( WSArrays::$arrays[ $name ] ) ) {
-                return GlobalFunctions::getArrayFromSafeComplexArray( WSArrays::$arrays[ $name ] );
+                if($unsafe === true) {
+                    return GlobalFunctions::getUnsafeArrayFromSafeComplexArray( WSArrays::$arrays[ $name ] );
+                } else {
+                    return GlobalFunctions::getArrayFromSafeComplexArray( WSArrays::$arrays[ $name ] );
+                }
             }
         } else {
             $base_array = GlobalFunctions::calculateBaseArray( $name );
@@ -147,7 +151,11 @@ class GlobalFunctions extends SafeComplexArray
                 return false;
             }
 
-            $array = GlobalFunctions::getArrayFromSafeComplexArray( WSArrays::$arrays[ $base_array ] );
+            if($unsafe === true) {
+                $array = GlobalFunctions::getUnsafeArrayFromSafeComplexArray( WSArrays::$arrays[ $base_array ] );
+            } else {
+                $array = GlobalFunctions::getArrayFromSafeComplexArray( WSArrays::$arrays[ $base_array ] );
+            }
 
             foreach ( $matches[ 0 ] as $match ) {
                 if ( ctype_digit( $match ) ) {
@@ -262,7 +270,7 @@ class GlobalFunctions extends SafeComplexArray
 
     /**
      * @param SafeComplexArray $array
-     * @return string
+     * @return array
      * @throws Exception
      */
     public static function getUnsafeArrayFromSafeComplexArray( SafeComplexArray $array ) {
