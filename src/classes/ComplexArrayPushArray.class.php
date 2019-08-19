@@ -26,7 +26,21 @@
  *
  * @extends WSArrays
  */
-class ComplexArrayPushArray extends WSArrays {
+class ComplexArrayPushArray extends ResultPrinter {
+    public function getName() {
+        return 'complexarraypusharray';
+    }
+
+    public function getAliases() {
+        return [
+            'capusharray'
+        ];
+    }
+
+    public function getType() {
+        return 'normal';
+    }
+
     /**
      * @var string
      */
@@ -40,7 +54,7 @@ class ComplexArrayPushArray extends WSArrays {
      *
      * @throws Exception
      */
-    public static function defineParser( Parser $parser ) {
+    public static function getResult( Parser $parser ) {
         GlobalFunctions::fetchSemanticArrays();
 
         return ComplexArrayPushArray::arrayPush( func_get_args() );

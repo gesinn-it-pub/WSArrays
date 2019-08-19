@@ -26,14 +26,28 @@
  *
  * @extends WSArrays
  */
-class ComplexArrayReset extends WSArrays {
+class ComplexArrayReset extends ResultPrinter {
+    public function getName() {
+        return 'complexarrayreset';
+    }
+
+    public function getAliases() {
+        return [
+            'careset'
+        ];
+    }
+
+    public function getType() {
+        return 'normal';
+    }
+
     /**
      * Define all allowed parameters.
      *
      * @param Parser $parser
      * @param string $array
      */
-    public static function defineParser( Parser $parser, $array = '' ) {
+    public static function getResult( Parser $parser, $array = '' ) {
         GlobalFunctions::fetchSemanticArrays();
 
         ComplexArrayReset::arrayReset( $array );

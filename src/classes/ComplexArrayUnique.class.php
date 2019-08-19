@@ -26,7 +26,21 @@
  *
  * @extends WSArrays
  */
-class ComplexArrayUnique extends WSArrays {
+class ComplexArrayUnique extends ResultPrinter {
+    public function getName() {
+        return 'complexarrayunique';
+    }
+
+    public function getAliases() {
+        return [
+            'caunique'
+        ];
+    }
+
+    public function getType() {
+        return 'normal';
+    }
+
     /**
      * Define parameters and initialize parser.
      *
@@ -36,7 +50,7 @@ class ComplexArrayUnique extends WSArrays {
      *
      * @throws Exception
      */
-    public static function defineParser( Parser $parser, $name = '' ) {
+    public static function getResult( Parser $parser, $name = '' ) {
         GlobalFunctions::fetchSemanticArrays();
 
         if ( empty( $name ) ) {

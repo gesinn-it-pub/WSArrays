@@ -26,7 +26,21 @@
  *
  * @extends WSArrays
  */
-class ComplexArraySize extends WSArrays {
+class ComplexArraySize extends ResultPrinter {
+    public function getName() {
+        return 'complexarraysize';
+    }
+
+    public function getAliases() {
+        return [
+          'casize'
+        ];
+    }
+
+    public function getType() {
+        return 'normal';
+    }
+
     /**
      * Define all allowed parameters.
      *
@@ -37,7 +51,7 @@ class ComplexArraySize extends WSArrays {
      *
      * @throws Exception
      */
-    public static function defineParser( Parser $parser, $name = '', $options = '' ) {
+    public static function getResult( Parser $parser, $name = '', $options = '' ) {
         GlobalFunctions::fetchSemanticArrays();
 
         if ( empty( $name ) ) {

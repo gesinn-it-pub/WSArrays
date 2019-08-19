@@ -26,7 +26,23 @@
  *
  * @extends WSArrays
  */
-class ComplexArrayMapTemplate extends WSArrays {
+class ComplexArrayMapTemplate extends ResultPrinter {
+    public function getName() {
+        return 'complexarraymaptemplate';
+    }
+
+    public function getAliases() {
+        return [
+            'camaptemplate',
+            'camapt',
+            'catemplate'
+        ];
+    }
+
+    public function getType() {
+        return 'normal';
+    }
+
     /**
      * Define all allowed parameters.
      *
@@ -38,7 +54,7 @@ class ComplexArrayMapTemplate extends WSArrays {
      *
      * @throws Exception
      */
-    public static function defineParser( Parser $parser, $name = '', $template = '', $options = '' ) {
+    public static function getResult( Parser $parser, $name = '', $template = '', $options = '' ) {
         GlobalFunctions::fetchSemanticArrays();
 
         if ( empty( $name ) ) {

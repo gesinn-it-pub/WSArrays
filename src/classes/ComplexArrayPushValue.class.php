@@ -26,7 +26,22 @@
  *
  * @extends WSArrays
  */
-class ComplexArrayPushValue extends WSArrays {
+class ComplexArrayPushValue extends ResultPrinter {
+    public function getName() {
+        return 'complexarraypushvalue';
+    }
+
+    public function getAliases() {
+        return [
+            'complexarraypush',
+            'capush'
+        ];
+    }
+
+    public function getType() {
+        return 'normal';
+    }
+
     /**
      * Define all allowed parameters.
      *
@@ -37,7 +52,7 @@ class ComplexArrayPushValue extends WSArrays {
      *
      * @throws Exception
      */
-    public static function defineParser( Parser $parser, $array = '', $value = '' ) {
+    public static function getResult( Parser $parser, $array = '', $value = '' ) {
         GlobalFunctions::fetchSemanticArrays();
 
         if ( empty( $array ) ) {

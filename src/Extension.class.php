@@ -1,11 +1,11 @@
 <?php
 
 /**
- * Abstract class ResultPrinter
+ * Abstract class Extension
  *
- * @extends ResultPrinterFactory
+ * @extends ExtensionFactory
  */
-abstract class ResultPrinter extends ResultPrinterFactory {
+abstract class Extension extends ExtensionFactory {
     /**
      * This function should return a string containing the name of the class (which is
      * also the name of the parser function).

@@ -26,7 +26,21 @@
  *
  * @extends WSArrays
  */
-class ComplexArrayMerge extends WSArrays {
+class ComplexArrayMerge extends ResultPrinter {
+    public function getName() {
+        return 'complexarraymerge';
+    }
+
+    public function getAliases() {
+        return [
+            'camerge'
+        ];
+    }
+
+    public function getType() {
+        return 'normal';
+    }
+
     /**
      * @var string
      */
@@ -45,7 +59,7 @@ class ComplexArrayMerge extends WSArrays {
      *
      * @throws Exception
      */
-    public static function defineParser( Parser $parser ) {
+    public static function getResult( Parser $parser ) {
         GlobalFunctions::fetchSemanticArrays();
 
         return ComplexArrayMerge::arrayMerge( func_get_args() );

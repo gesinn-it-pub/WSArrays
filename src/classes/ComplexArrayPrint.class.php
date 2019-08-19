@@ -26,7 +26,21 @@
  *
  * @extends WSArrays
  */
-class ComplexArrayPrint extends WSArrays {
+class ComplexArrayPrint extends ResultPrinter {
+    public function getName() {
+        return 'complexarrayprint';
+    }
+
+    public function getAliases() {
+        return [
+            'caprint'
+        ];
+    }
+
+    public function getType() {
+        return 'sfh';
+    }
+
     /**
      * Holds the array being worked on.
      *
@@ -64,7 +78,7 @@ class ComplexArrayPrint extends WSArrays {
      *
      * @throws Exception
      */
-    public static function defineParser( Parser $parser, $frame, $args ) {
+    public static function getResult( Parser $parser, $frame, $args ) {
         GlobalFunctions::fetchSemanticArrays();
 
         if ( isset( $args[ 0 ] ) ) {

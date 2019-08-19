@@ -26,7 +26,21 @@
  *
  * @extends WSArrays
  */
-class ComplexArraySort extends WSArrays {
+class ComplexArraySort extends ResultPrinter {
+    public function getName() {
+        return 'complexarraysort';
+    }
+
+    public function getAliases() {
+        return [
+            'casort'
+        ];
+    }
+
+    public function getType() {
+        return 'normal';
+    }
+
     /**
      * @var
      */
@@ -53,7 +67,7 @@ class ComplexArraySort extends WSArrays {
      *
      * @throws Exception
      */
-    public static function defineParser( Parser $parser, $name = '', $options = '', $key = '' ) {
+    public static function getResult( Parser $parser, $name = '', $options = '', $key = '' ) {
         GlobalFunctions::fetchSemanticArrays();
 
         if ( empty( $name ) ) {

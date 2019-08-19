@@ -26,7 +26,21 @@
  *
  * @extends WSArrays
  */
-class ComplexArraySlice extends WSArrays {
+class ComplexArraySlice extends ResultPrinter {
+    public function getName() {
+        return 'complexarrayslice';
+    }
+
+    public function getAliases() {
+        return [
+            'caslice'
+        ];
+    }
+
+    public function getType() {
+        return 'normal';
+    }
+
     /**
      * @param Parser $parser
      * @param string $new_array
@@ -37,7 +51,7 @@ class ComplexArraySlice extends WSArrays {
      *
      * @throws Exception
      */
-    public static function defineParser( Parser $parser, $new_array = '', $array = '', $offset = '', $length = '') {
+    public static function getResult( Parser $parser, $new_array = '', $array = '', $offset = '', $length = '') {
         GlobalFunctions::fetchSemanticArrays();
 
         if ( empty( $new_array ) ) {

@@ -26,7 +26,23 @@
  *
  * @extends WSArrays
  */
-class ComplexArrayAddValue extends WSArrays {
+class ComplexArrayAddValue extends ResultPrinter {
+    public function getName() {
+        return 'complexarrayaddvalue';
+    }
+
+    public function getAliases() {
+        return [
+            'caaddvalue',
+            'caadd',
+            'caaddv'
+        ];
+    }
+
+    public function getType() {
+        return 'normal';
+    }
+
     /**
      * Define parameters and initialize parser.
      *
@@ -37,7 +53,7 @@ class ComplexArrayAddValue extends WSArrays {
      *
      * @throws Exception
      */
-    public static function defineParser( Parser $parser, $name = '', $value = '' ) {
+    public static function getResult( Parser $parser, $name = '', $value = '' ) {
         GlobalFunctions::fetchSemanticArrays();
 
         if ( empty( $name ) ) {

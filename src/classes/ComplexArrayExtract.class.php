@@ -26,7 +26,21 @@
  *
  * @extends WSArrays
  */
-class ComplexArrayExtract extends WSArrays {
+class ComplexArrayExtract extends ResultPrinter {
+    public function getName() {
+        return 'complexarrayextract';
+    }
+
+    public function getAliases() {
+        return [
+            'caextract'
+        ];
+    }
+
+    public function getType() {
+        return 'normal';
+    }
+
     /**
      * Define all allowed parameters.
      *
@@ -37,7 +51,7 @@ class ComplexArrayExtract extends WSArrays {
      *
      * @throws Exception
      */
-    public static function defineParser( Parser $parser, $name = '', $subarray = '' ) {
+    public static function getResult( Parser $parser, $name = '', $subarray = '' ) {
         if ( !$name ) {
             $ca_omitted = wfMessage( 'ca-omitted', 'New array' );
 

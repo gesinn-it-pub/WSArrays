@@ -26,7 +26,21 @@
  *
  * @extends WSArrays
  */
-class ComplexArrayDefine extends WSArrays {
+class ComplexArrayDefine extends ResultPrinter {
+    public function getName() {
+        return 'complexarraydefine';
+    }
+
+    public function getAliases() {
+        return [
+            'cadefine'
+        ];
+    }
+
+    public function getType() {
+        return 'normal';
+    }
+
     /**
      * Define all allowed parameters.
      *
@@ -38,7 +52,7 @@ class ComplexArrayDefine extends WSArrays {
      *
      * @return null
      */
-    public static function defineParser( Parser $parser, $name = '', $wson = '' ) {
+    public static function getResult( Parser $parser, $name = '', $wson = '' ) {
         GlobalFunctions::fetchSemanticArrays();
 
         if ( empty( $name ) ) {

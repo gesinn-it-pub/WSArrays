@@ -26,7 +26,7 @@ require_once ('SafeComplexArray.class.php');
  *
  * Grandfather class. These functions are available in all other classes.
  */
-class GlobalFunctions extends SafeComplexArray {
+class GlobalFunctions {
     /**
      * Print an error message.
      *
