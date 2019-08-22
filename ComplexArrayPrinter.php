@@ -171,7 +171,11 @@ class ComplexArrayPrinter extends ResultPrinter {
             return $json;
         }
 
-        $wfDefinedArraysGlobal[ $this->name ] = new \SafeComplexArray( $this->buildResultArray( $queryResult ) );
+        $result = $this->buildResultArray( $queryResult );
+
+        $wfDefinedArraysGlobal[ $this->name ] = new \SafeComplexArray( $result );
+
+        return null;
     }
 
     /**

@@ -71,7 +71,7 @@ $GLOBALS[ 'smwgResultFormats' ][ 'complexarray' ] = 'SMW\Query\ResultPrinters\Co
  * @extends GlobalFunctions
  */
 class WSArrays extends SafeComplexArray {
-    const VERSION = '1.4';
+    const VERSION = '1.4.1';
 
     /**
      * This variable holds all defined arrays. If an array is defined called "array", the array will be stored in WSArrays::$arrays["array"].
