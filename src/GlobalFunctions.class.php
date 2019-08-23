@@ -144,6 +144,11 @@ class GlobalFunctions {
      * @throws Exception
      */
     public static function getArrayFromArrayName( $name, $unsafe = false ) {
+        global $wgEscapeEntitiesInArrays;
+        if($wgEscapeEntitiesInArrays === false) {
+            $unsafe = true;
+        }
+
         if ( !strpos( $name, "[" ) ) {
             if ( isset( WSArrays::$arrays[ $name ] ) ) {
                 if($unsafe === true) {

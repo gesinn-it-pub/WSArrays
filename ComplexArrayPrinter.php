@@ -33,6 +33,7 @@ namespace SMW\Query\ResultPrinters;
  * It defines the object arrays should be stored in. Arrays that are stored in this object, are always escaped and safe. This class is a copy of the class in src/SafeComplexArray.class.php.
  *
  * @package SMW\Query\ResultPrinters
+ * @alias src/SafeComplexArray.class.php
  */
 class SafeComplexArray {
     private $safe_array = array();

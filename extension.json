@@ -25,6 +25,7 @@
   },
   "config": {
     "SkipVersionControl": false,
+    "EscapeEntitiesInArrays": true,
     "DefinedArraysGlobal": []
   },
   "manifest_version": 1

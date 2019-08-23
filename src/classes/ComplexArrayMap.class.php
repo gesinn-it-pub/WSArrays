@@ -135,7 +135,7 @@ class ComplexArrayMap extends ResultPrinter {
         ComplexArrayMap::$buffer = '';
 
         $base_array = GlobalFunctions::calculateBaseArray( $array_name );
-        $array = GlobalFunctions::getArrayFromArrayName($array_name);
+        $array = GlobalFunctions::getArrayFromArrayName( $array_name );
 
         if ( !isset( WSArrays::$arrays[ $base_array ] ) || !$array ) {
             return null;
@@ -219,7 +219,7 @@ class ComplexArrayMap extends ResultPrinter {
     private static function getValueFromMatch( $match ) {
         $pointer = ComplexArrayMap::getPointerFromArrayName( $match );
         $array_name = ComplexArrayMap::getArrayNameFromPointer( $pointer );
-        $value = GlobalFunctions::getArrayFromArrayName( $array_name );
+        $value = GlobalFunctions::getArrayFromArrayName( $array_name, true );
 
         return $value;
     }
