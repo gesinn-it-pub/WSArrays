@@ -234,6 +234,11 @@ class GlobalFunctions {
                     return $array;
                 }
 
+                if ( GlobalFunctions::isWairudokado( $matches[$index + 1] ) ) {
+                    // Skip sequential Wairudokado operators and interpret them as one
+                    continue;
+                }
+
                 $array = GlobalFunctions::getArrayFromWairudokado( $array, $matches, $index );
                 $wairudokado_helper_object = true;
             } else {
