@@ -208,24 +208,34 @@ class GlobalFunctions {
         return $array;
     }
 
+    /**
+     * @param array $array
+     * @param array $matches
+     * @return array|bool|mixed
+     */
     private static function getArrayFromMatch( array $array, array $matches ) {
+        $wairudokado_helper_object = false;
+
         foreach ($matches as $index => $match) {
             $current_array = $array;
+
+            if ($wairudokado_helper_object === true) {
+                $wairudokado_helper_object = false;
+
+                continue;
+            }
 
             /*
              * The Wairudokado (or Wildcard) operator gives users the ability to use wildcards as pointers in an array
              */
             if (GlobalFunctions::isWairudokado($match)) {
-                if ( !isset( $matches[$index + 1] ) ) {
+                if ( GlobalFunctions::isWairudokado( end( $matches ) ) ) {
                     // The Wairudokado operator does not make sense when it's at the end, so just ignore it
                     return $array;
                 }
 
                 $array = GlobalFunctions::getArrayFromWairudokado( $array, $matches, $index );
-
-                // Break out, because the getArrayFromWairudokado function handled the rest (we could put everything there,
-                // but for arrays without such a Wairudokado, it would be slower
-                break;
+                $wairudokado_helper_object = true;
             } else {
                 foreach ($array as $key => $value) {
                     if ($key == $match) {
@@ -243,34 +253,21 @@ class GlobalFunctions {
         return $array;
     }
 
+    /**
+     * @param $array
+     * @param $matches
+     * @param $index
+     * @return array
+     */
     private static function getArrayFromWairudokado( $array, $matches, $index ) {
-        if ( !isset ( $matches[$index + 1] ) ) {
-            return $array;
-        }
+        $helper_array = [];
 
-        if ( GlobalFunctions::isWairudokado( end( $matches ) ) ) {
-            // The Wairudokado operator does not make sense when it's at the end, so just ignore it
-            return $array;
-        }
-
-        $index++;
-        $next = $matches[$index];
-
-        if ( GlobalFunctions::isWairudokado( $next ) ) {
-            // Two sequentials Wairudokado operators do not make sense
-            return $array;
-        } else {
-            $helper_array = [];
-
-            foreach ( $array as $item ) {
-                if ( !is_array( $item ) ) {
-                    continue;
-                }
-
-                array_push( $helper_array, $item[$next] );
+        foreach ( $array as $item ) {
+            if ( !is_array( $item ) ) {
+                continue;
             }
 
-            GlobalFunctions::getArrayFromWairudokado( $helper_array, $matches, $index );
+            array_push( $helper_array, $item[ $matches[ $index + 1 ] ] );
         }
 
         return $helper_array;
