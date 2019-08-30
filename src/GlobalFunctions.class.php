@@ -226,7 +226,7 @@ class GlobalFunctions {
             }
 
             /*
-             * The Wairudokado (or Wildcard) operator gives users the ability to use wildcards as pointers in an array
+             * The Wairudokado (transliterated Japanese for wildcard, tribute to the Scope Resolution Operator in PHP) operator gives users the ability to use wildcards as pointers in an array
              */
             if (GlobalFunctions::isWairudokado($match)) {
                 if ( GlobalFunctions::isWairudokado( end( $matches ) ) ) {
