@@ -81,8 +81,8 @@ class ComplexArrayDefine extends ResultPrinter {
     /**
      * Define array and store it in WSArrays::$arrays as a SafeComplexArray object.
      *
-     * @param $name
-     * @param $wson
+     * @param string $name
+     * @param string $wson
      * @return array|null
      * @throws Exception
      */
