@@ -85,6 +85,11 @@ class ComplexArrayPrinter extends ResultPrinter {
     private $name = '';
 
     /**
+     * @var string
+     */
+    private $delimiter = ',';
+
+    /**
      * @var bool
      */
     private $unassociative = false;
@@ -139,6 +144,12 @@ class ComplexArrayPrinter extends ResultPrinter {
             'default' => 'true'
         ];
 
+        $definitions[] = [
+            'name' => 'delimiter',
+            'message' => 'ca-smw-paramdesc-delimiter',
+            'default' => ','
+        ];
+
         return $definitions;
     }
 
@@ -159,6 +170,7 @@ class ComplexArrayPrinter extends ResultPrinter {
         global $wfDefinedArraysGlobal;
 
         $this->name = $this->params[ 'name' ];
+        $this->delimiter = $this->params[ 'delimiter' ];
         $this->hide_meta = filter_var( $this->params[ 'hide' ], FILTER_VALIDATE_BOOLEAN );
         $this->unassociative = filter_var( $this->params[ 'unassociative' ], FILTER_VALIDATE_BOOLEAN );
         $this->simple = filter_var( $this->params[ 'simple' ], FILTER_VALIDATE_BOOLEAN );
@@ -201,31 +213,40 @@ class ComplexArrayPrinter extends ResultPrinter {
 
             if ( count($printouts) !== 0 ) {
                 foreach ( $printouts as $key => $printout ) {
-                    if ( isset( $printout[ 0 ] ) ) {
-                        switch ( $printout[ 0 ] ) {
+                    $print = [];
+
+                    foreach ( $printout as $property ) {
+                        // Parse booleans
+                        switch ( $property ) {
                             case 'f':
-                                $printout[ 0 ] = 0;
+                                $property = 0;
                                 break;
                             case 't':
-                                $printout[ 0 ] = 1;
+                                $property = 1;
                                 break;
                         }
 
+                        // Parse subobjects
                         if ( $this->simple ) {
-                            if ( is_array( $printout[ 0 ] ) ) {
-                                if ( isset( $printout[ 0 ][ 'fulltext' ] ) ) {
-                                    $printout[ 0 ] = $printout[ 0 ][ 'fulltext' ];
+                            if ( is_array( $property ) ) {
+                                if ( isset( $property[ 'fulltext' ] ) ) {
+                                    $property = $property[ 'fulltext' ];
                                 }
-                            } elseif ( strpos( $printout[ 0 ], 'mailto:' ) !== false ) {
-                                $printout[0] = str_replace( "mailto:", "", $printout[ 0 ] );
+                            } elseif ( strpos( $property, 'mailto:' ) !== false ) {
+                                $property = str_replace( "mailto:", "", $property );
                             }
                         }
 
-                        if ( $this->unassociative ) {
-                            array_push( $r, $printout[ 0 ] );
-                        } else {
-                            $r[$key] = $printout[ 0 ];
-                        }
+                        $print[] = $property;
+                    }
+
+                    $properties = implode($this->delimiter, $print);
+
+                    // Parse associative items
+                    if ( $this->unassociative ) {
+                        array_push( $r, $properties );
+                    } else {
+                        $r[$key] = $properties;
                     }
                 }
             }
