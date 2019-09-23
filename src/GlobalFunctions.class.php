@@ -379,7 +379,7 @@ class GlobalFunctions {
     }
 
     public static function rawValue( $arg, $frame, $parser = '' ) {
-        $expanded_frame = $frame->expand( $arg, PPFrame::NO_ARGS | PPFrame::NO_TEMPLATES );
+        $expanded_frame = $frame->expand( $arg, PPFrame::NO_ARGS | PPFrame::NO_TEMPLATES | PPFrame::NO_TAGS | PPFrame::NO_IGNORE );
         $trimmed_frame  = trim( $expanded_frame );
 
         return $trimmed_frame;
