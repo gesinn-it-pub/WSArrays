@@ -145,8 +145,8 @@ class ComplexArrayPrinter extends ResultPrinter {
         ];
 
         $definitions[] = [
-            'name' => 'delimiter',
-            'message' => 'ca-smw-paramdesc-delimiter',
+            'name' => 'valuesep',
+            'message' => 'ca-smw-paramdesc-valuesep',
             'default' => ','
         ];
 
@@ -170,7 +170,7 @@ class ComplexArrayPrinter extends ResultPrinter {
         global $wfDefinedArraysGlobal;
 
         $this->name = $this->params[ 'name' ];
-        $this->delimiter = $this->params[ 'delimiter' ];
+        $this->delimiter = $this->params[ 'valuesep' ];
         $this->hide_meta = filter_var( $this->params[ 'hide' ], FILTER_VALIDATE_BOOLEAN );
         $this->unassociative = filter_var( $this->params[ 'unassociative' ], FILTER_VALIDATE_BOOLEAN );
         $this->simple = filter_var( $this->params[ 'simple' ], FILTER_VALIDATE_BOOLEAN );

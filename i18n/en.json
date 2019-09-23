@@ -24,5 +24,5 @@
   "ca-smw-paramdesc-hide": "Hides all semantic variables in the result",
   "ca-smw-paramdesc-unassociative": "Converts the named keys to integer keys",
   "ca-smw-paramdesc-simple": "Hides more detailed information from the query",
-  "ca-smw-paramdesc-delimiter": "Delimiter between properties of the same name"
+  "ca-smw-paramdesc-valuesep": "Delimiter between properties of the same name"
 }
