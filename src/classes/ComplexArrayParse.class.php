@@ -52,7 +52,6 @@ class ComplexArrayParse extends ResultPrinter {
         GlobalFunctions::fetchSemanticArrays();
 
         $output = GlobalFunctions::getValue( $args, $frame, $parser, 5 );
-        var_dump($output);
         return [ $output, 'noparse' => false, 'isHTML' => false ];
     }
 

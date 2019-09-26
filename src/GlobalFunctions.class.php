@@ -399,11 +399,7 @@ class GlobalFunctions {
         }
 
         if ( $noparse > 0 ) {
-            if ( empty( $parser ) ) {
-                throw new Exception( "Parser missing" );
-            } else {
-                return GlobalFunctions::rawValue( $arg, $frame, $parser, $noparse );
-            }
+            return GlobalFunctions::rawValue( $arg, $frame, $noparse );
         } else {
             return GlobalFunctions::getSFHValue( $arg, $frame );
         }
@@ -415,7 +411,7 @@ class GlobalFunctions {
      * @param string $parser
      * @return string
      */
-    public static function rawValue( $arg, $frame, $parser = '', $noparse_level = 1 ) {
+    public static function rawValue( $arg, $frame, $noparse_level = 1 ) {
         switch ( $noparse_level ) {
             case 1:
                 $expanded_frame = $frame->expand( $arg,
