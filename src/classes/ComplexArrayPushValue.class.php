@@ -39,33 +39,37 @@ class ComplexArrayPushValue extends ResultPrinter {
     }
 
     public function getType() {
-        return 'normal';
+        return 'sfh';
     }
 
     /**
      * Define all allowed parameters.
      *
      * @param Parser $parser
-     * @param string $array
-     * @param string $value
+     * @param string $frame
+     * @param string $args
      * @return array|bool|null
      *
      * @throws Exception
      */
-    public static function getResult( Parser $parser, $array_name = '', $value = '' ) {
+    public static function getResult( Parser $parser, $frame, $args ) {
         GlobalFunctions::fetchSemanticArrays();
 
-        if ( empty( $array_name ) ) {
+        if ( !isset( $args[ 0 ] ) || empty( $args[ 0 ] ) ) {
             $ca_omitted = wfMessage( 'ca-omitted', 'Name' );
 
             return GlobalFunctions::error( $ca_omitted );
         }
 
-        if ( empty( $value ) ) {
+        if ( !isset( $args[ 1 ] ) || empty( $args[ 1 ] ) ) {
             $ca_omitted = wfMessage( 'ca-omitted', 'Value' );
 
             return GlobalFunctions::error( $ca_omitted );
         }
+
+        $noparse = GlobalFunctions::getValue( $args[ 2 ], $frame );
+        $array_name = GlobalFunctions::getValue( $args[ 0 ], $frame );
+        $value = GlobalFunctions::getValue( $args[ 1 ], $frame, $parser, $noparse );
 
         return ComplexArrayPushValue::arrayPushValue( $array_name, $value );
     }
@@ -78,10 +82,10 @@ class ComplexArrayPushValue extends ResultPrinter {
      * @throws Exception
      */
     private static function arrayPushValue( $array_name, $value ) {
-        $base_array = ComplexArrayPushValue::calculateBaseArray( $array_name );
+        $base_array = GlobalFunctions::calculateBaseArray( $array_name );
 
         // If the array doesn't exist yet, create it
-        if ( !GlobalFunctions::arrayExists( $array_name ) ) {
+        if ( !GlobalFunctions::arrayExists( $base_array ) ) {
             if ( !GlobalFunctions::isValidArrayName( $base_array ) ) {
                 $ca_invalid_name = wfMessage( 'ca-invalid-name' );
 
@@ -91,37 +95,37 @@ class ComplexArrayPushValue extends ResultPrinter {
             WSArrays::$arrays[ $base_array ] = new SafeComplexArray();
         }
 
-        $array = GlobalFunctions::getArrayFromSafeComplexArray( WSArrays::$arrays[ $base_array ] );
+        $matches = array();
+        preg_match_all( "/(?<=\[).+?(?=\])/", $array_name, $matches );
+
+        global $wfEscapeEntitiesInArrays;
+        if ( $wfEscapeEntitiesInArrays === true ) {
+            $array = GlobalFunctions::getArrayFromSafeComplexArray( WSArrays::$arrays[ $base_array ] );
+        } else {
+            $array = GlobalFunctions::getUnsafeArrayFromSafeComplexArray( WSArrays::$arrays[ $base_array ] );
+        }
+
+        GlobalFunctions::toArrayIfValid( $value );
 
         if ( !strpos( $array_name, "[" ) ) {
-            GlobalFunctions::WSONtoJSON( $value );
+            ComplexArrayPushValue::replace( $value, $array, $base_array );
+        } else {
+            $result = ComplexArrayPushValue::add( $matches[0], $array, $value );
 
-            if ( GlobalFunctions::isValidJSON( $value ) ) {
-                $value = json_decode( $value, true );
+            if ( $result !== true ) {
+                return $result;
             }
 
-            array_push( $array, $value );
-
             WSArrays::$arrays[ $base_array ] = new SafeComplexArray( $array );
-
-            return null;
         }
-
-        if ( preg_match_all( "/(?<=\[).+?(?=\])/", $array_name, $matches ) === 0 ) {
-            $ca_invalid_name = wfMessage( 'ca-invalid-name' );
-
-            return GlobalFunctions::error( $ca_invalid_name );
-        }
-
-        $result = ComplexArrayPushValue::add( $matches[0], $array, $value );
-
-        if ( $result !== true ) {
-            return $result;
-        }
-
-        WSArrays::$arrays[ $base_array ] = new SafeComplexArray( $array );
 
         return null;
+    }
+
+    private static function replace( $value, $array, $base_array ) {
+        array_push( $array, $value );
+
+        WSArrays::$arrays[ $base_array ] = new SafeComplexArray( $array );
     }
 
     /**
@@ -133,33 +137,33 @@ class ComplexArrayPushValue extends ResultPrinter {
      * @return array|bool
      */
     private static function add( $path, &$array = array(), $value = null ) {
-        GlobalFunctions::WSONtoJSON( $value );
-
-        if ( GlobalFunctions::isValidJSON( $value ) ) {
-            $value = json_decode( $value, true );
-        }
-
         $temp =& $array;
-
         $depth = count( $path );
-
-        $current_depth = 1;
+        $current_depth = 0;
 
         foreach ( $path as $key ) {
             $current_depth++;
 
-            if ( !array_key_exists( $key, $temp ) ) {
-                $ca_nonexistent_subarray = wfMessage( 'ca-nonexistent-subarray' );
-
-                return GlobalFunctions::error( $ca_nonexistent_subarray );
+            if ( !array_key_exists( $key, (array)$temp ) ) {
+                $temp[$key] = array();
             }
 
             if( $current_depth !== $depth ) {
+                if ( !is_array( $temp[ $key ] ) ) {
+                    $temp[ $key ] = [ $temp[ $key ] ];
+                }
+
                 $temp =& $temp[ $key ];
+            } else {
+                if ( !is_array( $temp[ $key ] ) ) {
+                    $temp[ $key ] = [ $temp[ $key ] ];
+                }
+
+                array_push( $temp[ $key ], $value );
+
+                break;
             }
         }
-
-        array_push( $temp, $value );
 
         return true;
     }

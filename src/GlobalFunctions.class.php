@@ -66,6 +66,7 @@ class GlobalFunctions {
     public static function WSONtoJSON( &$wson ) {
         $wson = preg_replace( "/(?!\B\"[^\"]*)\(\((?![^\"]*\"\B)/i", "{", $wson );
         $wson = preg_replace( "/(?!\B\"[^\"]*)\)\)(?![^\"]*\"\B)/i", "}", $wson );
+        $wson = preg_replace( "~[\r\n]+~", '\\n', $wson);
     }
 
     /**
@@ -150,8 +151,8 @@ class GlobalFunctions {
      * @throws Exception
      */
     public static function getArrayFromArrayName( $array_name, $unsafe = false ) {
-        global $wgEscapeEntitiesInArrays;
-        if($wgEscapeEntitiesInArrays === false) {
+        global $wfEscapeEntitiesInArrays;
+        if($wfEscapeEntitiesInArrays === false) {
             $unsafe = true;
         }
 
@@ -321,6 +322,8 @@ class GlobalFunctions {
         if ( $wfDefinedArraysGlobal !== null ) {
             WSArrays::$arrays = array_merge( WSArrays::$arrays, $wfDefinedArraysGlobal );
         }
+
+        $wfDefinedArraysGlobal = [];
     }
 
     /**
@@ -370,11 +373,91 @@ class GlobalFunctions {
      * @param string $array_name
      * @return bool
      */
-    public static function arrayExists( $array_name ) {
-        if ( isset( WSArrays::$arrays[ $array_name ] ) ) {
+    public static function arrayExists( $array_name )
+    {
+        if (isset(WSArrays::$arrays[$array_name])) {
             return true;
         }
 
         return false;
+    }
+
+    /**
+     * @param $arg
+     * @param $frame
+     * @param string $parser
+     * @param int $noparse
+     * @return string
+     * @throws Exception
+     */
+    public static function getValue($arg, $frame, $parser = '', $noparse = '' ) {
+        if ( !isset( $arg ) || empty ( $arg ) ) {
+            return null;
+        }
+
+        if ( !empty( $noparse) && gettype( $noparse ) !== "int" ) {
+            $noparse = intval( $noparse );
+        }
+
+        if ( $noparse > 0 ) {
+            return GlobalFunctions::rawValue( $arg, $frame, $noparse );
+        } else {
+            return GlobalFunctions::getSFHValue( $arg, $frame );
+        }
+    }
+
+    /**
+     * @param $arg
+     * @param $frame
+     * @param string $parser
+     * @return string
+     */
+    public static function rawValue( $arg, $frame, $noparse_level = 1 ) {
+        switch ( $noparse_level ) {
+            case 1:
+                $expanded_frame = $frame->expand( $arg,
+                    PPFrame::NO_IGNORE );
+                break;
+            case 2:
+                $expanded_frame = $frame->expand( $arg,
+                    PPFrame::NO_IGNORE | PPFrame::NO_ARGS );
+                break;
+            case 3:
+                $expanded_frame = $frame->expand( $arg,
+                    PPFrame::NO_IGNORE | PPFrame::NO_ARGS | PPFrame::NO_TEMPLATES );
+                break;
+            case 4:
+                $expanded_frame = $frame->expand( $arg,
+                    PPFrame::NO_IGNORE | PPFrame::NO_ARGS | PPFrame::NO_TAGS );
+                break;
+             default:
+                $expanded_frame = $frame->expand( $arg,
+                    PPFrame::NO_IGNORE | PPFrame::NO_ARGS | PPFrame::NO_TAGS | PPFrame::NO_TEMPLATES );
+                break;
+        }
+
+        $trimmed_frame  = trim( $expanded_frame );
+
+        return $trimmed_frame;
+    }
+
+    /**
+     * @param $arg
+     * @param $frame
+     * @return string
+     */
+    public static function getSFHValue( $arg, $frame ) {
+        return trim( $frame->expand( $arg ) );
+    }
+
+    /**
+     * @param $value
+     */
+    public static function toArrayIfValid( &$value ) {
+        GlobalFunctions::WSONtoJSON( $value );
+
+        if ( GlobalFunctions::isValidJSON( $value ) ) {
+            $value = json_decode( $value, true );
+        }
     }
 }

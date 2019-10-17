@@ -106,19 +106,20 @@ class ComplexArrayMap extends ResultPrinter {
             return GlobalFunctions::error( $ca_omitted );
         }
 
-        // Separator
-        if ( isset( $args[ 3 ] ) && !empty( $args[ 3 ] ) ) {
-            ComplexArrayMap::$sep = trim( $frame->expand( $args[ 3 ] ) );
-        }
-
         // Hide
-        if ( isset( $args[ 4 ] ) && trim( $frame->expand( $args[ 4 ] ) ) === "true" ) {
-            ComplexArrayMap::$hide = true;
+        if ( isset( $args[4] ) ) {
+            if ( GlobalFunctions::getValue( $args[ 4 ], $frame ) === "true" ) {
+                ComplexArrayMap::$hide = true;
+            }
         }
 
-        $name = trim( $frame->expand( $args[ 0 ] ) );
-        $map_key = trim( $frame->expand( $args[ 1 ] ) );
-        $map = trim( $frame->expand( $args[ 2 ], PPFrame::NO_ARGS | PPFrame::NO_TEMPLATES ) );
+        if ( isset( $args[3] ) ) {
+            ComplexArrayMap::$sep = GlobalFunctions::getValue( $args[ 3 ], $frame );
+        }
+
+        $name = GlobalFunctions::getValue( $args[ 0 ], $frame );
+        $map_key = GlobalFunctions::getValue( $args[ 1 ], $frame );
+        $map = GlobalFunctions::getValue( $args[ 2 ], $frame, $parser, '5' );
 
         return array( ComplexArrayMap::arrayMap( $name, $map_key, $map ), 'noparse' => false );
     }

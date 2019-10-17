@@ -38,29 +38,35 @@ class ComplexArrayDefine extends ResultPrinter {
     }
 
     public function getType() {
-        return 'normal';
+        return 'sfh';
     }
 
     /**
      * Define all allowed parameters.
      *
      * @param Parser $parser
-     * @param string $name The name of the array that is going to be defined
-     * @param string $wson The array, encoded in valid JSON
-     * @param string $sep The separator used when defining a simple array, default: ,
+     * @param string $frame
+     * @param string $args
      *
      * @throws Exception
      *
      * @return null
      */
-    public static function getResult( Parser $parser, $name = '', $wson = '', $sep = ',' ) {
+    public static function getResult( Parser $parser, $frame, $args ) {
         GlobalFunctions::fetchSemanticArrays();
 
-        if ( empty( $name ) ) {
+        // Name
+        if ( !isset( $args[ 0 ] ) || empty( $args[ 0 ] ) ) {
             $ca_omitted = wfMessage( 'ca-omitted', 'Name' );
 
             return GlobalFunctions::error( $ca_omitted );
+        } else {
+            $name = GlobalFunctions::getValue( $args[ 0 ], $frame );
         }
+
+        $noparse = GlobalFunctions::getValue( $args[ 3 ], $frame );
+        $wson = GlobalFunctions::getValue( $args[ 1 ], $frame, $parser, $noparse );
+        $sep = GlobalFunctions::getValue( $args[ 2 ], $frame );
 
         if ( !GlobalFunctions::isValidArrayName( $name ) ) {
             $ca_invalid_name = wfMessage( 'ca-invalid-name' );
@@ -70,7 +76,7 @@ class ComplexArrayDefine extends ResultPrinter {
 
         // Define an empty array
         if ( empty( $wson ) ) {
-            WSArrays::$arrays[$name] = new SafeComplexArray();
+            WSArrays::$arrays[ $name ] = new SafeComplexArray();
 
             return null;
         }
@@ -83,22 +89,31 @@ class ComplexArrayDefine extends ResultPrinter {
      *
      * @param string $name
      * @param string $wson
+     * @param string $sep
      * @return array|null
      * @throws Exception
      */
-    private static function arrayDefine( $name, $wson, $sep ) {
+    private static function arrayDefine( $name, $wson, $sep = null ) {
         // Convert the WSON to an array
         $array = GlobalFunctions::WSONtoArray( $wson );
 
         // If it's not WSON, assume it is a simple array
         if ( !$array ) {
-            $array = explode( $sep, $wson );
-
-            WSArrays::$arrays[$name] = new SafeComplexArray( $array );
+            ComplexArrayDefine::defineSimpleArray( $name, $wson, $sep );
         } else {
             WSArrays::$arrays[$name] = new SafeComplexArray( $array );
         }
 
         return null;
+    }
+
+    private static function defineSimpleArray( $name, $wson, $sep = null ) {
+        if ( !$sep ) {
+            $sep = ",";
+        }
+
+        $array = array_map('trim', explode( $sep, $wson ) );
+
+        WSArrays::$arrays[$name] = new SafeComplexArray( $array );
     }
 }

@@ -81,29 +81,13 @@ class ComplexArrayPrint extends ResultPrinter {
     public static function getResult( Parser $parser, $frame, $args ) {
         GlobalFunctions::fetchSemanticArrays();
 
-        if ( isset( $args[ 0 ] ) ) {
-            $name = trim( $frame->expand( $args[ 0 ] ) );
-        } else {
-            $name = '';
-        }
+        ComplexArrayPrint::$array = [];
 
-        if ( isset( $args[ 1 ] ) ) {
-            $options = trim( $frame->expand( $args[ 1 ] ) );
-        } else {
-            $options = '';
-        }
-
-        if ( isset( $args[ 2 ] ) ) {
-            $map = trim( $frame->expand( $args[ 2 ] ) );
-        } else {
-            $map = '';
-        }
-
-        if ( isset( $args[ 3 ] ) ) {
-            $subject = trim( $frame->expand( $args[ 3 ], PPFrame::NO_ARGS | PPFrame::NO_TEMPLATES ) );
-        } else {
-            $subject = '';
-        }
+        $name = GlobalFunctions::getValue($args[ 0 ], $frame );
+        $options = GlobalFunctions::getValue( $args[ 1 ], $frame );
+        $map = GlobalFunctions::getValue( $args[ 2 ], $frame );
+        $noparse = GlobalFunctions::getValue( $args[ 4 ], $frame );
+        $subject = GlobalFunctions::getValue( $args[ 3 ], $frame, $parser, $noparse );
 
         if ( empty( $name ) ) {
             $ca_omitted = wfMessage( 'ca-omitted', 'Name' );
@@ -217,14 +201,14 @@ class ComplexArrayPrint extends ResultPrinter {
      * @return array|null|string
      */
     private static function createList( $type = "unordered" ) {
-        if ( count( ComplexArrayPrint::$array ) === 1 && !GlobalFunctions::containsArray( ComplexArrayPrint::$array ) ) {
+        if ( is_array( ComplexArrayPrint::$array ) && count( ComplexArrayPrint::$array ) === 1 && !GlobalFunctions::containsArray( ComplexArrayPrint::$array ) ) {
             if ( is_array( ComplexArrayPrint::$array ) ) {
                 $last_el = reset( ComplexArrayPrint::$array );
                 $return  = key( ComplexArrayPrint::$array ) . ": " . $last_el;
 
-                return $return;
+                return array( $return, 'noparse' => false, 'isHTML' => false );
             } else {
-                return ComplexArrayPrint::$array;
+                return array( ComplexArrayPrint::$array, 'noparse' => false, 'isHTML' => false );
             }
         }
 

@@ -83,5 +83,14 @@ $magicWords['en'] = [
     'capusharray' => [ 0, 'capusharray' ],
 
     'complexarraymap' => [ 0, 'complexarraymap' ],
-    'camap' => [ 0, 'camap' ]
+    'camap' => [ 0, 'camap' ],
+
+    'complexarrayarraymap' => [ 0, 'complexarrayarraymap' ],
+    'caamap' => [ 0, 'caamap' ],
+    'camapa' => [ 0, 'camapa' ],
+
+    'complexarraydefinedarrays' => [ 0, 'complexarraydefinedarrays' ],
+    'cadefinedarrays' => [ 0, 'cadefinedarrays' ],
+    'cadefined' => [ 0, 'cadefined' ],
+    'cad' => [ 0, 'cad' ]
 ];
