@@ -20,7 +20,7 @@
  */
 
 /**
- * Class ComplexArrayParent
+ * Class ComplexArrayParent.class
  *
  * Defines the parser function {{#complexarrayparent:}}, which returns the parent of the given key.
  *
