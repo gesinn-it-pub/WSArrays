@@ -83,11 +83,11 @@ class ComplexArrayPrint extends ResultPrinter {
 
         ComplexArrayPrint::$array = [];
 
-        $name = GlobalFunctions::getValue($args[ 0 ], $frame );
-        $options = GlobalFunctions::getValue( $args[ 1 ], $frame );
-        $map = GlobalFunctions::getValue( $args[ 2 ], $frame );
-        $noparse = GlobalFunctions::getValue( $args[ 4 ], $frame );
-        $subject = GlobalFunctions::getValue( $args[ 3 ], $frame, $parser, $noparse );
+        $name = GlobalFunctions::getValue( @$args[ 0 ], $frame );
+        $options = GlobalFunctions::getValue( @$args[ 1 ], $frame );
+        $map = GlobalFunctions::getValue( @$args[ 2 ], $frame );
+        $noparse = GlobalFunctions::getValue( @$args[ 4 ], $frame );
+        $subject = GlobalFunctions::getValue( @$args[ 3 ], $frame, $parser, $noparse );
 
         if ( empty( $name ) ) {
             $ca_omitted = wfMessage( 'ca-omitted', 'Name' );
@@ -148,7 +148,7 @@ class ComplexArrayPrint extends ResultPrinter {
                 break;
             case 'markup':
             case 'wson':
-                return ComplexArrayPrint::arrayToWSON( ComplexArrayPrint::$array );
+                return ComplexArrayPrint::arrayToMarkup( ComplexArrayPrint::$array );
                 break;
             default:
                 return ComplexArrayPrint::createList( $options );
@@ -201,7 +201,7 @@ class ComplexArrayPrint extends ResultPrinter {
      * @return array|null|string
      */
     private static function createList( $type = "unordered" ) {
-        if ( is_array( ComplexArrayPrint::$array ) && count( ComplexArrayPrint::$array ) === 1 && !GlobalFunctions::containsArray( ComplexArrayPrint::$array ) ) {
+        if ( count( ComplexArrayPrint::$array ) === 1 && !GlobalFunctions::containsArray( ComplexArrayPrint::$array ) ) {
             if ( is_array( ComplexArrayPrint::$array ) ) {
                 $last_el = reset( ComplexArrayPrint::$array );
                 $return  = key( ComplexArrayPrint::$array ) . ": " . $last_el;

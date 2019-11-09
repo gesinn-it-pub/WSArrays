@@ -92,5 +92,14 @@ $magicWords['en'] = [
     'complexarraydefinedarrays' => [ 0, 'complexarraydefinedarrays' ],
     'cadefinedarrays' => [ 0, 'cadefinedarrays' ],
     'cadefined' => [ 0, 'cadefined' ],
-    'cad' => [ 0, 'cad' ]
+    'cad' => [ 0, 'cad' ],
+
+    'complexarrayparent' => [ 0, 'complexarrayparent' ],
+    'caparent' => [ 0, 'caparent'],
+    'capapa' => [ 0, 'capapa' ],
+    'camama' => [ 0, 'camama' ],
+
+    'ComplexArrayUnset.class' => [ 0, 'ComplexArrayUnset.class'],
+    'caunset' => [ 0, 'caunset' ],
+    'caremove' => [ 0, 'caremove' ]
 ];

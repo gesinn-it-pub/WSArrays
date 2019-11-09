@@ -89,6 +89,9 @@ class ComplexArraySearch extends ResultPrinter {
             return null;
         }
 
+        ComplexArraySearch::$found = 0;
+        ComplexArraySearch::$array_name = null;
+
         ComplexArraySearch::findValue( $value, $array_name );
 
         return htmlspecialchars(ComplexArraySearch::$array_name);
@@ -119,7 +122,7 @@ class ComplexArraySearch extends ResultPrinter {
         foreach( $array as $current_key => $current_item ) {
             $array_name .= "[$current_key]";
 
-            if( $value == $current_item ) {
+            if( $value === $current_item ) {
                 ComplexArraySearch::$array_name = $array_name;
 
                 ComplexArraySearch::$found = 1;
