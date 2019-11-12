@@ -103,7 +103,13 @@ class ComplexArrayArrayMap extends ResultPrinter {
         ComplexArrayArrayMap::$formula = $formula;
         ComplexArrayArrayMap::$new_delimiter = $new_delimiter;
 
-        return ComplexArrayArrayMap::iterate();
+        $haystack = ComplexArrayArrayMap::iterate();
+
+        if(ComplexArrayArrayMap::$new_delimiter) {
+            substr_replace($haystack, "", -1);
+        }
+
+        return $haystack;
     }
 
     private static function iterate() {
