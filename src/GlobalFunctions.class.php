@@ -171,11 +171,6 @@ class GlobalFunctions {
     public static function isCommaSeparatedList( $markup ) {
         $exploded_list = explode( ',', $markup );
 
-        if ( count( $exploded_list ) < 2 ) {
-            // A comma separated list with one item does not make sense.
-            return false;
-        }
-
         if ( !strpos( $markup, '[' ) && !strpos( $markup, ']' ) && !strpos( $markup, ':' ) ) {
             return true;
         }
