@@ -105,15 +105,11 @@ class ComplexArrayArrayMap extends ResultPrinter {
 
         $haystack = ComplexArrayArrayMap::iterate();
 
-        if(ComplexArrayArrayMap::$new_delimiter) {
-            substr_replace($haystack, "", -1);
-        }
-
         return $haystack;
     }
 
     private static function iterate() {
-        $haystack = '';
+        $haystack = [];
 
         foreach (ComplexArrayArrayMap::$array as $item ) {
             $replaced_formula = str_replace( ComplexArrayArrayMap::$variable, $item, ComplexArrayArrayMap::$formula );
@@ -122,9 +118,9 @@ class ComplexArrayArrayMap extends ResultPrinter {
                 continue;
             }
 
-            $haystack .= $replaced_formula . ComplexArrayArrayMap::$new_delimiter;
+            array_push($haystack,$replaced_formula);
         }
 
-        return $haystack;
+        return implode(ComplexArrayArrayMap::$new_delimiter, $haystack);
     }
 }
