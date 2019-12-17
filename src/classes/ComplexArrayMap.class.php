@@ -114,7 +114,13 @@ class ComplexArrayMap extends ResultPrinter {
         }
 
         if ( isset( $args[3] ) ) {
-            ComplexArrayMap::$sep = GlobalFunctions::getValue( $args[ 3 ], $frame );
+            $sep = GlobalFunctions::getValue( $args[ 3 ], $frame );
+
+            if($sep === '\n') {
+                $sep = "\r\n";
+            }
+
+            ComplexArrayMap::$sep = $sep;
         }
 
         $name = GlobalFunctions::getValue( $args[ 0 ], $frame );
