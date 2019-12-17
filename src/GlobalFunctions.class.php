@@ -19,7 +19,7 @@
  * Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  */
 
-require_once ('SafeComplexArray.class.php');
+require_once('ComplexArray.class.php');
 
 /**
  * Class GlobalFunctions
@@ -224,7 +224,7 @@ class GlobalFunctions {
      *
      * @throws Exception
      */
-    public static function getArrayFromArrayName( $array_name, $unsafe = false ) {
+    public static function getArrayFromArrayName( $array_name ) {
         global $wfEscapeEntitiesInArrays;
         if($wfEscapeEntitiesInArrays === false) {
             $unsafe = true;
@@ -233,14 +233,10 @@ class GlobalFunctions {
         /* This is already a base array, so just get the array */
         if ( !strpos( $array_name, "[" ) ) {
             if ( isset( WSArrays::$arrays[ $array_name ] ) ) {
-                if($unsafe === true) {
-                    return GlobalFunctions::getUnsafeArrayFromSafeComplexArray( WSArrays::$arrays[ $array_name ] );
-                } else {
-                    return GlobalFunctions::getArrayFromSafeComplexArray( WSArrays::$arrays[ $array_name ] );
-                }
+                return GlobalFunctions::getArrayFromComplexArray( WSArrays::$arrays[ $array_name ] );
             }
         } else {
-            return GlobalFunctions::getSubarrayFromArrayName( $array_name, $unsafe );
+            return GlobalFunctions::getSubarrayFromArrayName( $array_name );
         }
 
         return false;
@@ -254,7 +250,7 @@ class GlobalFunctions {
      * @return array|bool|mixed
      * @throws Exception
      */
-    private static function getSubarrayFromArrayName( $array_name, $unsafe ) {
+    private static function getSubarrayFromArrayName( $array_name ) {
         /* Get the name of the base array */
         $base_array_name = GlobalFunctions::calculateBaseArray( $array_name );
 
@@ -266,11 +262,7 @@ class GlobalFunctions {
             return false;
         }
 
-        if ( $unsafe === true ) {
-            $array = GlobalFunctions::getUnsafeArrayFromSafeComplexArray( WSArrays::$arrays[ $base_array_name ] );
-        } else {
-            $array = GlobalFunctions::getArrayFromSafeComplexArray( WSArrays::$arrays[ $base_array_name ] );
-        }
+        $array = GlobalFunctions::getArrayFromComplexArray( WSArrays::$arrays[ $base_array_name ] );
 
         if ( !is_array( $array ) ) {
             return false;
@@ -426,21 +418,12 @@ class GlobalFunctions {
     }
 
     /**
-     * @param SafeComplexArray $array
+     * @param ComplexArray $array
      * @return array
      * @throws Exception
      */
-    public static function getArrayFromSafeComplexArray( SafeComplexArray $array ) {
+    public static function getArrayFromComplexArray(ComplexArray $array) {
         return $array->getArray();
-    }
-
-    /**
-     * @param SafeComplexArray $array
-     * @return array
-     * @throws Exception
-     */
-    public static function getUnsafeArrayFromSafeComplexArray( SafeComplexArray $array ) {
-        return $array->getUnsafeArray();
     }
 
     /**
@@ -460,7 +443,7 @@ class GlobalFunctions {
      * @param $arg
      * @param $frame
      * @param string $parser
-     * @param int $noparse
+     * @param string $noparse
      * @return string
      * @throws Exception
      */

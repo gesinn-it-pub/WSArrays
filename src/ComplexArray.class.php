@@ -24,23 +24,17 @@
  *
  * Great-grandfather class. This is the highest class. It defines the object arrays should be stored in. Arrays that are stored in this object, are always escaped and safe.
  */
-class SafeComplexArray extends GlobalFunctions {
+class ComplexArray extends GlobalFunctions {
     /**
      * @var array
      */
-    private $safe_array   = array();
-
-    /**
-     * @var array
-     */
-    private $unsafe_array = array();
+    private $array = array();
 
     /**
      * @param array $array
      */
     public function __construct( array $array = array() ) {
-        $this->storeDirtyArray( $array );
-        $this->storeCleanArray( $array );
+        $this->storeArray( $array );
     }
 
     /**
@@ -50,21 +44,9 @@ class SafeComplexArray extends GlobalFunctions {
      * @throws Exception
      */
     public function getArray() {
-        if ( !isset( $this->safe_array ) ) throw new Exception( "No array has been declared" );
+        if ( !isset( $this->array ) ) throw new Exception( "No array has been declared" );
 
-        return $this->safe_array;
-    }
-
-    /**
-     * Return the array without escaped characters.
-     *
-     * @return array
-     * @throws Exception
-     */
-    public function getUnsafeArray() {
-        if ( !isset( $this->unsafe_array ) ) throw new Exception( "No array has been declared" );
-
-        return $this->unsafe_array;
+        return $this->array;
     }
 
     /**
@@ -72,34 +54,7 @@ class SafeComplexArray extends GlobalFunctions {
      *
      * @param $array
      */
-    private function storeDirtyArray( $array ) {
-        $this->unsafe_array = $array;
-    }
-
-    /**
-     * Escape and store the array.
-     *
-     * @param $array
-     */
-    private function storeCleanArray( $array ) {
-        $this->cleanArray( $array );
-
-        $this->safe_array = $array;
-    }
-
-    /**
-     * @param $array
-     */
-    private function cleanArray( &$array ) {
-        array_walk_recursive( $array, "SafeComplexArray::filter" );
-    }
-
-    /**
-     * Called by SafeComplexArray::cleanArray in the array_walk_recursive function.
-     *
-     * @param $value
-     */
-    private static function filter( &$value ) {
-        $value = htmlspecialchars( $value, ENT_QUOTES, 'UTF-8' );
+    private function storeArray( $array ) {
+        $this->array = $array;
     }
 }

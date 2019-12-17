@@ -83,7 +83,7 @@ class ComplexArrayPushArray extends ResultPrinter {
 
         $arrays = ComplexArrayPushArray::iterate( $args );
 
-        WSArrays::$arrays[ComplexArrayPushArray::$new_array] = new SafeComplexArray( $arrays );
+        WSArrays::$arrays[ComplexArrayPushArray::$new_array] = new ComplexArray( $arrays );
 
         return null;
     }
@@ -103,11 +103,7 @@ class ComplexArrayPushArray extends ResultPrinter {
                 continue;
             }
 
-            if ( $wfEscapeEntitiesInArrays === true ) {
-                $push_array = GlobalFunctions::getArrayFromSafeComplexArray( WSArrays::$arrays[ $array_name ] );
-            } else {
-                $push_array = GlobalFunctions::getUnsafeArrayFromSafeComplexArray( WSArrays::$arrays[ $array_name ] );
-            }
+            $push_array = GlobalFunctions::getArrayFromComplexArray( WSArrays::$arrays[ $array_name ] );
 
             array_push( $arrays, $push_array );
         }

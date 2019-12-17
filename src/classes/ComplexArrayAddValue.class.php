@@ -106,18 +106,12 @@ class ComplexArrayAddValue extends ResultPrinter {
             return GlobalFunctions::error( $ca_invalid_name );
         }
 
-        global $wfEscapeEntitiesInArrays;
-
-        if ( $wfEscapeEntitiesInArrays === true ) {
-            $wsarray = GlobalFunctions::getArrayFromSafeComplexArray( WSArrays::$arrays[ $base_array ] );
-        } else {
-            $wsarray = GlobalFunctions::getUnsafeArrayFromSafeComplexArray( WSArrays::$arrays[ $base_array ] );
-        }
+        $wsarray = GlobalFunctions::getArrayFromComplexArray( WSArrays::$arrays[ $base_array ] );
 
 
         ComplexArrayAddValue::set( $keys, $wsarray, $value );
 
-        WSArrays::$arrays[ $base_array ] = new SafeComplexArray( $wsarray );
+        WSArrays::$arrays[ $base_array ] = new ComplexArray( $wsarray );
 
         return null;
     }

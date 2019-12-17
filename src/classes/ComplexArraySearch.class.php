@@ -104,7 +104,7 @@ class ComplexArraySearch extends ResultPrinter {
      * @throws Exception
      */
     private static function findValue( $value, $array_name ) {
-        $array = GlobalFunctions::getArrayFromArrayName( $array_name, true );
+        $array = GlobalFunctions::getArrayFromArrayName( $array_name );
 
         ComplexArraySearch::i( $array, $value, $array_name );
     }

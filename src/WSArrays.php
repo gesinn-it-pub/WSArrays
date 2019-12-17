@@ -74,8 +74,8 @@ if ( $wfEnableResultPrinter ) {
  *
  * @extends GlobalFunctions
  */
-class WSArrays extends SafeComplexArray {
-    const VERSION = '2.0.3';
+class WSArrays extends ComplexArray {
+    const VERSION = '2.1';
 
     /**
      * This variable holds all defined arrays. If an array is defined called "array", the array will be stored in WSArrays::$arrays["array"].

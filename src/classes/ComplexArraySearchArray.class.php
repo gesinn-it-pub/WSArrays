@@ -99,7 +99,7 @@ class ComplexArraySearchArray extends ResultPrinter {
         ComplexArraySearchArray::findValues( $value, $name );
 
         if ( count( ComplexArraySearchArray::$found ) > 0 ) {
-            WSArrays::$arrays[ $new_array ] = new SafeComplexArray( ComplexArraySearchArray::$found );
+            WSArrays::$arrays[ $new_array ] = new ComplexArray( ComplexArraySearchArray::$found );
         }
 
         return null;
@@ -112,7 +112,7 @@ class ComplexArraySearchArray extends ResultPrinter {
      * @throws Exception
      */
     private static function findValues( $value, $key ) {
-        $array = GlobalFunctions::getArrayFromArrayName( $key, true );
+        $array = GlobalFunctions::getArrayFromArrayName( $key );
 
         ComplexArraySearchArray::$found = [];
         ComplexArraySearchArray::i( $array, $value, $key );

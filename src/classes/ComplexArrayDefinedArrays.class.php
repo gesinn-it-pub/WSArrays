@@ -70,6 +70,6 @@ class ComplexArrayDefinedArrays extends ResultPrinter {
     private static function arrayDefinedArrays( $key ) {
         $array = array_keys( WSArrays::$arrays );
 
-        WSArrays::$arrays[ $key ] = new SafeComplexArray( $array );
+        WSArrays::$arrays[ $key ] = new ComplexArray( $array );
     }
 }

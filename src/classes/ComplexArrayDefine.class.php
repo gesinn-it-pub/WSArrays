@@ -76,7 +76,7 @@ class ComplexArrayDefine extends ResultPrinter {
 
         // Define an empty array
         if ( empty( $markup ) ) {
-            WSArrays::$arrays[ $name ] = new SafeComplexArray();
+            WSArrays::$arrays[ $name ] = new ComplexArray();
 
             return null;
         }
@@ -102,7 +102,7 @@ class ComplexArrayDefine extends ResultPrinter {
             return null;
         }
 
-        WSArrays::$arrays[$name] = new SafeComplexArray( $array );
+        WSArrays::$arrays[$name] = new ComplexArray( $array );
 
         return null;
     }

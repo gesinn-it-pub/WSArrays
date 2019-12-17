@@ -85,16 +85,16 @@ class ComplexArraySlice extends ResultPrinter {
      * @throws Exception
      */
     private static function arraySlice( $new_array_name, $array_name, $offset = 0, $length = 0 ) {
-        $array = GlobalFunctions::getArrayFromArrayName( $array_name, true );
+        $array = GlobalFunctions::getArrayFromArrayName( $array_name );
 
         if ( !$array ) {
             return null;
         }
 
         if ( !empty( $length ) ) {
-            WSArrays::$arrays[ $new_array_name ] = new SafeComplexArray( array_slice( $array, $offset, $length ) );
+            WSArrays::$arrays[ $new_array_name ] = new ComplexArray( array_slice( $array, $offset, $length ) );
         } else {
-            WSArrays::$arrays[ $new_array_name ] = new SafeComplexArray( array_slice( $array, $offset ) );
+            WSArrays::$arrays[ $new_array_name ] = new ComplexArray( array_slice( $array, $offset ) );
         }
 
         return null;

@@ -89,7 +89,7 @@ class ComplexArrayExtract extends ResultPrinter {
             return GlobalFunctions::error( $ca_subarray_not_provided );
         }
 
-        $array = GlobalFunctions::getArrayFromArrayName( $array_name, true );
+        $array = GlobalFunctions::getArrayFromArrayName( $array_name );
 
         if( !$array ) {
             // Array does not exist
@@ -101,7 +101,7 @@ class ComplexArrayExtract extends ResultPrinter {
             $array = [$array];
         }
 
-        WSArrays::$arrays[ $name ] = new SafeComplexArray( $array );
+        WSArrays::$arrays[ $name ] = new ComplexArray( $array );
 
         return null;
     }

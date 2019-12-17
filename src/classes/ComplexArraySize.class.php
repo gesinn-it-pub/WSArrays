@@ -79,7 +79,7 @@ class ComplexArraySize extends ResultPrinter {
             return null;
         }
 
-        $array = GlobalFunctions::getUnsafeArrayFromSafeComplexArray( WSArrays::$arrays[ $base_array ] );
+        $array = GlobalFunctions::getArrayFromComplexArray( WSArrays::$arrays[ $base_array ] );
 
         if ( !strpos( $name, "[" ) && empty( $options ) ) {
             $count = count( $array, COUNT_RECURSIVE );

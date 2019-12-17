@@ -55,34 +55,34 @@ class ComplexArrayArrayMap extends ResultPrinter {
         GlobalFunctions::fetchSemanticArrays();
 
         $value = GlobalFunctions::getValue(
-            $args[ 0 ],
+            @$args[ 0 ],
             $frame,
             $parser,
             GlobalFunctions::getValue(
-                $args[ 5 ],
+                @$args[ 5 ],
                 $frame
             )
         );
 
         $delimiter = GlobalFunctions::getValue(
-            $args[ 1 ],
+            @$args[ 1 ],
             $frame
         );
 
         $variable = GlobalFunctions::getValue(
-            $args[ 2 ],
+            @$args[ 2 ],
             $frame
         );
 
         $formula = GlobalFunctions::getValue(
-            $args[ 3 ],
+            @$args[ 3 ],
             $frame,
             $parser,
             '5'
         );
 
         $new_delimiter = GlobalFunctions::getValue(
-            $args[ 4 ],
+            @$args[ 4 ],
             $frame
         );
 

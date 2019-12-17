@@ -92,18 +92,13 @@ class ComplexArrayPushValue extends ResultPrinter {
                 return GlobalFunctions::error( $ca_invalid_name );
             }
 
-            WSArrays::$arrays[ $base_array ] = new SafeComplexArray();
+            WSArrays::$arrays[ $base_array ] = new ComplexArray();
         }
 
         $matches = array();
         preg_match_all( "/(?<=\[).+?(?=\])/", $array_name, $matches );
 
-        global $wfEscapeEntitiesInArrays;
-        if ( $wfEscapeEntitiesInArrays === true ) {
-            $array = GlobalFunctions::getArrayFromSafeComplexArray( WSArrays::$arrays[ $base_array ] );
-        } else {
-            $array = GlobalFunctions::getUnsafeArrayFromSafeComplexArray( WSArrays::$arrays[ $base_array ] );
-        }
+        $array = GlobalFunctions::getArrayFromComplexArray( WSArrays::$arrays[ $base_array ] );
 
         if ( $parsed_array = GlobalFunctions::markupToArray( $value ) ) {
             $value = $parsed_array;
@@ -118,7 +113,7 @@ class ComplexArrayPushValue extends ResultPrinter {
                 return $result;
             }
 
-            WSArrays::$arrays[ $base_array ] = new SafeComplexArray( $array );
+            WSArrays::$arrays[ $base_array ] = new ComplexArray( $array );
         }
 
         return null;
@@ -127,7 +122,7 @@ class ComplexArrayPushValue extends ResultPrinter {
     private static function replace( $value, $array, $base_array ) {
         array_push( $array, $value );
 
-        WSArrays::$arrays[ $base_array ] = new SafeComplexArray( $array );
+        WSArrays::$arrays[ $base_array ] = new ComplexArray( $array );
     }
 
     /**

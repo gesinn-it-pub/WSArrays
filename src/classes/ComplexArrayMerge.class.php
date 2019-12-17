@@ -94,7 +94,7 @@ class ComplexArrayMerge extends ResultPrinter {
                 return null;
             }
 
-            WSArrays::$arrays[ ComplexArrayMerge::$new_array ] = new SafeComplexArray( $array );
+            WSArrays::$arrays[ ComplexArrayMerge::$new_array ] = new ComplexArray( $array );
         } else {
             $array = call_user_func_array( 'array_merge', $arrays );
 
@@ -102,7 +102,7 @@ class ComplexArrayMerge extends ResultPrinter {
                 return null;
             }
 
-            WSArrays::$arrays[ ComplexArrayMerge::$new_array ] = new SafeComplexArray( $array );
+            WSArrays::$arrays[ ComplexArrayMerge::$new_array ] = new ComplexArray( $array );
         }
 
         return null;
@@ -138,14 +138,9 @@ class ComplexArrayMerge extends ResultPrinter {
                 continue;
             }
 
-            // Convert the SafeComplexArray object to an actual array
-            if ( $wfEscapeEntitiesInArrays === true ) {
-                $safe_array = GlobalFunctions::getArrayFromSafeComplexArray( WSArrays::$arrays[ $array ] );
-            } else {
-                $safe_array = GlobalFunctions::getUnsafeArrayFromSafeComplexArray( WSArrays::$arrays[ $array ] );
-            }
+            $array = GlobalFunctions::getArrayFromComplexArray( WSArrays::$arrays[ $array ] );
 
-            array_push( $arrays, $safe_array );
+            array_push( $arrays, $array );
         }
 
         return $arrays;

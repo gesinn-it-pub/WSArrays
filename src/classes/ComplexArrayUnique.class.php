@@ -71,16 +71,16 @@ class ComplexArrayUnique extends ResultPrinter {
      * @throws Exception
      */
     private static function arrayUnique( $array_name ) {
-        $array = GlobalFunctions::getUnsafeArrayFromSafeComplexArray( WSArrays::$arrays[ $array_name ] );
+        $array = GlobalFunctions::getArrayFromComplexArray( WSArrays::$arrays[ $array_name ] );
 
         if ( GlobalFunctions::containsArray( $array ) ) {
             $array = array_unique( $array, SORT_REGULAR );
 
-            WSArrays::$arrays[ $array_name ] = new SafeComplexArray( $array );
+            WSArrays::$arrays[ $array_name ] = new ComplexArray( $array );
         } else {
             $array = array_unique( $array );
 
-            WSArrays::$arrays[ $array_name ] = new SafeComplexArray( $array );
+            WSArrays::$arrays[ $array_name ] = new ComplexArray( $array );
         }
 
         return null;

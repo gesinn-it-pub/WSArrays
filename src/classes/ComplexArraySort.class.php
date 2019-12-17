@@ -92,7 +92,7 @@ class ComplexArraySort extends ResultPrinter {
             return null;
         }
 
-        ComplexArraySort::$array      = GlobalFunctions::getUnsafeArrayFromSafeComplexArray( WSArrays::$arrays[ $array_name ] );
+        ComplexArraySort::$array      = GlobalFunctions::getArrayFromComplexArray( WSArrays::$arrays[ $array_name ] );
         ComplexArraySort::$array_name = $array_name;
 
         if ( empty( $options ) ) {
@@ -106,7 +106,7 @@ class ComplexArraySort extends ResultPrinter {
         }
 
         if( $result === true ) {
-            WSArrays::$arrays[ $array_name ] = new SafeComplexArray( ComplexArraySort::$array );
+            WSArrays::$arrays[ $array_name ] = new ComplexArray( ComplexArraySort::$array );
 
             return null;
         }
@@ -331,7 +331,7 @@ class ComplexArraySort extends ResultPrinter {
             ComplexArraySort::$array = array_reverse( ComplexArraySort::$array );
         }
 
-        WSArrays::$arrays[ ComplexArraySort::$array_name ] = new SafeComplexArray( ComplexArraySort::$array );
+        WSArrays::$arrays[ ComplexArraySort::$array_name ] = new ComplexArray( ComplexArraySort::$array );
 
         return true;
     }

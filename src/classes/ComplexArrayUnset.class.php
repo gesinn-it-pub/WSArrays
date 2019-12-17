@@ -89,7 +89,7 @@ class ComplexArrayUnset extends ResultPrinter {
 
         ComplexArrayUnset::unsetValueFromKeys( $array, $keys );
 
-        WSArrays::$arrays[$base_array_name] = new SafeComplexArray( $array );
+        WSArrays::$arrays[$base_array_name] = new ComplexArray( $array );
 
         return null;
     }
