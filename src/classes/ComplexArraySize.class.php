@@ -93,7 +93,9 @@ class ComplexArraySize extends ResultPrinter {
             return $count;
         }
 
-        if ( !is_array( $array = GlobalFunctions::getArrayFromArrayName( $name ) ) ) {
+        $array = GlobalFunctions::getArrayFromArrayName( $name );
+
+        if ( !is_array( $array ) ) {
             return null;
         }
 
