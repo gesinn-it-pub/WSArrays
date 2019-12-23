@@ -71,9 +71,7 @@ class ComplexArraySort extends ResultPrinter {
         GlobalFunctions::fetchSemanticArrays();
 
         if ( empty( $array_name ) ) {
-            $ca_omitted = wfMessage( 'ca-omitted', 'Name' );
-
-            return GlobalFunctions::error( $ca_omitted );
+            return GlobalFunctions::error( wfMessage( 'ca-omitted', 'Name' ) );
         }
 
         return ComplexArraySort::arraySort( $array_name, $options, $key );
@@ -106,7 +104,7 @@ class ComplexArraySort extends ResultPrinter {
         }
 
         if( $result === true ) {
-            WSArrays::$arrays[ $array_name ] = new ComplexArray( ComplexArraySort::$array );
+            WSArrays::$arrays[$array_name] = new ComplexArray( ComplexArraySort::$array );
 
             return null;
         }

@@ -78,7 +78,7 @@ class ComplexArrayArrayMap extends ResultPrinter {
             @$args[ 3 ],
             $frame,
             $parser,
-            '5'
+            'NO_IGNORE, NO_ARGS, NO_TAGS, NO_TEMPLATES'
         );
 
         $new_delimiter = GlobalFunctions::getValue(
@@ -89,7 +89,7 @@ class ComplexArrayArrayMap extends ResultPrinter {
         return array( ComplexArrayArrayMap::arrayArrayMap( $value, $variable, $formula, $delimiter, $new_delimiter ), 'noparse' => false );
     }
 
-    private static function arrayArrayMap( $value, $variable, $formula, $delimiter = ',', $new_delimiter = null ) {
+    private static function arrayArrayMap( $value, $variable, $formula, $delimiter, $new_delimiter ) {
         if ( $delimiter === null ) {
             $delimiter = ',';
         }
@@ -98,9 +98,13 @@ class ComplexArrayArrayMap extends ResultPrinter {
             $new_delimiter = "\r\n";
         }
 
-        ComplexArrayArrayMap::$array = explode( $delimiter, $value );
-        ComplexArrayArrayMap::$variable = $variable;
-        ComplexArrayArrayMap::$formula = $formula;
+        if ( !$value ) {
+            return null;
+        }
+
+        ComplexArrayArrayMap::$array         = explode( $delimiter, $value );
+        ComplexArrayArrayMap::$variable      = $variable;
+        ComplexArrayArrayMap::$formula       = $formula;
         ComplexArrayArrayMap::$new_delimiter = $new_delimiter;
 
         $haystack = ComplexArrayArrayMap::iterate();

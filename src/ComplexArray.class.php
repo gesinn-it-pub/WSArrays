@@ -34,7 +34,7 @@ class ComplexArray extends GlobalFunctions {
      * @param array $array
      */
     public function __construct( array $array = array() ) {
-        $this->storeArray( $array );
+        $this->array = $array;
     }
 
     /**
@@ -44,17 +44,6 @@ class ComplexArray extends GlobalFunctions {
      * @throws Exception
      */
     public function getArray() {
-        if ( !isset( $this->array ) ) throw new Exception( "No array has been declared" );
-
         return $this->array;
-    }
-
-    /**
-     * Store the array unescaped.
-     *
-     * @param $array
-     */
-    private function storeArray( $array ) {
-        $this->array = $array;
     }
 }

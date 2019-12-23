@@ -169,8 +169,6 @@ class GlobalFunctions {
      * @return bool
      */
     public static function isCommaSeparatedList( $markup ) {
-        $exploded_list = explode( ',', $markup );
-
         if ( !strpos( $markup, '[' ) && !strpos( $markup, ']' ) && !strpos( $markup, ':' ) ) {
             return true;
         }
@@ -225,11 +223,6 @@ class GlobalFunctions {
      * @throws Exception
      */
     public static function getArrayFromArrayName( $array_name ) {
-        global $wfEscapeEntitiesInArrays;
-        if($wfEscapeEntitiesInArrays === false) {
-            $unsafe = true;
-        }
-
         /* This is already a base array, so just get the array */
         if ( !strpos( $array_name, "[" ) ) {
             if ( isset( WSArrays::$arrays[ $array_name ] ) ) {
@@ -252,7 +245,7 @@ class GlobalFunctions {
      */
     private static function getSubarrayFromArrayName( $array_name ) {
         /* Get the name of the base array */
-        $base_array_name = GlobalFunctions::calculateBaseArray( $array_name );
+        $base_array_name = GlobalFunctions::getBaseArrayFromArrayName( $array_name );
 
         if ( !GlobalFunctions::arrayExists( $base_array_name ) ) {
             return false;
@@ -358,25 +351,6 @@ class GlobalFunctions {
     }
 
     /**
-     * Find the max depth of a multidimensional array.
-     *
-     * @param array $array
-     * @param int $depth
-     * @return int|mixed
-     */
-    public static function arrayMaxDepth( $array, $depth = 0 ) {
-        $max_sub_depth = 0;
-        foreach ( array_filter( $array, 'is_array' ) as $subarray ) {
-            $max_sub_depth = max(
-                $max_sub_depth,
-                GlobalFunctions::arrayMaxDepth($subarray, $depth + 1)
-            );
-        }
-
-        return $max_sub_depth + $depth;
-    }
-
-    /**
      * Fetch any arrays defined by Semantic MediaWiki.
      *
      * Semantic MediaWiki stores all ComplexArrays in the configuration parameter $wfDefinedArraysGlobal. In order to allow access to these array, we need to move them to WSArrays::$arrays.
@@ -398,7 +372,7 @@ class GlobalFunctions {
      * @param string $array_name
      * @return string
      */
-    public static function calculateBaseArray( $array_name ) {
+    public static function getBaseArrayFromArrayName($array_name ) {
         return strtok( $array_name, "[" );
     }
 
@@ -430,8 +404,7 @@ class GlobalFunctions {
      * @param string $array_name
      * @return bool
      */
-    public static function arrayExists( $array_name )
-    {
+    public static function arrayExists( $array_name ) {
         if (isset(WSArrays::$arrays[$array_name])) {
             return true;
         }
@@ -452,45 +425,55 @@ class GlobalFunctions {
             return null;
         }
 
-        if ( !empty( $noparse) && gettype( $noparse ) !== "int" ) {
-            $noparse = intval( $noparse );
-        }
+        $noparse_arguments = GlobalFunctions::formatNoparse($noparse);
 
-        if ( $noparse > 0 ) {
-            return GlobalFunctions::rawValue( $arg, $frame, $noparse );
+        if ( count($noparse_arguments) > 0 ) {
+            return GlobalFunctions::rawValue( $arg, $frame, $noparse_arguments );
         } else {
             return GlobalFunctions::getSFHValue( $arg, $frame );
         }
     }
 
     /**
+     * @param $noparse
+     * @return array
+     */
+    public static function formatNoparse($noparse) {
+        $noparse_arguments = explode(',', $noparse);
+
+        $arguments = [];
+        foreach($noparse_arguments as &$argument) {
+            switch($argument) {
+                case "NO_IGNORE":
+                    $arguments[] = PPFrame::NO_IGNORE;
+                    break;
+                case "NO_ARGS":
+                    $arguments[] = PPFrame::NO_ARGS;
+                    break;
+                case "NO_TAGS":
+                    $arguments[] = PPFrame::NO_TAGS;
+                    break;
+                case "NO_TEMPLATES":
+                    $arguments[] = PPFrame::NO_TEMPLATES;
+                    break;
+            }
+        }
+
+        return $arguments;
+    }
+
+    /**
      * @param $arg
      * @param $frame
-     * @param string $parser
+     * @param array $noparse_arguments
      * @return string
      */
-    public static function rawValue( $arg, $frame, $noparse_level = 1 ) {
-        switch ( $noparse_level ) {
-            case 1:
-                $expanded_frame = $frame->expand( $arg,
-                    PPFrame::NO_IGNORE );
-                break;
-            case 2:
-                $expanded_frame = $frame->expand( $arg,
-                    PPFrame::NO_IGNORE | PPFrame::NO_ARGS );
-                break;
-            case 3:
-                $expanded_frame = $frame->expand( $arg,
-                    PPFrame::NO_IGNORE | PPFrame::NO_ARGS | PPFrame::NO_TEMPLATES );
-                break;
-            case 4:
-                $expanded_frame = $frame->expand( $arg,
-                    PPFrame::NO_IGNORE | PPFrame::NO_ARGS | PPFrame::NO_TAGS );
-                break;
-             default:
-                $expanded_frame = $frame->expand( $arg,
-                    PPFrame::NO_IGNORE | PPFrame::NO_ARGS | PPFrame::NO_TAGS | PPFrame::NO_TEMPLATES );
-                break;
+    public static function rawValue( $arg, $frame, $noparse_arguments = [] ) {
+        if( !$noparse_arguments ) {
+            $expanded_frame = $frame->expand( $arg, PPFrame::NO_IGNORE );
+        } else {
+            $flags = array_reduce( $noparse_arguments, function($a, $b) { return $a | $b; }, 0 );
+            $expanded_frame = $frame->expand( $arg, $flags );
         }
 
         $trimmed_frame  = trim( $expanded_frame );

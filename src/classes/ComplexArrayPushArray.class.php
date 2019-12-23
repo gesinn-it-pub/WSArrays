@@ -70,15 +70,11 @@ class ComplexArrayPushArray extends ResultPrinter {
         ComplexArrayPushArray::parseFunctionArguments( $args );
 
         if ( !GlobalFunctions::isValidArrayName( ComplexArrayPushArray::$new_array ) ) {
-            $ca_invalid_name = wfMessage( 'ca-invalid-name' );
-
-            return GlobalFunctions::error( $ca_invalid_name );
+            return GlobalFunctions::error( wfMessage( 'ca-invalid-name' ) );
         }
 
         if( count( $args ) < 2 ) {
-            $ca_too_little_arrays = wfMessage( 'ca-too-little-arrays' );
-
-            return GlobalFunctions::error( $ca_too_little_arrays );
+            return GlobalFunctions::error( wfMessage( 'ca-too-little-arrays' ) );
         }
 
         $arrays = ComplexArrayPushArray::iterate( $args );
@@ -95,8 +91,6 @@ class ComplexArrayPushArray extends ResultPrinter {
      * @throws Exception
      */
     private static function iterate( $array ) {
-        global $wfEscapeEntitiesInArrays;
-
         $arrays = [];
         foreach ( $array as $array_name ) {
             if ( !GlobalFunctions::arrayExists( $array_name ) ) {
