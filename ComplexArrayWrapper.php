@@ -119,7 +119,7 @@ final class ComplexArrayWrapper extends ComplexArray {
 
         foreach($this->indices as $index) {
             if(!isset($temp[$index])) {
-               $temp[$index] = [];
+                $temp[$index] = [];
             }
 
             $temp = $temp[$index];
