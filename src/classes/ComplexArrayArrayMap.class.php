@@ -78,7 +78,7 @@ class ComplexArrayArrayMap extends ResultPrinter {
             @$args[ 3 ],
             $frame,
             $parser,
-            'NO_IGNORE, NO_ARGS, NO_TAGS, NO_TEMPLATES'
+            'NO_IGNORE,NO_ARGS,NO_TAGS,NO_TEMPLATES'
         );
 
         $new_delimiter = GlobalFunctions::getValue(
