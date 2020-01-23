@@ -27,6 +27,8 @@
 
 namespace SMW\Query\ResultPrinters;
 
+use Exception;
+
 /**
  * Class ComplexArray
  *
@@ -35,7 +37,7 @@ namespace SMW\Query\ResultPrinters;
  * @package SMW\Query\ResultPrinters
  * @alias src/ComplexArray.class.php
  */
-class ComplexArray extends GlobalFunctions {
+class ComplexArray {
     /**
      * @var array
      */

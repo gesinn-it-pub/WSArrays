@@ -54,6 +54,10 @@ class ComplexArrayArrayMap extends ResultPrinter {
     public static function getResult( Parser $parser, $frame, $args ) {
         GlobalFunctions::fetchSemanticArrays();
 
+        if(!isset($args[5])) {
+            $args[5] = '';
+        }
+
         $value = GlobalFunctions::getValue(
             @$args[ 0 ],
             $frame,
