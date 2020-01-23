@@ -141,9 +141,9 @@ class ComplexArrayPrint extends ResultPrinter {
                 $last_el = reset( ComplexArrayPrint::$array );
                 $return  = key( ComplexArrayPrint::$array ) . ": " . $last_el;
 
-                return array( $return , 'noparse' => ComplexArrayPrint::$noparse, 'isHTML' => true );
+                return array( $return , 'noparse' => ComplexArrayPrint::$noparse, 'isHTML' => ComplexArrayPrint::$noparse );
             } else {
-                return array( ComplexArrayPrint::$array, 'noparse' => ComplexArrayPrint::$noparse, 'isHTML' => true );
+                return array( ComplexArrayPrint::$array, 'noparse' => ComplexArrayPrint::$noparse, 'isHTML' => ComplexArrayPrint::$noparse );
             }
         }
 
