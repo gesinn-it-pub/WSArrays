@@ -177,7 +177,7 @@ class ComplexArrayMap extends ResultPrinter {
             }
         }
 
-        $buffer = ComplexArrayMap::$sep ? implode($buffer, ComplexArrayMap::$sep) : implode($buffer);
+        $buffer = ComplexArrayMap::$sep ? implode(ComplexArrayMap::$sep, $buffer) : implode($buffer);
 
         return $buffer;
     }
