@@ -102,8 +102,8 @@ class ComplexArrayMap extends ResultPrinter {
 
         // Hide
         if ( isset( $args[4] ) ) {
-            if ( GlobalFunctions::getValue( $args[4], $frame ) === "true" ) {
-                ComplexArrayMap::$hide = true;
+            if ( isset( $args[4] ) ) {
+                ComplexArrayMap::$hide = !filter_var(GlobalFunctions::getValue( $args[4], $frame ), FILTER_VALIDATE_BOOLEAN);
             }
         }
 
