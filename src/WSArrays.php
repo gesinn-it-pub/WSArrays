@@ -24,7 +24,7 @@
  * Initialization file for WSArrays.
  *
  * @license GPL-2.0-or-later
- * @version: 3.4.1
+ * @version: 3.4.2
  *
  * @author Xxmarijnw <marijn@wikibase.nl>
  *
@@ -86,7 +86,7 @@ require_once 'GlobalFunctions.class.php';
  * @extends GlobalFunctions
  */
 class WSArrays extends ComplexArray {
-    const VERSION = '3.4.1';
+    const VERSION = '3.4.2';
 
     /**
      * This variable holds all defined arrays. If an array is defined called "array", the array will be stored in WSArrays::$arrays["array"].

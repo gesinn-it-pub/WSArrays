@@ -127,6 +127,18 @@ class ComplexArrayPrinter extends ResultPrinter {
     }
 
     /**
+     * Creates an empty array with the specified name before the result is passed to getResultText().
+     *
+     * @inheritDoc
+     */
+    protected function handleParameters( array $params, $outputMode ) {
+        $name = $params['name'];
+
+        global $wfDefinedArraysGlobal;
+        $wfDefinedArraysGlobal[ $name ] = new \ComplexArray( [] );
+    }
+
+    /**
      * @param \SMWQueryResult $queryResult
      * @param $outputMode
      * @return bool|string
