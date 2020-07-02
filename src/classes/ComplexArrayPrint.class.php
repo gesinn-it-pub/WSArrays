@@ -70,16 +70,13 @@ class ComplexArrayPrint extends ResultPrinter {
 	 *
 	 * @throws Exception
 	 */
-	public static function getResult( Parser $parser, $array_name = null, $options = null, $noparse = false ) {
+	public static function getResult( Parser $parser, $array_name = null, $options = null ) {
 		GlobalFunctions::fetchSemanticArrays();
 		self::$array = [];
 
 		if ( empty( $array_name ) ) {
 			return GlobalFunctions::error( wfMessage( 'ca-omitted', 'Name' ) );
 		}
-
-		$noparse = filter_var( $noparse, FILTER_VALIDATE_BOOLEAN );
-		self::$noparse = $noparse;
 
 		return self::arrayPrint( $array_name, $options );
 	}
@@ -114,7 +111,7 @@ class ComplexArrayPrint extends ResultPrinter {
 	 * @return array|mixed|null|string|string[]
 	 */
 	private static function applyOptions( $options ) {
-		if ( gettype( $options ) === "array" ) {
+		if ( is_array( $options ) ) {
 			$options = $options[ 0 ];
 		}
 
@@ -123,8 +120,6 @@ class ComplexArrayPrint extends ResultPrinter {
 			case 'wson':
 				return GlobalFunctions::arrayToMarkup( self::$array );
 				break;
-			case 'json':
-				return json_encode( self::$array );
 			default:
 				return self::createList( $options );
 				break;
@@ -143,9 +138,9 @@ class ComplexArrayPrint extends ResultPrinter {
 				$last_el = reset( self::$array );
 				$return  = key( self::$array ) . ": " . $last_el;
 
-				return [ $return , 'noparse' => self::$noparse, 'isHTML' => false ];
+				return [ $return ];
 			} else {
-				return [ self::$array, 'noparse' => self::$noparse, 'isHTML' => false ];
+				return [ self::$array ];
 			}
 		}
 

@@ -248,6 +248,3 @@ Print simple array with "markup" option
 <p>["a","b","c"]
 </p>
 !! end
-
-!! test
-Print simple array with noparse
