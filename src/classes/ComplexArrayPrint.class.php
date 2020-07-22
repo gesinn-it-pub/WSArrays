@@ -70,13 +70,16 @@ class ComplexArrayPrint extends ResultPrinter {
 	 *
 	 * @throws Exception
 	 */
-	public static function getResult( Parser $parser, $array_name = null, $options = null ) {
+	public static function getResult( Parser $parser, $array_name = null, $options = null, $noparse = false ) {
 		GlobalFunctions::fetchSemanticArrays();
+
 		self::$array = [];
 
 		if ( empty( $array_name ) ) {
 			return GlobalFunctions::error( wfMessage( 'ca-omitted', 'Name' ) );
 		}
+
+		self::$noparse = filter_var($noparse, FILTER_VALIDATE_BOOLEAN);
 
 		return self::arrayPrint( $array_name, $options );
 	}
@@ -121,7 +124,7 @@ class ComplexArrayPrint extends ResultPrinter {
 				return GlobalFunctions::arrayToMarkup( self::$array );
 				break;
 			default:
-				return self::createList( $options );
+				return self::createList();
 				break;
 		}
 	}
@@ -129,36 +132,26 @@ class ComplexArrayPrint extends ResultPrinter {
 	/**
 	 * Create an (un)ordered list from an array.
 	 *
-	 * @param string $type
 	 * @return array|null|string
 	 */
-	private static function createList( $type = "unordered" ) {
+	private static function createList() {
 		if ( !is_array( self::$array ) || count( self::$array ) === 1 && !GlobalFunctions::containsArray( self::$array ) ) {
 			if ( is_array( self::$array ) ) {
 				$last_el = reset( self::$array );
 				$return  = key( self::$array ) . ": " . $last_el;
 
-				return [ $return ];
+				return [ $return, 'noparse' => self::$noparse ];
 			} else {
-				return [ self::$array ];
+				return [ self::$array, 'noparse' => self::$noparse ];
 			}
-		}
-
-		if ( $type == "ordered" ) {
-			self::$indent_char = "#";
 		}
 
 		$result = null;
 		foreach ( self::$array as $key => $value ) {
 			if ( !is_array( $value ) ) {
-				if ( !is_numeric( $key ) ) {
-					$result .= self::$indent_char . " $key: $value\n";
-				} else {
-					$result .= self::$indent_char . " $value\n";
-				}
+				$result .= is_numeric( $key ) ? self::$indent_char . " $value\n" : self::$indent_char . " $key: $value\n";
 			} else {
 				$result .= self::$indent_char . " " . strval( $key ) . "\n";
-
 				self::addArrayToList( $value, $result );
 			}
 		}

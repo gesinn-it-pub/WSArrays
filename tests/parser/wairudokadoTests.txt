@@ -39,5 +39,4 @@ Test non-existent key
 !! html
 <p><br />
 </p>
-
 !! end

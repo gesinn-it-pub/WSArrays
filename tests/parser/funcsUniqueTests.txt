@@ -65,13 +65,13 @@ Two-dimensional list duplicate values in subarray
 !! html
 <p><br />
 </p>
-<ul><li>
+<ul><li>0
 <ul><li>a</li>
 <li>a</li></ul></li>
-<li>
+<li>1
 <ul><li>a</li>
 <li>b</li></ul></li>
-<li>
+<li>2
 <ul><li>a</li>
 <li>c</li></ul></li></ul>
 

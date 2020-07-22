@@ -38,9 +38,8 @@ Unset dangling array
 <li>1
 <ul><li>b</li></ul></li></ul>
 <p><br />
+0: a
 </p>
-<ul><li>a</li></ul>
-
 !! end
 
 !! test
@@ -84,8 +83,8 @@ Unset non-existent subarray
 !! test
 Unset non-existent array
 !! wikitext
-{{#complexarrayunset:foobar[999]}}
-{{#complexarrayprint:foobar}}
+{{#complexarrayunset:foobzr[999]}}
+{{#complexarrayprint:foobzr}}
 !! html
 <p><br />
 </p>

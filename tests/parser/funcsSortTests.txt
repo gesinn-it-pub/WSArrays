@@ -319,6 +319,8 @@ Sort one-dimensional alphabetical list using keysort with zero key
 {{#complexarraysort:example|keysort|0}}
 {{#complexarrayprint:example}}
 !! html
+<p><br />
+</p>
 <ul><li>a</li>
 <li>b</li>
 <li>c</li>
@@ -355,6 +357,8 @@ Sort one-dimensional alphabetical list using keysort with numeric non-zero key
 {{#complexarraysort:example|keysort|1}}
 {{#complexarrayprint:example}}
 !! html
+<p><span class="error">This sort key is not valid, since it is not available for each sub-array.</span>
+</p>
 <ul><li>a</li>
 <li>b</li>
 <li>c</li>
@@ -407,7 +411,7 @@ Sort two-dimensional disordered list using keysort with non-existent key
 {{#complexarraysort:example|keysort|a}}
 {{#complexarrayprint:example}}
 !! html
-<p><br />
+<p><span class="error">This sort key is not valid, since it is not available for each sub-array.</span>
 </p>
 <ul><li>0
 <ul><li>b: b</li></ul></li>
@@ -423,7 +427,7 @@ Sort two-dimensional disordered list using keysort with asymmetric non-existant 
 {{#complexarraysort:example|keysort|a}}
 {{#complexarrayprint:example}}
 !! html
-<p><br />
+<p><span class="error">This sort key is not valid, since it is not available for each sub-array.</span>
 </p>
 <ul><li>0
 <ul><li>a: b</li></ul></li>

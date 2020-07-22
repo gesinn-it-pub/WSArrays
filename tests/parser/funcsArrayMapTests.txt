@@ -29,8 +29,7 @@ Test simple three item array map, broken mapping key
 !! wikitext
 {{#complexarrayarraymap:a,b,c|,||Hello, ####!}}
 !! html
-<p>Hello, ####!Hello, ####!Hello, ####!
-</p>
+
 !! end
 
 !! test
@@ -38,7 +37,8 @@ Test simple three item array map, broken delimiter
 !! wikitext
 {{#complexarrayarraymap:a,b,c||####|Hello, ####!}}
 !! html
-
+<p>Hello, a!Hello, b!Hello, c!
+</p>
 !! end
 
 !! test

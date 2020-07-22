@@ -102,40 +102,10 @@ Object WSON definition with line breaks
 !! wikitext
 {{#complexarraydefine:example|(("foo":
 "bar"))}}
-!! html
-<ul><li>foo: bar
-</li></ul>
-
-!! end
-
-!! test
-ArchieML simple object definition
-!! wikitext
-{{#complexarraydefine:example|
-[example]
-* foobar
-* boofar
-[]}}
 {{#complexarrayprint:example}}
 !! html
-<ul><li>example
-<ul><li>foobar</li>
-<li>boofar</li></ul></li></ul>
-!! end
-
-!! test
-ArchieML simple associative object definition
-!! wikitext
-{{#complexarraydefine:example|
-[example]
-foo: bar
-boo: far
-}}
-{{#complexarrayprint:example}}
-!! html
-<ul><li>example
-<ul><li>foo: bar</li>
-<li>boo: far</li></ul></li></ul>
+<p>foo: bar
+</p>
 !! end
 
 !! test
@@ -225,18 +195,6 @@ Print two-dimensional array with ambiguous numeric indices (should fail)
 !! html
 <p><br />
 </p>
-!! end
-
-!! test
-Print simple array with "ordered" option
-!! wikitext
-{{#complexarraydefine:example|a,b,c}}
-{{#complexarrayprint:example|ordered}}
-!! html
-<ol><li>a</li>
-<li>b</li>
-<li>c</li></ol>
-
 !! end
 
 !! test

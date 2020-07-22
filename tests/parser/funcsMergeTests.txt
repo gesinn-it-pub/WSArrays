@@ -29,9 +29,9 @@ Merge two one-dimensional lists
 !! test
 Merge two one-item lists
 !! wikitext
-{{#complexarraydefine:1|a}}
-{{#complexarraydefine:2|b}}
-{{#complexarraymerge:example|1|2}}
+{{#complexarraydefine:a|a}}
+{{#complexarraydefine:b|b}}
+{{#complexarraymerge:example|a|b}}
 {{#complexarrayprint:example}}
 !! html
 <p><br />
@@ -44,13 +44,13 @@ Merge two one-item lists
 !! test
 Merge many one-dimensional lists
 !! wikitext
-{{#complexarraydefine:1|a}}
-{{#complexarraydefine:2|b}}
-{{#complexarraydefine:3|c}}
-{{#complexarraydefine:4|d}}
-{{#complexarraydefine:5|e}}
-{{#complexarraydefine:6|f}}
-{{#complexarraymerge:example|1|2|3|4|5|6}}
+{{#complexarraydefine:a|a}}
+{{#complexarraydefine:b|b}}
+{{#complexarraydefine:c|c}}
+{{#complexarraydefine:d|d}}
+{{#complexarraydefine:e|e}}
+{{#complexarraydefine:f|f}}
+{{#complexarraymerge:example|a|b|c|d|e|f}}
 {{#complexarrayprint:example}}
 !! html
 <p><br />
@@ -102,7 +102,7 @@ Merge two arbitrary lists
 !! test
 Merge two non-existant lists
 !! wikitext
-{{#complexarraymerge:example|a|b}}
+{{#complexarraymerge:example|aaaa|bbbb}}
 {{#complexarrayprint:example}}
 !! html
 <p><br />
