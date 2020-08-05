@@ -140,9 +140,9 @@ class ComplexArrayPrint extends ResultPrinter {
 				$last_el = reset( self::$array );
 				$return  = key( self::$array ) . ": " . $last_el;
 
-				return [ $return, 'noparse' => self::$noparse ];
+				return [ $return, 'noparse' => self::$noparse, 'nowiki' => self::$noparse ];
 			} else {
-				return [ self::$array, 'noparse' => self::$noparse ];
+				return [ self::$array, 'noparse' => self::$noparse, 'nowiki' => self::$noparse ];
 			}
 		}
 
