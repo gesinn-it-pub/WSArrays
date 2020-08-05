@@ -111,7 +111,7 @@ class GlobalFunctions {
 		}
 
 		$markup = str_replace( "\n", '', $markup );
-		$markup_type = self::determineMarkup( $markup );
+		$markup_type = self::determineMarkup( $markup, $separator );
 
 		switch ( $markup_type ) {
 			case self::CA_MARKUP_LEGACY:
@@ -135,11 +135,16 @@ class GlobalFunctions {
 		}
 	}
 
-	/**
-	 * @param $markup
-	 * @return int
-	 */
-	public static function determineMarkup( $markup ) {
+    /**
+     * @param $markup
+     * @param null $separator
+     * @return int
+     */
+	public static function determineMarkup( $markup, $separator = null ) {
+	    if ( $separator ) {
+	        return self::CA_MARKUP_SIMPLE;
+        }
+
 		$json_markup = $markup;
 		self::WSONtoJSON( $json_markup );
 
