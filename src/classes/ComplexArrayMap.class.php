@@ -100,12 +100,9 @@ class ComplexArrayMap extends ResultPrinter {
 			return GlobalFunctions::error( wfMessage( 'ca-omitted', 'Map' ) );
 		}
 
-		// Show
-		if ( isset( $args[4] ) ) {
-			self::$show = filter_var( GlobalFunctions::getValue( $args[4], $frame ), FILTER_VALIDATE_BOOLEAN );
-		} else {
-		    self::$show = false;
-        }
+		self::$show = isset( $args[4] ) ?
+            filter_var( GlobalFunctions::getValue( $args[4], $frame ), FILTER_VALIDATE_BOOLEAN ) :
+            false;
 
 		if ( isset( $args[3] ) ) {
 			$sep = GlobalFunctions::getValue( $args[3], $frame );
@@ -117,22 +114,25 @@ class ComplexArrayMap extends ResultPrinter {
 			self::$sep = $sep;
 		}
 
+		$key_replace = isset( $args[5] ) ? GlobalFunctions::getValue( $args[5], $frame ) : false;
+
 		$name = GlobalFunctions::getValue( @$args[0], $frame );
 		$map_key = GlobalFunctions::getValue( @$args[1], $frame );
 		$map = GlobalFunctions::getValue( @$args[2], $frame, $parser, 'NO_IGNORE,NO_TAGS,NO_TEMPLATES' );
 
-		return [ self::arrayMap( $name, $map_key, $map ), 'noparse' => false ];
+		return [ self::arrayMap( $name, $map_key, $map, $key_replace ), 'noparse' => false ];
 	}
 
-	/**
-	 * @param $array_name
-	 * @param $map_key
-	 * @param $map
-	 * @return array|string
-	 *
-	 * @throws Exception
-	 */
-	private static function arrayMap( $array_name, $map_key, $map ) {
+    /**
+     * @param $array_name
+     * @param $map_key
+     * @param $map
+     * @param $key_replace
+     * @return array|string
+     *
+     * @throws Exception
+     */
+	private static function arrayMap( $array_name, $map_key, $map, $key_replace = false ) {
 		self::$buffer = '';
 
 		if ( empty( $array_name ) || empty( $map_key ) || empty( $map ) ) {
@@ -146,37 +146,31 @@ class ComplexArrayMap extends ResultPrinter {
 			return '';
 		}
 
-		return self::iterate( $array, $map_key, $map, $array_name );
+		return self::iterate( $array, $map_key, $map, $array_name, $key_replace );
 	}
 
-	/**
-	 * @param $array
-	 * @param $map_key
-	 * @param $map
-	 * @param $array_name
-	 * @return string
-	 *
-	 * @throws Exception
-	 */
-	private static function iterate( $array, $map_key, $map, $array_name ) {
+    /**
+     * @param $array
+     * @param $map_key
+     * @param $map
+     * @param $array_name
+     * @param bool $key_replace
+     * @return string
+     *
+     */
+	private static function iterate( $array, $map_key, $map, $array_name, $key_replace = false ) {
 		self::$array = $array_name;
 
 		$buffer = [];
 		foreach ( $array as $array_key => $subarray ) {
+		    $current_map = $key_replace === false ? $map : str_replace( $key_replace, $array_key, $map );
+
 			self::$array_key = $array_key;
-
-			$type = gettype( $subarray );
-
-			if ( $type !== "array" ) {
-				switch ( $type ) {
-					case 'string':
-					case 'integer':
-					case 'float':
-						$buffer[] = str_replace( $map_key, $subarray, $map );
-				}
+			if ( gettype( $subarray ) !== "array" ) {
+			    $buffer[] = str_replace( $map_key, $subarray, $current_map );
 			} else {
 				$preg_quote = preg_quote( $map_key );
-				$buffer[] = preg_replace_callback( "/($preg_quote((\[[^\[\]]+\])+)?)/", 'ComplexArrayMap::replaceCallback', $map );
+				$buffer[] = preg_replace_callback( "/($preg_quote((\[[^\[\]]+\])+)?)/", 'ComplexArrayMap::replaceCallback', $current_map );
 			}
 		}
 
