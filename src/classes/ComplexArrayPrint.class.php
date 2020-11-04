@@ -135,14 +135,14 @@ class ComplexArrayPrint extends ResultPrinter {
 	 * @return array|null|string
 	 */
 	private static function createList() {
-		if ( !is_array( self::$array ) || count( self::$array ) === 1 && !GlobalFunctions::containsArray( self::$array ) ) {
+	    if ( !is_array( self::$array ) || count( self::$array ) === 1 && !GlobalFunctions::containsArray( self::$array ) ) {
 			if ( is_array( self::$array ) ) {
 				$last_el = reset( self::$array );
 				$return  = key( self::$array ) . ": " . $last_el;
 
-				return [ $return, 'noparse' => self::$noparse, 'nowiki' => self::$noparse ];
+				return [ $return, 'noparse' => self::$noparse ];
 			} else {
-				return [ self::$array, 'noparse' => self::$noparse, 'nowiki' => self::$noparse ];
+				return [ self::$array, 'noparse' => self::$noparse ];
 			}
 		}
 
