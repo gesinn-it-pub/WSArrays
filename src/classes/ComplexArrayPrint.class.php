@@ -27,7 +27,7 @@
  * @extends WSArrays
  */
 class ComplexArrayPrint extends ResultPrinter {
-	public function getName() {
+    public function getName() {
 		return 'complexarrayprint';
 	}
 
@@ -54,23 +54,29 @@ class ComplexArrayPrint extends ResultPrinter {
 	private static $indent_char = "*";
 
 	/**
-	 * @var null
+	 * @var bool
 	 */
 	private static $noparse = false;
 
-	/**
-	 * Define all allowed parameters. This parser is hooked with Parser::SFH_OBJECT_ARGS.
-	 *
-	 * @param Parser $parser
-	 *
-	 * @param null $array_name
-	 * @param null $options
-	 * @param bool $noparse
-	 * @return array|mixed|null|string|string[]
-	 *
-	 * @throws Exception
-	 */
-	public static function getResult( Parser $parser, $array_name = null, $options = null, $noparse = false ) {
+    /**
+     * @var bool
+     */
+    private static $nowiki = false;
+
+    /**
+     * Define all allowed parameters. This parser is hooked with Parser::SFH_OBJECT_ARGS.
+     *
+     * @param Parser $parser
+     *
+     * @param null $array_name
+     * @param null $options
+     * @param bool $noparse
+     * @param bool $nowiki
+     * @return array|mixed|null|string|string[]
+     *
+     * @throws Exception
+     */
+	public static function getResult( Parser $parser, $array_name = null, $options = null, $parser_behaviour = null ) {
 		GlobalFunctions::fetchSemanticArrays();
 
 		self::$array = [];
@@ -79,7 +85,16 @@ class ComplexArrayPrint extends ResultPrinter {
 			return GlobalFunctions::error( wfMessage( 'ca-omitted', 'Name' ) );
 		}
 
-		self::$noparse = filter_var($noparse, FILTER_VALIDATE_BOOLEAN);
+		if ( $parser_behaviour === "true" ) {
+		    // Hack for backwards compatibility
+		    self::$noparse = true;
+        } else {
+            $parser_behaviour_parts = explode(",", $parser_behaviour);
+            $parser_behaviour_parts = array_map("trim", $parser_behaviour_parts);
+
+            self::$noparse = in_array( "noparse", $parser_behaviour_parts );
+            self::$nowiki = in_array( "nowiki", $parser_behaviour_parts );
+        }
 
 		return self::arrayPrint( $array_name, $options );
 	}
@@ -140,9 +155,9 @@ class ComplexArrayPrint extends ResultPrinter {
 				$last_el = reset( self::$array );
 				$return  = key( self::$array ) . ": " . $last_el;
 
-				return [ $return, 'noparse' => self::$noparse ];
+				return [ $return, 'noparse' => self::$noparse, 'nowiki' => self::$nowiki ];
 			} else {
-				return [ self::$array, 'noparse' => self::$noparse ];
+				return [ self::$array, 'noparse' => self::$noparse, 'nowiki' => self::$nowiki ];
 			}
 		}
 
