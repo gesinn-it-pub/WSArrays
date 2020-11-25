@@ -88,6 +88,7 @@ class ComplexArrayPrint extends ResultPrinter {
 		if ( $parser_behaviour === "true" ) {
 		    // Hack for backwards compatibility
 		    self::$noparse = true;
+		    self::$nowiki  = true;
         } else {
             $parser_behaviour_parts = explode(",", $parser_behaviour);
             $parser_behaviour_parts = array_map("trim", $parser_behaviour_parts);
