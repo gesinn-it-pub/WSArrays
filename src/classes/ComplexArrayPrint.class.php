@@ -158,7 +158,9 @@ class ComplexArrayPrint extends ResultPrinter {
 
 				return [ $return, 'noparse' => self::$noparse, 'nowiki' => self::$nowiki ];
 			} else {
-				return [ self::$array, 'noparse' => self::$noparse, 'nowiki' => self::$nowiki ];
+			    // Replace any carraige returns with the empty string
+                // TODO: Figure out where these cr's are coming from
+				return [ str_replace( "\r", "", self::$array ), 'noparse' => self::$noparse, 'nowiki' => self::$nowiki ];
 			}
 		}
 
