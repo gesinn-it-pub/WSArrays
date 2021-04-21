@@ -189,6 +189,7 @@ class ComplexArrayMap extends ResultPrinter {
 		switch ( gettype( $value ) ) {
 			case 'integer':
 			case 'float':
+			case 'double':
 			case 'string':
 				return $value;
 				break;
