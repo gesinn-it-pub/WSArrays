@@ -135,6 +135,25 @@ class ComplexArrayArrayMap extends ResultPrinter {
 			}
 		}
 
-		return implode( self::$new_delimiter, $haystack );
+		if ( self::$new_delimiter === "print=pretty" ) {
+			return self::prettyPrint( $haystack );
+		} else {
+			return implode( self::$new_delimiter, $haystack );
+		}
+	}
+
+	private static function prettyPrint( $haystack ) {
+		$num_items = count( $haystack );
+
+		if ( $num_items === 0 ) {
+			return "";
+		} else if ( $num_items === 1 ) {
+			return array_pop( $haystack );
+		}
+
+		$last_element = array_pop( $haystack );
+		$and = htmlspecialchars( wfMessage( "and" )->plain() );
+
+		return implode(", ", $haystack ) . $and . " " . $last_element;
 	}
 }

@@ -460,7 +460,8 @@ class GlobalFunctions {
 	 */
 	public static function rawValue( $arg, $frame, $noparse_arguments = [] ) {
 		if ( !$noparse_arguments ) {
-			$expanded_frame = $frame->expand( $arg, PPFrame::NO_IGNORE );
+			$expanded_frame = $frame->expand( $arg );
+
 		} else {
 			$flags = array_reduce( $noparse_arguments, function ( $a, $b ) { return $a | $b;
 			}, 0 );
