@@ -106,9 +106,12 @@ class ComplexArrayArrayMap extends ResultPrinter {
 			$delimiter = ',';
 		}
 
-		if ( $new_delimiter === '\n' ) {
-			$new_delimiter = "\r\n";
+		if ( empty( $new_delimiter ) ) {
+			$new_delimiter = ', ';
 		}
+
+		$delimiter = str_replace( [ '\n', '\s' ], [ "\n", ' ' ], $delimiter );
+		$new_delimiter = str_replace( [ '\n', '\s' ], [ "\n", ' ' ], $new_delimiter );
 
 		self::$array         = explode( $delimiter, $value );
 		self::$variable      = $variable;
