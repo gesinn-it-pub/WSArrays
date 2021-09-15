@@ -1,6 +1,10 @@
 {
   "name": "wikibasesolutions/w-s-arrays",
   "type": "mediawiki-extension",
+  "description": "Parser functions to allow the creation and traversing of associative and multidimensional arrays",
+  "keywords": "",
+  "license": "GPL-2.0-or-later",
+  "require": {},
   "require-dev": {
     "mediawiki/mediawiki-codesniffer": "31.0.0",
     "mediawiki/minus-x": "1.1.0",
@@ -9,13 +13,13 @@
   },
   "scripts": {
     "test": [
-      "parallel-lint . --exclude vendor --exclude node_modules",
-      "phpcs -p -s",
-      "minus-x check ."
+        "parallel-lint . --exclude vendor --exclude node_modules",
+        "phpcs -p -s",
+        "minus-x check ."
     ],
     "fix": [
-      "minus-x fix .",
-      "phpcbf"
+        "minus-x fix .",
+        "phpcbf"
     ]
   }
 }
