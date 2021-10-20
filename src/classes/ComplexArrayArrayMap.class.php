@@ -106,7 +106,7 @@ class ComplexArrayArrayMap extends ResultPrinter {
 			$delimiter = ',';
 		}
 
-		if ( empty( $new_delimiter ) ) {
+		if ( $new_delimiter === null ) {
 			$new_delimiter = ', ';
 		}
 
