@@ -1,5 +1,5 @@
 {
-  "name": "wikibase/w-s-arrays",
+  "name": "wikibase-solutions/w-s-arrays",
   "type": "mediawiki-extension",
   "description": "Parser functions to allow the creation and traversing of associative and multidimensional arrays",
   "keywords": "",
