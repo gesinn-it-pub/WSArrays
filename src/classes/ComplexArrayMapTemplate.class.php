@@ -43,18 +43,19 @@ class ComplexArrayMapTemplate extends ResultPrinter {
 		return 'normal';
 	}
 
-	/**
-	 * Define all allowed parameters.
-	 *
-	 * @param Parser $parser
-	 * @param string $name
-	 * @param string $template
-	 * @param string $options
-	 * @return array
-	 *
-	 * @throws Exception
-	 */
-	public static function getResult( Parser $parser, $name = '', $template = '', $options = '' ) {
+    /**
+     * Define all allowed parameters.
+     *
+     * @param Parser $parser
+     * @param string $name
+     * @param string $template
+     * @param string $options
+     * @param string $new_delimiter
+     * @return array
+     *
+     * @throws Exception
+     */
+	public static function getResult( Parser $parser, $name = '', $template = '', $options = '', $new_delimiter = '' ) {
 		GlobalFunctions::fetchSemanticArrays();
 
 		if ( empty( $name ) ) {
@@ -65,18 +66,21 @@ class ComplexArrayMapTemplate extends ResultPrinter {
 			return GlobalFunctions::error( wfMessage( 'ca-omitted', 'Template' ) );
 		}
 
-		return self::arrayMapTemplate( $name, $template, $options );
+        $new_delimiter = str_replace( [ '\n', '\s' ], [ "\n", ' ' ], $new_delimiter );
+
+		return self::arrayMapTemplate( $name, $template, $options, $new_delimiter );
 	}
 
-	/**
-	 * @param $name
-	 * @param $template
-	 * @param $options
-	 * @return array|string
-	 *
-	 * @throws Exception
-	 */
-	private static function arrayMapTemplate( $name, $template, $options = '' ) {
+    /**
+     * @param $name
+     * @param $template
+     * @param string $options
+     * @param string $new_delimiter
+     * @return array|string
+     *
+     * @throws Exception
+     */
+	private static function arrayMapTemplate( $name, $template, $options = '', $new_delimiter = '' ) {
 		$base_array = GlobalFunctions::getBaseArrayFromArrayName( $name );
 		$array = GlobalFunctions::getArrayFromArrayName( $name );
 
@@ -84,17 +88,18 @@ class ComplexArrayMapTemplate extends ResultPrinter {
 			return '';
 		}
 
-		return [ self::mapToArray( $array, $template, $options ), "noparse" => false ];
+		return [ self::mapToArray( $array, $template, $options, $new_delimiter ), "noparse" => false ];
 	}
 
-	/**
-	 * @param $array
-	 * @param $template
-	 * @param $options
-	 * @return string|null
-	 */
-	private static function mapToArray( $array, $template, $options ) {
-		$return = null;
+    /**
+     * @param $array
+     * @param $template
+     * @param $options
+     * @param $new_delimiter
+     * @return string|null
+     */
+	private static function mapToArray( $array, $template, $options, $new_delimiter ) {
+		$return = [];
 
 		if ( GlobalFunctions::containsArray( $array ) && $options !== "condensed" ) {
 			foreach ( $array as $value ) {
@@ -104,7 +109,7 @@ class ComplexArrayMapTemplate extends ResultPrinter {
 			self::map( $array, $return, $template );
 		}
 
-		return $return;
+		return implode( $new_delimiter, $return );
 	}
 
 	/**
@@ -134,6 +139,6 @@ class ComplexArrayMapTemplate extends ResultPrinter {
 			$t .= "|$value";
 		}
 
-		$return .= $t . "}}";
+		$return[] = $t . "}}";
 	}
 }
