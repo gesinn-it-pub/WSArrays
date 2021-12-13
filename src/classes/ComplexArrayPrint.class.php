@@ -67,12 +67,10 @@ class ComplexArrayPrint extends ResultPrinter {
      * Define all allowed parameters. This parser is hooked with Parser::SFH_OBJECT_ARGS.
      *
      * @param Parser $parser
-     *
-     * @param null $array_name
-     * @param null $options
-     * @param bool $noparse
-     * @param bool $nowiki
-     * @return array|mixed|null|string|string[]
+     * @param mixed $array_name
+     * @param mixed $options
+     * @param mixed $parser_behaviour
+     * @return null|string|array
      *
      * @throws Exception
      */
@@ -103,14 +101,14 @@ class ComplexArrayPrint extends ResultPrinter {
 	/**
 	 * @param $array_name
 	 * @param string $options
-	 * @return array|mixed|null|string|string[]
+	 * @return null|string
 	 *
 	 * @throws Exception
 	 */
 	private static function arrayPrint( $array_name, $options = '' ) {
 		self::$array = GlobalFunctions::getArrayFromArrayName( $array_name );
 
-		if ( !self::$array ) {
+		if ( self::$array === false ) {
 			// Array does not exist
 			return '';
 		}
