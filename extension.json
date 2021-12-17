@@ -2,7 +2,7 @@
   "name": "WSArrays",
   "namemsg": "ca-name",
   "author": "Xxmarijnw",
-  "version": "5.4.2",
+  "version": "5.4.3",
   "url": "https://www.mediawiki.org/wiki/Extension:WSArrays",
   "descriptionmsg": "ca-description",
   "license-name": "GPL-2.0-or-later",
@@ -13,7 +13,8 @@
     ]
   },
   "AutoloadClasses": {
-    "WSArrays": "src/WSArrays.php"
+    "WSArrays": "src/WSArrays.php",
+    "ComplexArrayWrapper": "ComplexArrayWrapper.php"
   },
   "ExtensionMessagesFiles": {
     "WSArraysMagic": "WSArrays.i18n.php"
