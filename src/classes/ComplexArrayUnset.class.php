@@ -98,8 +98,8 @@ class ComplexArrayUnset extends ResultPrinter {
 
 	private static function unsetValueFromKeys( &$array, $keys ) {
 		$depth = count( $keys ) - 1;
-
 		$temp =& $array;
+
 		for ( $i = 0; $i <= $depth; $i++ ) {
 			if ( $i === $depth ) {
 				// Last key, delete it.
@@ -110,10 +110,29 @@ class ComplexArrayUnset extends ResultPrinter {
 				    unset( $array[$keys[$i - 1]] );
                 }
 
+                if ( !self::isAssoc($temp) ) {
+                    // Reset the array indexing and only do this for numbered arrays.
+                    $temp = array_values($temp);
+                }
+
 				return;
 			}
 
 			$temp =& $temp[$keys[$i]];
 		}
 	}
+
+    /**
+     * Check whether an array is associative or sequentially numbered.
+     *
+     * @param array $array
+     * @return bool
+     */
+    private static function isAssoc( $array ) {
+        if ( $array === [] ) {
+            return false;
+        }
+
+        return array_keys($array) !== range(0, count($array) - 1);
+    }
 }
