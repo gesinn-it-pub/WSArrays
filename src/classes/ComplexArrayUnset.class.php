@@ -100,6 +100,8 @@ class ComplexArrayUnset extends ResultPrinter {
 		$depth = count( $keys ) - 1;
 		$temp =& $array;
 
+		$isAssoc = self::isAssoc( $array );
+
 		for ( $i = 0; $i <= $depth; $i++ ) {
 			if ( $i === $depth ) {
 				// Last key, delete it.
@@ -110,7 +112,7 @@ class ComplexArrayUnset extends ResultPrinter {
 				    unset( $array[$keys[$i - 1]] );
                 }
 
-                if ( !self::isAssoc($temp) ) {
+                if ( !$isAssoc ) {
                     // Reset the array indexing and only do this for numbered arrays.
                     $temp = array_values($temp);
                 }
