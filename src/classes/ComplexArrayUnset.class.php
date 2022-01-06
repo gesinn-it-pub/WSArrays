@@ -110,7 +110,7 @@ class ComplexArrayUnset extends ResultPrinter {
 				    unset( $array[$keys[$i - 1]] );
                 }
 
-                if ( !self::isAssoc($temp) ) {
+                if ( !self::isAssoc( $array ) ) {
                     // Reset the array indexing and only do this for numbered arrays.
                     $temp = array_values($temp);
                 }
