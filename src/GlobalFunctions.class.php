@@ -56,9 +56,11 @@ class GlobalFunctions {
 	 * @return bool
 	 */
 	public static function isValidJSON( $json ) {
-		json_decode( $json );
+		$value = json_decode( $json );
 
-		return ( json_last_error() == JSON_ERROR_NONE );
+        // We check whether "$value" is an array, otherwise an integer would also be considered as valid JSON, which
+        // leads to problems.
+		return json_last_error() == JSON_ERROR_NONE && is_array( $value );
 	}
 
 	/**
