@@ -56,7 +56,7 @@ class GlobalFunctions {
 	 * @return bool
 	 */
 	public static function isValidJSON( $json ) {
-		$value = json_decode( $json );
+		$value = json_decode( $json, true );
 
         // We check whether "$value" is an array, otherwise an integer would also be considered as valid JSON, which
         // leads to problems.
@@ -150,7 +150,7 @@ class GlobalFunctions {
 		$json_markup = $markup;
 		self::WSONtoJSON( $json_markup );
 
-		if ( self::isValidJSON( $json_markup ) ) {
+        if ( self::isValidJSON( $json_markup ) ) {
 			return self::CA_MARKUP_LEGACY;
 		}
 
