@@ -57,11 +57,11 @@ class ComplexArraySearch extends ResultPrinter {
 	public static function getResult( Parser $parser, $array_name = '', $value = '' ) {
 		GlobalFunctions::fetchSemanticArrays();
 
-		if ( empty( $array_name ) ) {
+		if ( $array_name === '' ) {
 			return GlobalFunctions::error( wfMessage( 'ca-omitted', 'Name' ) );
 		}
 
-		if ( empty( $value ) ) {
+		if ( $value === '' ) {
 			return GlobalFunctions::error( wfMessage( 'ca-omitted', 'Value' ) );
 		}
 
