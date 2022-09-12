@@ -2,7 +2,7 @@
   "name": "wikibase-solutions/w-s-arrays",
   "type": "mediawiki-extension",
   "description": "Parser functions to allow the creation and traversing of associative and multidimensional arrays",
-  "keywords": "",
+  "keywords": [],
   "license": "GPL-2.0-or-later",
   "require": {},
   "require-dev": {
