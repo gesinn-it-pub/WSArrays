@@ -416,6 +416,10 @@ class GlobalFunctions {
 			return null;
 		}
 
+        if ( $noparse === null ) {
+            $noparse = '';
+        }
+
 		$noparse_arguments = self::formatNoparse( $noparse );
 		$noparse_arguments = array_map( 'trim', $noparse_arguments );
 
